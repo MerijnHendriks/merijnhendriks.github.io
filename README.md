@@ -1,2 +1,0 @@
-# merijnhendriks.github.io
-Website
