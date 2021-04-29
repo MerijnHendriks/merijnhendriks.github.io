@@ -29,7 +29,7 @@ function loadPage()
     const file = url.split("/").pop();
 
     // get filepath
-    if (file !== window.location.host)
+    if (file !== window.location.hostname)
     {
         url = url.replace(file, `assets/md/${file}.md`);
     }
