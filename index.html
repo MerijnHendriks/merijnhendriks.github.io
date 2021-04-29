@@ -8,14 +8,14 @@
         <!-- js -->
         <script src="./assets/js/bootstrap.min.js"></script>
         <script src="./assets/js/showdown.min.js"></script>
-        <script src="./assets/js/loader.js"></script> 
+        <script src="./assets/js/common.js"></script> 
     </head>
 
     <body>
         <div data-markdown></div>
 
         <script type="text/javascript">
-            window.onload = loadPage();
+            window.onload = Router.getPage;
         </script>
     </body>
 </html>
