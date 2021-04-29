@@ -24,20 +24,21 @@ function loadPage()
 {
     let url = window.location.href;
     let file = url.split('/').pop();
-    let filename = (file !== window.location.host) ? file.substr(0, file.lastIndexOf('.')) : "";
 
-    // get page
-    if (file || filename)
+    if (file !== window.location.host)
     {
-        url = url.replace(file, `assets/md/${filename || file}.md`);
+        // subpage
+        url = url.replace(file, `assets/md/${file}.md`);
     }
     else
     {
+        // index
         url += "assets/md/index.md";
     }
 
     // load page
     fetch(url)
-        .then(response => response.text())
-        .then((data) => loadMarkdown(data));
+            .catch(() => { window.location.href = "404.html"; })
+            .then(response => response.text())
+            .then((data) => loadMarkdown(data));
 }
