@@ -28,15 +28,20 @@ function loadPage()
     let url = window.location.href;
     const file = url.split("/").pop();
 
+    console.log(url);
+    console.log(file);
+
     // get filepath
-    if (file !== window.location.hostname)
-    {
-        url = url.replace(file, `assets/md/${file}.md`);
-    }
-    else
+    if (file === "" || file === window.location.hostname)
     {
         url += "assets/md/index.md";
     }
+    else
+    {
+        url = url.replace(file, `assets/md/${file}.md`);
+    }
+
+    console.log(url);
 
     // load page content
     fetch(url)
