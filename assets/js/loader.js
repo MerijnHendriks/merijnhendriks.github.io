@@ -25,8 +25,9 @@ class Loader
         item.innerHTML = converter.makeHtml(md);
     }
     
-    static loadPage(url)
+    static loadPage()
     {
+        let url = window.location.href;
         const file = url.split('/').pop();
     
         // get filepath
