@@ -101,6 +101,14 @@ Right aligned columns
 | engine | engine to be used for processing templates. Handlebars is the default. |
 | ext    | extension to be used for dest files. |
 
+No surrounded marking
+
+Option | Description
+------ | -----------
+data   | path to data files to supply the data that will be passed into templates.
+engine | engine to be used for processing templates. Handlebars is the default.
+ext    | extension to be used for dest files.
+
 ## Links
 
 [link text](http://dev.nodeca.com)
