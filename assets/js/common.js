@@ -1,3 +1,10 @@
+class PurifyOptions
+{
+    USE_PROFILES = {
+        "html": true
+    };
+}
+
 class Loader
 {
     static unescapeHTML(text)
@@ -15,13 +22,12 @@ class Loader
     
         if (item === undefined)
         {
-            // element data-markdown not found
             return;
         }
     
         const md = Loader.unescapeHTML(data);
         const converted = marked(md);
-        const html = DOMPurify.sanitize(converted, { "USE_PROFILES": { "html": true }});
+        const html = DOMPurify.sanitize(converted, PurifyOptions);
 
         item.innerHTML = html;
     }
@@ -29,16 +35,16 @@ class Loader
 
 class Router
 {
+    static path = "assets/md/";
+
     static getPage()
     {
         const search = window.location.search;
         const params = new URLSearchParams(search);
         const page = params.has("page") ? params.get("page") : "index";
-        const url = `${window.location.href.replace(search, "")}assets/md/${page}.md`;
+        const url = window.location.href.replace(search, "");
 
-        console.log(url);
-
-        fetch(url)
+        fetch(`${url}${Router.path}${page}.md`)
             .catch(() => { window.location.href = "404.html"; })
             .then(response => response.text())
             .then((data) => Loader.loadMarkdown(data));
