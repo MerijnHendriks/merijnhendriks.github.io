@@ -6,5 +6,5 @@ My personal website
 
 **Library** | **Version**
 ----------- | -----------
-Bootstrap   | 5.0.0-beta2
+Bootstrap   | 5.0.0-beta3
 Showdown    | 1.9.1
