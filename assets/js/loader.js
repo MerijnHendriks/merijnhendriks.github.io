@@ -43,8 +43,8 @@ class Loader
             return;
         }
 
-        marked.use(MarkedRenderer);
-        marked.setOptions(MarkedOptions);
+        marked.use({ MarkedRenderer });
+        marked.setOptions({ MarkedOptions });
     
         const md = Loader.unescapeHTML(data);
         const converted = marked(md);
