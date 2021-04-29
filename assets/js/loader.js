@@ -27,11 +27,11 @@ class Loader
     
     static loadPage()
     {
-        let url = window.location.href;
+        let url = location.href;
         const file = url.split('/').pop();
     
         // get filepath
-        if (file !== window.location.host)
+        if (file !== location.host)
         {
             url = url.replace(file, `assets/md/${file}.md`);
         }
@@ -42,7 +42,7 @@ class Loader
     
         // load page content
         fetch(url)
-            .catch(() => { window.location.href = "404.html"; })
+            .catch(() => { location.href = "404.html"; })
             .then((response) => response.text())
             .then((data) => Loader.loadMarkdown("data-markdown", data));
     }
