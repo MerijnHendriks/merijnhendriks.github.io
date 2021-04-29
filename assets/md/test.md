@@ -64,34 +64,27 @@ Inline `code`
 
 Syntax highlighting
 
-```js
-var foo = function (bar) {
-return bar++;
-};
+```c
+#include <stdio.h>
+#include <stdlib.h>
 
-console.log(foo(5));
+int main()
+{
+    printf("hello world!");
+    return EXIT_SUCCESS;
+}
 ```
 
 ## Tables
 
-| Option | Description |
-| ------ | ----------- |
-| data   | path to data files to supply the data that will be passed into templates. |
-| engine | engine to be used for processing templates. Handlebars is the default. |
-| ext    | extension to be used for dest files. |
-
-Right aligned columns
-
-| Option | Description |
-| ------:| -----------:|
-| data   | path to data files to supply the data that will be passed into templates. |
-| engine | engine to be used for processing templates. Handlebars is the default. |
-| ext    | extension to be used for dest files. |
-
-No surrounded marking
-
 Option | Description
 ------ | -----------
+data   | path to data files to supply the data that will be passed into templates.
+engine | engine to be used for processing templates. Handlebars is the default.
+ext    | extension to be used for dest files.
+
+Option | Description
+-----: | ----------:
 data   | path to data files to supply the data that will be passed into templates.
 engine | engine to be used for processing templates. Handlebars is the default.
 ext    | extension to be used for dest files.
