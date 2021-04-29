@@ -11,20 +11,22 @@ class Loader
                    .replace( /&#39;/g, "'" );
     }
     
-    static loadMarkdown(data)
+    static loadMarkdown(element, data)
     {
-        let item = document.querySelector("[data-markdown]");
+        let item = document.querySelector(`[${element}]`);
     
-        if (item !== undefined)
+        if (!item)
         {
-            const md = unescapeHTML(data);
-            item.innerHTML = converter.makeHtml(md);
+            // element not found
+            return;
         }
+
+        const md = Loader.unescapeHTML(data);
+        item.innerHTML = converter.makeHtml(md);
     }
     
-    static loadPage()
+    static loadPage(url)
     {
-        let url = window.location.href;
         const file = url.split('/').pop();
     
         // get filepath
@@ -41,6 +43,6 @@ class Loader
         fetch(url)
             .catch(() => { window.location.href = "404.html"; })
             .then((response) => response.text())
-            .then((data) => loadMarkdown(data));
+            .then((data) => Loader.loadMarkdown("data-markdown", data));
     }
 }
