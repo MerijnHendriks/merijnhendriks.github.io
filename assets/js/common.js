@@ -11,11 +11,8 @@ class Loader
 {
     static unescapeHTML(text)
     {
-        return text.replace(/&amp;/g, "&")
-                   .replace(/&lt;/g, "<")
-                   .replace(/&gt;/g, ">")
-                   .replace(/&quot;/g, "\"")
-                   .replace(/&#39;/g, "'" );
+        const doc = new DOMParser().parseFromString(text, "text/html");
+        return doc.documentElement.textContent;
     }
     
     static loadMarkdown(id, data)
