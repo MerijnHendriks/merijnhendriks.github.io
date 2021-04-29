@@ -23,7 +23,7 @@ function loadMarkdown(data)
 function loadPage()
 {
     let url = window.location.href;
-    let file = url.split('/').pop();
+    const file = url.split('/').pop();
 
     // path
     if (file !== window.location.host)
