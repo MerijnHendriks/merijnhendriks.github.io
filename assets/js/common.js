@@ -1,5 +1,3 @@
-const converter = new showdown.Converter();
-
 class Loader
 {
     static unescapeHTML(text)
@@ -13,7 +11,7 @@ class Loader
     
     static loadMarkdown(data)
     {
-        let item = window.document.querySelector("[data-markdown]");
+        let item = window.document.getElementById("content");
     
         if (item === undefined)
         {
@@ -22,7 +20,10 @@ class Loader
         }
     
         const md = Loader.unescapeHTML(data);
-        item.innerHTML = converter.makeHtml(md);
+        const converted = marked(md);
+        const html = DOMPurify.sanitize(converted, { "USE_PROFILES": { "html": true }});
+
+        item.innerHTML = html;
     }
 }
 

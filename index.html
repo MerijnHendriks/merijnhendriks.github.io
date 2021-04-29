@@ -1,17 +1,22 @@
 <!doctype html>
 <html>
     <head>
+        <!-- metadata -->
+        <meta charset="utf-8"/>
+        <title>Merijn Hendriks</title>
+
         <!-- css -->
         <link rel="stylesheet" type="text/css" href="./assets/css/bootstrap.min.css"/>
         <link rel="stylesheet" type="text/css" href="./assets/css/styles.css"/>
 
         <!-- js -->
-        <script src="./assets/js/showdown.min.js"></script>
+        <script src="./assets/js/purify.min.js"></script>
+        <script src="./assets/js/marked.min.js"></script>
         <script src="./assets/js/common.js"></script> 
     </head>
 
     <body>
-        <div data-markdown></div>
+        <div id="content"></div>
 
         <script type="text/javascript">
             window.onload = Router.getPage;

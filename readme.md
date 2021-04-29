@@ -7,4 +7,5 @@ My personal website
 **Library** | **Version**
 ----------- | -----------
 Bootstrap   | 5.0.0-beta3
-Showdown    | 1.9.1
+DOMPurify   | 2.0.8
+Marked      | 2.0.3
