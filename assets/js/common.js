@@ -31,9 +31,10 @@ class Router
 {
     static getPage()
     {
-        const search = window.location.search || `?page=index`;
+        const search = window.location.search;
         const params = new URLSearchParams(search);
-        const url = window.location.href.replace(search, `assets/md/${params.get("page")}.md`);
+        const page = params.has("page") ? params.get("page") : "index";
+        const url = window.location.href.replace(search, `assets/md/${page}.md`);
 
         fetch(url)
             .catch(() => { window.location.href = "404.html"; })
