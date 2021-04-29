@@ -27,9 +27,9 @@ function loadPage()
     let filename = (file !== window.location.host) ? file.substr(0, file.lastIndexOf('.')) : "";
 
     // get page
-    if (filename)
+    if (file || filename)
     {
-        url = url.replace(file, `assets/md/${filename}.md`);
+        url = url.replace(file, `assets/md/${filename || file}.md`);
     }
     else
     {
