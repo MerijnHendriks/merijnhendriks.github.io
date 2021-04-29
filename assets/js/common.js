@@ -15,7 +15,7 @@ class Loader
     
         if (item === undefined)
         {
-            // element data-markdown not found
+            // element with id content not found
             return;
         }
     
@@ -31,21 +31,10 @@ class Router
 {
     static getPage()
     {
-        let url = window.location.href;
-        const search = window.location.search;
+        const search = window.location.search || `?page=index`;
         const params = new URLSearchParams(search);
-    
-        // get url
-        if (!params.has("page"))
-        {
-            url += "assets/md/index.md";
-        }
-        else
-        {
-            url = url.replace(search, `assets/md/${params.get("page")}.md`);
-        }
-    
-        // load page content
+        const url = window.location.href.replace(search, `assets/md/${params.get("page")}.md`);
+
         fetch(url)
             .catch(() => { window.location.href = "404.html"; })
             .then(response => response.text())
