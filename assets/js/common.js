@@ -34,7 +34,9 @@ class Router
         const search = window.location.search;
         const params = new URLSearchParams(search);
         const page = params.has("page") ? params.get("page") : "index";
-        const url = `${window.location.hostname}/assets/md/${page}.md`
+        const url = `${window.location.href.replace(search, "")}assets/md/${page}.md`;
+
+        console.log(url);
 
         fetch(url)
             .catch(() => { window.location.href = "404.html"; })
