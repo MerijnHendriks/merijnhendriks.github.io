@@ -15,7 +15,7 @@ class Loader
     
         if (item === undefined)
         {
-            // element with id content not found
+            // element data-markdown not found
             return;
         }
     
@@ -34,7 +34,7 @@ class Router
         const search = window.location.search;
         const params = new URLSearchParams(search);
         const page = params.has("page") ? params.get("page") : "index";
-        const url = window.location.href.replace(search, `assets/md/${page}.md`);
+        const url = `${window.location.hostname}/assets/md/${page}.md`
 
         fetch(url)
             .catch(() => { window.location.href = "404.html"; })
