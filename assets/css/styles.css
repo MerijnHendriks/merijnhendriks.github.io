@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+html, body, .row, .col-md-3, .col-md-8 {
+    height: 100%;
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
+
+.blog-bg {
+    background-image: url('../img/bg.png');
+    background-size: cover;
+    background-position: center;
+}

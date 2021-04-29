@@ -1,3 +1,5 @@
+"use strict";
+
 class PurifyOptions
 {
     USE_PROFILES = {
@@ -16,9 +18,9 @@ class Loader
                    .replace(/&#39;/g, "'" );
     }
     
-    static loadMarkdown(data)
+    static loadMarkdown(id, data)
     {
-        let item = window.document.getElementById("content");
+        let item = window.document.getElementById(id);
     
         if (item === undefined)
         {
@@ -47,6 +49,6 @@ class Router
         fetch(`${url}${Router.path}${page}.md`)
             .catch(() => { window.location.href = "404.html"; })
             .then(response => response.text())
-            .then((data) => Loader.loadMarkdown(data));
+            .then((data) => Loader.loadMarkdown("content", data));
     }
 }
