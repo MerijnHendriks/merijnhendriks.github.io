@@ -11,7 +11,7 @@ function unescapeHTML(text)
 
 function loadMarkdown(data)
 {
-    let item = document.querySelector('[data-markdown]');
+    let item = document.querySelector("[data-markdown]");
 
     if (item !== undefined)
     {
@@ -25,20 +25,19 @@ function loadPage()
     let url = window.location.href;
     let file = url.split('/').pop();
 
+    // path
     if (file !== window.location.host)
     {
-        // subpage
         url = url.replace(file, `assets/md/${file}.md`);
     }
     else
     {
-        // index
         url += "assets/md/index.md";
     }
 
     // load page
     fetch(url)
-            .catch(() => { window.location.href = "404.html"; })
-            .then(response => response.text())
-            .then((data) => loadMarkdown(data));
+        .catch(() => { window.location.href = "404.html"; })
+        .then(response => response.text())
+        .then((data) => loadMarkdown(data));
 }
