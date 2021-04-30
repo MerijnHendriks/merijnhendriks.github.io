@@ -81,15 +81,15 @@ class Router
         window.location.href = file;
     }
 
-    static request(url, callback)
+    static async get(url)
     {
         fetch(url)
             //.catch(() => { Router.redirect("500.html"); })
             .then((response) => response.text())
-            .then((data) => callback(data));
+            .then((data) => Promise.resolve(data));
     }
 
-    static getPage()
+    static async getPage()
     {
         const search = window.location.search;
         const params = new URLSearchParams(search);
@@ -97,9 +97,7 @@ class Router
         const url = window.location.href.replace(search, "");
 
         // get routes
-        let routes = {};
-
-        Router.request(`${url}assets/routes.json`, (data) => { console.log(data); routes = JSON.parse(data); });
+        const routes = JSON.parse(await Router.get(`${url}assets/routes.json`));
 
         console.log(routes);
         console.log(`${url}${routes[route]}`)
@@ -111,6 +109,6 @@ class Router
         }
 
         // get page content
-        Router.request(`${url}${routes[route]}`, Loader.loadMarkdown);
+        Loader.loadMarkdown(await Router.get(`${url}${routes[route]}`));
     }
 }
