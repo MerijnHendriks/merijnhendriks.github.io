@@ -14,3 +14,7 @@ html, body, .row, .col-md-3, .col-md-8 {
     background-size: cover;
     background-position: center;
 }
+
+.blog-container {
+    background-color: #303030;
+}
