@@ -10,8 +10,6 @@
 
 ###### h6 Heading
 
-:smiley:
-
 ## Horizontal Rules
 
 ___
