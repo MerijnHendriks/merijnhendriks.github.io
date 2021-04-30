@@ -42,8 +42,10 @@ class CustomRenderer extends marked.Renderer
                 break;
         }
 
-        const highlighted = Prism.highlight(code, Prism.languages[selected], selected);
-        return `<div class="blog-container p-3 mb-3"><pre class="mb-0 ${preClass}" ${preAttr}><code class="${codeClass}">${highlighted}</code></pre></div>`;
+        const input = `<pre class="${preClass}" ${preAttr}><code class="${codeClass}">${highlighted}</code></pre>`;
+        const highlighted = Prism.highlight(input, Prism.languages[selected], selected);
+
+        return `<div class="blog-container p-3 mb-3"><pre class="mb-0"><code>${highlighted}</code></pre></div>`;
     }
 }
 
