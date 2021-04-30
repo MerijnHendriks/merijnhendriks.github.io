@@ -104,7 +104,7 @@ class Router
         const url = window.location.href.replace(search, "");
 
         // get routes
-        Router.getRoutes();
+        Router.getRoutes(url);
 
         if (!Router.routes[route])
         {
