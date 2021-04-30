@@ -86,12 +86,14 @@ class Request
             {
                 case 404:
                     //Router.redirect("404.html");
-                    return "";
+                    break;
 
                 default:
                     //Router.redirect("500.html");
-                    return "";
+                    break;
             }
+
+            return "";
         }
 
         const text = await response.text();
