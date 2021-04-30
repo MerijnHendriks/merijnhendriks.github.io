@@ -1,6 +1,6 @@
 "use strict";
 
-class MarkedRenderer
+class LoaderHelper
 {
     static blockquote(quote)
     {
@@ -11,27 +11,53 @@ class MarkedRenderer
     {
         return `<table class="table"><thead">${header}</thead><tbody>${body}</tbody></table>`;
     }
-}
 
-class MarkedOptions
-{
-    breaks = true;
-    xhtml = true;
-}
-
-class PurifyOptions
-{
-    USE_PROFILES = {
-        "html": true
-    };
+    static code(code, language)
+    {
+        const valid = Prism.languages[language] !== undefined;
+        const highlighted = (valid) ? Prism.highlight(code, Prism.languages[language], language) : code
+        return `<pre><code class="language-${language}">${highlighted}</code></pre>`;
+    }
 }
 
 class Loader
 {
-    static unescapeHTML(text)
+    static unescapeText(text)
     {
         const doc = new DOMParser().parseFromString(text, "text/html");
         return doc.documentElement.textContent;
+    }
+
+    static convertMarkdown(md)
+    {
+        // setup
+        let renderer = new marked.Renderer();
+
+        renderer.blockquote = LoaderHelper.blockquote;
+        renderer.table = LoaderHelper.table;
+        renderer.code = LoaderHelper.code;
+
+        marked.setOptions({
+            "breaks": true,
+            "renderer": renderer,
+            "xhtml": true
+        });
+
+        // convert
+        return marked(md);
+    }
+
+    static sanitizeHtml()
+    {
+        // setup
+        const options = {
+            "USE_PROFILES": {
+                "html": true
+            }
+        };
+
+        // sanitize
+        return DOMPurify.sanitize(converted, options);
     }
     
     static loadMarkdown(id, data)
@@ -43,13 +69,10 @@ class Loader
             return;
         }
 
-        marked.use({ MarkedRenderer });
-        marked.setOptions({ MarkedOptions });
-    
-        const md = Loader.unescapeHTML(data);
-        const converted = marked(md);
-        const html = DOMPurify.sanitize(converted, PurifyOptions);
+        const md = Loader.unescapeText(data);
+        const html = Loader.convertMarkdown(md);
+        const result = Loader.sanitizeHtml(html);
 
-        item.innerHTML = html;
+        item.innerHTML = result;
     }
 }
