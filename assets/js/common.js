@@ -10,9 +10,11 @@ class LoaderHelper
 
     static escapeText(text)
     {
-        let div = document.createElement("div");
-        div.innerText = text;
-        return div.innerHTML;
+        return text.replace(/&/g, "&amp;")
+                   .replace(/</g, "&lt;")
+                   .replace(/>/g, "&gt;")
+                   .replace(/"/g, "&quot;")
+                   .replace(/'/g, "&#039;");
     }
 
     static blockquote(quote)
