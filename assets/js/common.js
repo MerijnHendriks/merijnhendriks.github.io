@@ -84,7 +84,7 @@ class Router
     static request(url, callback)
     {
         fetch(url)
-            .catch(() => { Router.redirect("500.html"); })
+            //.catch(() => { Router.redirect("500.html"); })
             .then(response => response.text())
             .then((data) => callback(data));
     }
@@ -103,7 +103,7 @@ class Router
 
         if (!routes[route])
         {
-            Router.redirect("404.html");
+            //Router.redirect("404.html");
             return;
         }
 
