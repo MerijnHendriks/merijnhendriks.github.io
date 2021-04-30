@@ -44,11 +44,8 @@ class CustomRenderer extends marked.Renderer
                 break;
         }
 
-        // highlight with properties enabled
-        let result = "";
-        
-        Prism.highlightElement( `<code class="${codeClass}">${code}</code>`, false, (element) => { result += element; });
-        return `<div class="blog-container p-3 mb-3"><pre class="mb-0 ${preClass}" ${preAttr}>${result}</pre></div>`;
+        // let prism highlight after generation
+        return `<div class="blog-container p-3 mb-3"><pre class="mb-0 ${preClass}" ${preAttr}><code class="${codeClass}">${code}</code></pre></div>`;
     }
 }
 
@@ -88,10 +85,15 @@ class Loader
             return;
         }
 
+        // generate html
         const html = Loader.convertMarkdown(data);
         const result = Loader.sanitizeHtml(html);
 
+        // add to page
         item.innerHTML = result;
+
+        // highlight html
+        Prism.highlightAll();
     }
 }
 
