@@ -92,7 +92,7 @@ class Loader
         // add to page
         item.innerHTML = result;
 
-        // highlight html
+        // highlight all code
         Prism.highlightAll();
     }
 }
