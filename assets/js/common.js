@@ -9,7 +9,7 @@ class CustomRenderer extends marked.Renderer
 
     blockquote(quote)
     {
-        return `<div class="blog-container px-4 mb-2"><blockquote class="blockquote">${quote}</blockquote></div>`;
+        return `<blockquote class="blockquote blog-container p-3 mb-2">${quote}</blockquote>`;
     }
 
     table(header, body)
