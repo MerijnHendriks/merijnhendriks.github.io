@@ -1,24 +1,23 @@
 "use strict";
 
-class LoaderHelper
+class CustomRenderer extends marked.Renderer
 {
-    static unescapeText(text)
+    constructor()
     {
-        const doc = new DOMParser().parseFromString(text, "text/html");
-        return doc.documentElement.textContent;
+        super();
     }
 
-    static blockquote(quote)
+    blockquote(quote)
     {
         return `<blockquote class="blockquote">${quote}</blockquote>`;
     }
 
-    static table(header, body)
+    table(header, body)
     {
         return `<table class="table"><thead">${header}</thead><tbody>${body}</tbody></table>`;
     }
 
-    static code(code, language)
+    code(code, language)
     {
         const selected = (Prism.languages[language]) ? language : "plain";
         const highlighted = Prism.highlight(code, Prism.languages[selected], selected);
@@ -28,18 +27,20 @@ class LoaderHelper
 
 class Loader
 {
+    static unescapeText(text)
+    {
+        const doc = new DOMParser().parseFromString(text, "text/html");
+        return doc.documentElement.textContent;
+    }
+
     static convertMarkdown(data)
     {
-        const md = LoaderHelper.unescapeText(data);
-        let renderer = new marked.Renderer();
-
-        renderer.blockquote = LoaderHelper.blockquote;
-        renderer.table = LoaderHelper.table;
-        renderer.code = LoaderHelper.code;
+        const md = data; //LoaderHelper.unescapeText(data);
 
         marked.setOptions({
             "breaks": true,
-            "renderer": renderer,
+            "gfm": true,
+            "renderer": new CustomRenderer(),
             "xhtml": true
         });
 
@@ -57,7 +58,7 @@ class Loader
         return DOMPurify.sanitize(html, options);
     }
     
-    static loadMarkdown(id, data)
+    static loadMarkdown(data, id = "content")
     {
         let item = window.document.getElementById(id);
     
@@ -75,9 +76,24 @@ class Loader
 
 class Router
 {
+    routes = {};
+
     static redirect(file)
     {
         window.location.href = file;
+    }
+
+    static request(url, callback)
+    {
+        fetch(url)
+            .catch(() => { Router.redirect("500.html"); })
+            .then(response => response.text())
+            .then((data) => callback);
+    }
+
+    static getRoutes(url)
+    {
+        Router.request(`${url}assets/routes.json`, (data) => { Router.routes = data; });
     }
 
     static getPage()
@@ -87,15 +103,16 @@ class Router
         const route = params.has("page") ? params.get("page") : "index";
         const url = window.location.href.replace(search, "");
 
-        if (!routes[route])
+        // get routes
+        Router.getRoutes();
+
+        if (!Router.routes[route])
         {
             Router.redirect("404.html");
             return;
         }
 
-        fetch(`${url}${routes[route]}`)
-            .catch(() => { Router.redirect("500.html"); })
-            .then(response => response.text())
-            .then((data) => Loader.loadMarkdown("content", data));
+        // get page content
+        Router.request(`${url}${routes[route]}`, Loader.loadMarkdown);
     }
 }
