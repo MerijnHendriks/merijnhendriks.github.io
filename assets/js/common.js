@@ -24,6 +24,7 @@ class CustomRenderer extends marked.Renderer
         let preClass = "";
         let preAttr = "";
 
+        // add properties based on language
         switch (selected)
         {
             case "plain":
@@ -43,10 +44,13 @@ class CustomRenderer extends marked.Renderer
                 break;
         }
 
-        const input = `<pre class="mb-0 ${preClass}" ${preAttr}><code class="${codeClass}">${code}</code></pre>`;
-        const highlighted = Prism.highlight(input, Prism.languages[selected], selected);
+        // highlight with properties enabled
+        let result = "";
+        const input = `<pre class="mb-0 ${preClass}" ${preAttr}><code class="${codeClass}">${code}</code></pre>`;        
+        Prism.highlightAllUnder(input, false, (element) => { result += element; });
 
-        return `<div class="blog-container p-3 mb-3">${highlighted}</div>`;
+        // get result
+        return `<div class="blog-container p-3 mb-3">${result}</div>`;
     }
 }
 
