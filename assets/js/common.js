@@ -85,7 +85,7 @@ class Router
     {
         fetch(url)
             //.catch(() => { Router.redirect("500.html"); })
-            .then(response => response.text())
+            .then((response) => response.text())
             .then((data) => callback(data));
     }
 
@@ -99,7 +99,10 @@ class Router
         // get routes
         let routes = {};
 
-        Router.request(`${url}assets/routes.json`, (data) => { routes = JSON.parse(data); });
+        Router.request(`${url}assets/routes.json`, (data) => { console.log(data); routes = JSON.parse(data); });
+
+        console.log(routes);
+        console.log(`${url}${routes[route]}`)
 
         if (!routes[route])
         {
