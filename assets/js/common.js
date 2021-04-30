@@ -30,7 +30,6 @@ class Loader
 {
     static convertMarkdown(data)
     {
-        // setup
         const md = LoaderHelper.unescapeText(data);
         let renderer = new marked.Renderer();
 
@@ -44,20 +43,17 @@ class Loader
             "xhtml": true
         });
 
-        // convert
         return marked(md);
     }
 
     static sanitizeHtml(html)
     {
-        // setup
         const options = {
             "USE_PROFILES": {
                 "html": true
             }
         };
 
-        // sanitize
         return DOMPurify.sanitize(html, options);
     }
     
