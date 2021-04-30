@@ -89,6 +89,28 @@ int main()
 }
 ```
 
+diff
+
+```diff
+     #include <stdio.h>
+     #include <stdlib.h>
+
+     int main()
+     {
+         printf("hello world!");
+-        return 0;
++        return EXIT_SUCCESS;
+     }
+```
+
+shell
+
+```sh
+cd /usr/local/etc
+cp php.ini php.ini.bak
+vi php.ini
+```
+
 ## Tables
 
 Option | Description

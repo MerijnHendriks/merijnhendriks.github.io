@@ -17,11 +17,33 @@ class CustomRenderer extends marked.Renderer
         return `<table class="table blog-container"><thead">${header}</thead><tbody>${body}</tbody></table>`;
     }
 
-    code(code, language)
+    code(code, lang)
     {
-        const selected = (Prism.languages[language]) ? language : "plain";
+        const selected = (Prism.languages[lang]) ? lang : "plain";
+        let codeClass = `language-${selected}`;
+        let preClass = "";
+        let preAttr = "";
+
+        switch (selected)
+        {
+            case "plain":
+                break;
+
+            case "diff":
+                codeClass += " diff-highlight";
+                break;
+            
+            case "sh":
+                preAttr = `"data-user="user" data-host="localhost"`;
+                break;
+
+            default:
+                preClass = "line-numbers";
+                break;
+        }
+
         const highlighted = Prism.highlight(code, Prism.languages[selected], selected);
-        return `<div class="blog-container p-3 mb-3"><pre class="mb-0"><code class="highlight language-${selected}">${highlighted}</code></pre></div>`;
+        return `<div class="blog-container p-3 mb-3"><pre class="mb-0 ${preClass}" ${preAttr}><code class="${codeClass}">${highlighted}</code></pre></div>`;
     }
 }
 
