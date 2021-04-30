@@ -46,11 +46,9 @@ class CustomRenderer extends marked.Renderer
 
         // highlight with properties enabled
         let result = "";
-        const input = `<pre class="mb-0 ${preClass}" ${preAttr}><code class="${codeClass}">${code}</code></pre>`;        
-        Prism.highlightAllUnder(input, false, (element) => { result += element; });
-
-        // get result
-        return `<div class="blog-container p-3 mb-3">${result}</div>`;
+        
+        Prism.highlightElement( `<code class="${codeClass}">${code}</code>`, false, (element) => { result += element; });
+        return `<div class="blog-container p-3 mb-3"><pre class="mb-0 ${preClass}" ${preAttr}>${result}</pre></div>`;
     }
 }
 

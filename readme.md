@@ -4,22 +4,9 @@ My personal website
 
 ## Todo
 
-- fix md rendering issues (codeblock, blockquotes)
+- fix code rendering issues
 - fix bg image rendering issue
-- add basic plugins
 - add many pages
-
-## Idea
-
-- codeblock
-  - if bash / shell, disable line numbers and enable terminal display mode
-
-## Interesting
-
-- [prism line numbers](https://prismjs.com/plugins/line-numbers/)
-- [prism command line](https://prismjs.com/plugins/command-line/)
-- [prism treeview](https://prismjs.com/plugins/treeview/)
-- [prism diff highlight](https://prismjs.com/plugins/diff-highlight/)
 
 ## Vendor
 
