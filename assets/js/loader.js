@@ -47,7 +47,7 @@ class Loader
         return marked(md);
     }
 
-    static sanitizeHtml()
+    static sanitizeHtml(html)
     {
         // setup
         const options = {
@@ -57,7 +57,7 @@ class Loader
         };
 
         // sanitize
-        return DOMPurify.sanitize(converted, options);
+        return DOMPurify.sanitize(html, options);
     }
     
     static loadMarkdown(id, data)
