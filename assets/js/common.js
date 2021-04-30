@@ -45,7 +45,7 @@ class CustomRenderer extends marked.Renderer
         }
 
         // let prism highlight after generation
-        return `<div class="p-3 mb-3"><pre class="mb-0 ${preClass}" ${preAttr}><code class="${codeClass}">${code}</code></pre></div>`;
+        return `<div class="mb-3"><pre class="mb-0 ${preClass}" ${preAttr}><code class="${codeClass}">${code}</code></pre></div>`;
     }
 }
 
