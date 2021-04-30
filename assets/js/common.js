@@ -76,7 +76,7 @@ class Loader
 
 class Router
 {
-    routes = {};
+    static routes = {};
 
     static redirect(file)
     {
