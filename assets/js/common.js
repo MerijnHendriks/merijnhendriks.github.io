@@ -27,15 +27,9 @@ class CustomRenderer extends marked.Renderer
 
 class Loader
 {
-    static unescapeText(text)
-    {
-        const doc = new DOMParser().parseFromString(text, "text/html");
-        return doc.documentElement.textContent;
-    }
-
     static convertMarkdown(data)
     {
-        const md = data; //LoaderHelper.unescapeText(data);
+        const md = data;
 
         marked.setOptions({
             "breaks": true,
@@ -85,11 +79,11 @@ class Request
             switch(response.status)
             {
                 case 404:
-                    //Router.redirect("404.html");
+                    Router.redirect("404.html");
                     break;
 
                 default:
-                    //Router.redirect("500.html");
+                    Router.redirect("500.html");
                     break;
             }
 
