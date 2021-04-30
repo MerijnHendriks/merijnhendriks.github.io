@@ -9,19 +9,19 @@ class CustomRenderer extends marked.Renderer
 
     blockquote(quote)
     {
-        return `<blockquote class="blog-container blockquote">${quote}</blockquote>`;
+        return `<div class="blog-container padding-1"><blockquote class="blockquote">${quote}</blockquote></div>`;
     }
 
     table(header, body)
     {
-        return `<table class="blog-container table"><thead">${header}</thead><tbody>${body}</tbody></table>`;
+        return `<div class="blog-container padding-1"><table class="table"><thead">${header}</thead><tbody>${body}</tbody></table></div>`;
     }
 
     code(code, language)
     {
         const selected = (Prism.languages[language]) ? language : "plain";
         const highlighted = Prism.highlight(code, Prism.languages[selected], selected);
-        return `<pre><code class="blog-container highlight language-${language}">${highlighted}</code></pre>`;
+        return `<div class="blog-container padding-1"><pre><code class="highlight language-${language}">${highlighted}</code></pre></div>`;
     }
 }
 
