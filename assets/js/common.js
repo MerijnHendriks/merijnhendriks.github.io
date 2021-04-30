@@ -40,7 +40,7 @@ class Loader
     static convertMarkdown(data)
     {
         // setup
-        const md = Loader.unescapeText(data);
+        const md = LoaderHelper.unescapeText(data);
         let renderer = new marked.Renderer();
 
         renderer.blockquote = LoaderHelper.blockquote;
