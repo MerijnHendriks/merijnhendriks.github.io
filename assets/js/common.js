@@ -91,9 +91,9 @@ class Router
             .then((data) => callback(data));
     }
 
-    static getRoutes(url)
+    static getRoutes(data)
     {
-        Router.request(`${url}assets/routes.json`, (data) => { Router.routes = data; });
+        Router.routes = JSON.parse(data);
     }
 
     static getPage()
@@ -104,7 +104,7 @@ class Router
         const url = window.location.href.replace(search, "");
 
         // get routes
-        Router.getRoutes(url);
+        Router.request(`${url}assets/routes.json`, Router.getRoutes);
 
         debug.log(Router.routes);
 
