@@ -86,7 +86,7 @@ class Router
         fetch(url)
             //.catch(() => { Router.redirect("500.html"); })
             .then((response) => response.text())
-            .then((data) => Promise.resolve(data));
+            .then((data) => { console.log(data); Promise.resolve(data); });
     }
 
     static async getPage()
