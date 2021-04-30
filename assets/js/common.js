@@ -21,7 +21,7 @@ class CustomRenderer extends marked.Renderer
     {
         const selected = (Prism.languages[language]) ? language : "plain";
         const highlighted = Prism.highlight(code, Prism.languages[selected], selected);
-        return `<div class="blog-container p-3 mb-2"><pre class="mb-0"><code class="highlight language-${selected}">${highlighted}</code></pre></div>`;
+        return `<div class="blog-container p-3 mb-3"><pre class="mb-0"><code class="highlight language-${selected}">${highlighted}</code></pre></div>`;
     }
 }
 
