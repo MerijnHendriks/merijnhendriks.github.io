@@ -14,7 +14,7 @@ class CustomRenderer extends marked.Renderer
 
     table(header, body)
     {
-        return `<div class="blog-container p-1 mb-2"><table class="table"><thead">${header}</thead><tbody>${body}</tbody></table></div>`;
+        return `<table class="table blog-container"><thead">${header}</thead><tbody>${body}</tbody></table>`;
     }
 
     code(code, language)
