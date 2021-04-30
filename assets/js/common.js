@@ -88,7 +88,7 @@ class Router
         fetch(url)
             .catch(() => { Router.redirect("500.html"); })
             .then(response => response.text())
-            .then((data) => callback);
+            .then((data) => callback(data));
     }
 
     static getRoutes(url)
