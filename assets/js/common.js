@@ -74,19 +74,36 @@ class Loader
     }
 }
 
+class Request
+{
+    static async get(url)
+    {
+        const response = await fetch(url);
+
+        if (!response.ok)
+        {
+            switch(response.status)
+            {
+                case 404:
+                    //Router.redirect("404.html");
+                    return "";
+
+                default:
+                    //Router.redirect("500.html");
+                    return "";
+            }
+        }
+
+        const text = await response.text();
+        return text;
+    }
+}
+
 class Router
 {
     static redirect(file)
     {
         window.location.href = file;
-    }
-
-    static async get(url)
-    {
-        fetch(url)
-            //.catch(() => { Router.redirect("500.html"); })
-            .then((response) => response.text())
-            .then((data) => { console.log(data); Promise.resolve(data); });
     }
 
     static async getPage()
@@ -95,20 +112,8 @@ class Router
         const params = new URLSearchParams(search);
         const route = params.has("page") ? params.get("page") : "index";
         const url = window.location.href.replace(search, "");
+        const routes = JSON.parse(await Request.get(`${url}assets/routes.json`));
 
-        // get routes
-        const routes = JSON.parse(await Router.get(`${url}assets/routes.json`));
-
-        console.log(routes);
-        console.log(`${url}${routes[route]}`)
-
-        if (!routes[route])
-        {
-            //Router.redirect("404.html");
-            return;
-        }
-
-        // get page content
-        Loader.loadMarkdown(await Router.get(`${url}${routes[route]}`));
+        Loader.loadMarkdown(await Request.get(`${url}${routes[route]}`));
     }
 }
