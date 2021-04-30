@@ -75,6 +75,17 @@ int main()
 }
 ```
 
+```bollocks
+#include <stdio.h>
+#include <stdlib.h>
+
+int main()
+{
+    printf("hello world!");
+    return EXIT_SUCCESS;
+}
+```
+
 ## Tables
 
 Option | Description
@@ -92,8 +103,6 @@ ext    | extension to be used for dest files.
 ## Links
 
 [link text](http://dev.nodeca.com)
-
-[link with title](http://nodeca.github.io/pica/demo/ "title text!")
 
 Autoconverted link https://github.com/nodeca/pica (enable linkify to see)
 
