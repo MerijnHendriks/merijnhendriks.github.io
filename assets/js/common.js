@@ -76,8 +76,6 @@ class Loader
 
 class Router
 {
-    static routes = {};
-
     static redirect(file)
     {
         window.location.href = file;
@@ -91,11 +89,6 @@ class Router
             .then((data) => callback(data));
     }
 
-    static getRoutes(data)
-    {
-        Router.routes = JSON.parse(data);
-    }
-
     static getPage()
     {
         const search = window.location.search;
@@ -104,11 +97,11 @@ class Router
         const url = window.location.href.replace(search, "");
 
         // get routes
-        Router.request(`${url}assets/routes.json`, Router.getRoutes);
+        let routes = {};
 
-        debug.log(Router.routes);
+        Router.request(`${url}assets/routes.json`, (data) => { routes = JSON.parse(data); });
 
-        if (!Router.routes[route])
+        if (!routes[route])
         {
             Router.redirect("404.html");
             return;
