@@ -17,7 +17,7 @@ class LoaderHelper
 
     static blockquote(quote)
     {
-        return `<blockquote class="blockquote">${quote}</blockquote>`;
+        return `<blockquote class="blockquote"><p class="mb-0">${quote}</p></blockquote>`;
     }
 
     static table(header, body)
