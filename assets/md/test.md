@@ -98,6 +98,7 @@ engine | engine to be used for processing templates. Handlebars is the default.
 ext    | extension to be used for dest files.
 
 Inverted table
+Hello world?
 
 Option | Description
 -----: | ----------:
