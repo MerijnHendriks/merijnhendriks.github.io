@@ -8,15 +8,6 @@ class LoaderHelper
         return doc.documentElement.textContent;
     }
 
-    static escapeText(text)
-    {
-        return text.replace(/&/g, "&amp;")
-                   .replace(/</g, "&lt;")
-                   .replace(/>/g, "&gt;")
-                   .replace(/"/g, "&quot;")
-                   .replace(/'/g, "&apos;");
-    }
-
     static blockquote(quote)
     {
         return `<blockquote class="blockquote"><p class="mb-0">${quote}</p></blockquote>`;
@@ -29,11 +20,9 @@ class LoaderHelper
 
     static code(code, language)
     {
-        const text = LoaderHelper.escapeText(code);
         const selected = (Prism.languages[language]) ? language : "plain";
-        const highlighted = Prism.highlight(text, Prism.languages[selected], selected);
-
-        return `<pre><code class="language-${language}">${highlighted}</code></pre>`;
+        const highlighted = Prism.highlight(code, Prism.languages[selected], selected);
+        return `<pre><code class="highlight language-${language}">${highlighted}</code></pre>`;
     }
 }
 
