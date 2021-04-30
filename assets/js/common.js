@@ -106,6 +106,8 @@ class Router
         // get routes
         Router.getRoutes(url);
 
+        debug.log(Router.routes);
+
         if (!Router.routes[route])
         {
             Router.redirect("404.html");
