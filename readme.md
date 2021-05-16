@@ -4,9 +4,11 @@ My personal website
 
 ## Info
 
-- wallpaper: Meiji Shrine, Yoyogi Park, Tokyo, Japan
+### Wallpaper
 
-## Vendor
+Meiji Shrine, Yoyogi Park, Tokyo, Japan
+
+### Vendor
 
 **Libraries**      | **Version**
 ------------------ | -----------
@@ -21,14 +23,14 @@ prism-vsc-dark-plus | v1.4.0
 
 ### Prism
 
-**Languages**
+#### Languages
 
 - c-like
 - bash + shell
 - c
 - diff
 
-**Extensions**
+#### Extensions
 
 - line numbers
 - autolinker
