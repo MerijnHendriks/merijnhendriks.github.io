@@ -4,13 +4,6 @@ My name is Merijn Hendriks and I hail from The Netherlands.
 Currently employed as a software engineer, I write software both professionally and as a hobby.  
 Whenever I'm not programming, I spend time with my close friends, doing nerd things or daydream.
 
-## Personality types
-
-- Western zodiac: Sagittarius
-- Chinese zodiac: Earth Tiger
-- Blood type: O
-- MBTI: INFP (mediator)
-
 ## Hobbies
 
 - Programming games, applications (primarly ANSI-C and C#, but I know other languages)
@@ -22,5 +15,12 @@ Whenever I'm not programming, I spend time with my close friends, doing nerd thi
 - Learning programming techniques, Japanese language
 - Spending time with close friends
 - Daydreaming
+
+## Personality types
+
+- Western zodiac: Sagittarius
+- Chinese zodiac: Earth Tiger
+- Blood type: O
+- MBTI: INFP (mediator)
 
 ![INFP type image](./assets/img/about/infp.png)
