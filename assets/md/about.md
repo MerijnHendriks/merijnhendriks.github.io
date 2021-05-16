@@ -23,4 +23,4 @@ Whenever I'm not programming, I spend time with my close friends, doing nerd thi
 - Spending time with close friends
 - Daydreaming
 
-![INFP type image](../img/about/infp.png)
+![INFP type image](./assets/img/about/infp.png)
