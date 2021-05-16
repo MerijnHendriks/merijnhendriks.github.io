@@ -14,10 +14,6 @@
 
 ___
 
----
-
-***
-
 ## Emphasis
 
 **This is bold text**
@@ -131,8 +127,6 @@ ext    | extension to be used for dest files.
 ## Links
 
 [link text](http://dev.nodeca.com)
-
-Autoconverted link https://github.com/nodeca/pica (enable linkify to see)
 
 ## Images
 
