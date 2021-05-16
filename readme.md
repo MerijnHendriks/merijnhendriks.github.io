@@ -2,11 +2,9 @@
 
 My personal website
 
-## Todo
+## Info
 
-- fix code rendering issues
-- fix bg image rendering issue
-- add many pages
+- wallpaper: Meiji Shrine, Yoyogi Park, Tokyo, Japan
 
 ## Vendor
 
@@ -36,4 +34,9 @@ prism-vsc-dark-plus | v1.4.0
 - autolinker
 - command line
 - diff highlight
-- 
+
+## Todo
+
+- fix code rendering issues
+- fix bg image rendering issue
+- add many pages
