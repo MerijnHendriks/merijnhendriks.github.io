@@ -1,7 +1,6 @@
-# Hi!
+# About me
 
-My name is Merijn Hendriks and I hail from The Netherlands.  
-Currently employed as a software engineer, I write software both professionally and as a hobby.  
+Currently employed as a software engineer The Netherlands, I write software both professionally and as a hobby.  
 Whenever I'm not programming, I spend time with my close friends, doing nerd things or daydream.
 
 ## Hobbies
