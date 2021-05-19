@@ -8,4 +8,4 @@ Expect anime and programming related articles, among other things.
 ## Articles
 
 - [About me](https://merijnhendriks.github.io/?page=about)
-- [Writing clean code](https://merijnhendriks.github.io/?page=writingcleancode)
+- [Writing clean code](https://merijnhendriks.github.io/?page=codestylepreference)

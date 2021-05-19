@@ -1,4 +1,4 @@
-# Writing clean code
+# Code style preference
 
 19-05-2020: initial version
 
@@ -8,12 +8,13 @@ In the past years, I've read many different programming styles and had the chanc
 There is always one thing that stood out to me: everyone seems to use a distinctly different programming style.  
 In today's article I'll explain the way I would ideally write code and why.
 
-## Some background
+## History
 
 In the early days of programming, the size of your source files mattered alot.  
 If your floppy disk wasn't capable of holding your full source code, you had to trim it down in one way or another.  
 Spaces became tabs, cost-saving programming features such as multiple initialization was introduced and more just to combat the size limit.  
-In modern days these things don't matter as much anymore as the file size we can use for our programs became much larger over time.
+In modern days these things don't matter as much anymore as the file size we can use for our programs became much larger over time.  
+Now the focus is readability and how fast you can write your code.
 
 ## What I use
 
