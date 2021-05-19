@@ -17,8 +17,7 @@ Whenever I'm not programming, I spend time with my close friends, doing nerd thi
 
 ## Personality
 
-While I could write many words about it myself, I think the personality types highlighted below  
-are actually a pretty accurate representation of who I am.
+While I could write many words about it myself, I think the personality types highlighted below are actually a pretty accurate representation of who I am.
 
 - Western zodiac: Sagittarius
 - Chinese zodiac: Earth Tiger

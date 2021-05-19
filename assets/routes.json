@@ -1,5 +1,6 @@
 {
     "index": "assets/md/index.md",
     "test": "assets/md/test.md",
-    "about": "assets/md/about.md"
+    "about": "assets/md/about.md",
+    "writingcleancode": "assets/md/writingcleancode.md"
 }
