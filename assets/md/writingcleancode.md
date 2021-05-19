@@ -27,20 +27,19 @@ class Program
     void main(string[] args)
     {
         bool isOn = true;
+        string cookies = [
+            "choco chip cookie",
+            "biscuit"
+        ];
 
         if (isOn)
         {
-            string cookies = [
-                "choco chip cookie",
-                "biscuit"
-            ];
-
             Std.print("hello world!");
+        }
 
-            for (string cookie : cookies)
-            {
-                Std.print($"hello {cookie}!");
-            }
+        for (string cookie : cookies)
+        {
+            Std.print($"hello {cookie}!");
         }
     }
 }
