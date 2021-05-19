@@ -89,7 +89,7 @@ I stick to the same naming scheme for as for structs, but use camel case instead
 I would stick with the language default or company style when required, but if I had a choice I would pick the following:
 
 **thing**   | **what I do**
------------ | ---------------------------------
+----------- | ---------------------------------------------------------------------------------------------------------
 Brace style | Allman, 1 operation or scope denotion on each line
 Indentation | 4 spaces, tabs when programming and convert to spaces when sharing the source
 Structs     | Pascal case, avoid numbers, never use special characters
