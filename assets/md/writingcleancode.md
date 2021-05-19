@@ -66,15 +66,17 @@ All my IDE's are configured to represent a tab as 4 spaces.
 When I save the file, my IDE automatically turns it into 4 spaces.  
 This way the source will always be in the correct indentation level when opened in another IDE that isn't configured correctly.
 
-### Structs (/ classes)
+### Structs / Classes
+
+`Pascal case, avoid numbers, never use special characters`
 
 My naming is quite strict; all must be pascal case and only letters unless numbers are strictly required.
 I never use special characters like `_` as they make it harder on the eye to see the object as one instance.
 I make no distinction between public, protected private, global or enums.
 
-### Variables (/ fields)
+### Variables / Fields
 
-`Single, at the start of the scope, camel case, avoid numbers, never use special characters`
+`Camel case, avoid numbers, never use special characters, single initialization, at the start of the scope`
 
 To make my life easier for reading my source, I make sure to be consistent in where and how I intialize my variables.  
 The big advantage in declaring and initializing your variables at the beginning of the scope is that you know it's longlivity.  
@@ -84,9 +86,9 @@ That one line defines exactly what you need to know opposed to having to memoriz
 
 I stick to the same naming scheme for as for structs, but use camel case instead.
 
-### Functions (/ methods)
+### Functions / Methods
 
-`bottom-up order, camel case, avoid numbers, never use special characters`
+`Camel case, avoid numbers, never use special characters, bottom-up order`
 
 It is much easier to figure out what something does if you know it in advance.  
 In addition, in ANSI-C it also means you don't need to add a function prototype in your source file for the compiler to be aware of the order.  
