@@ -1,4 +1,4 @@
-# Code style preference
+# Code style preferences
 
 19-05-2020: initial version
 

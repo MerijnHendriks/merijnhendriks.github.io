@@ -2,5 +2,7 @@
     "index": "assets/md/index.md",
     "test": "assets/md/test.md",
     "about": "assets/md/about.md",
-    "codestylepreference": "assets/md/codestylepreference.md"
+    "codestylepreferences": "assets/md/codestylepreferences.md",
+    "designingalanguage": "assets/md/designingalanguage.md",
+    "whyidislikegc": "assets/md/whyidislikegc.md"
 }

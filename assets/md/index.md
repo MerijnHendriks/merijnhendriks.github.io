@@ -8,4 +8,5 @@ Expect anime and programming related articles, among other things.
 ## Articles
 
 - [About me](https://merijnhendriks.github.io/?page=about)
-- [Writing clean code](https://merijnhendriks.github.io/?page=codestylepreference)
+- [Code style preferences](https://merijnhendriks.github.io/?page=codestylepreferences)
+- [Why I dislike GC (and other modern language features)](https://merijnhendriks.github.io/?page=whyidislikegc)
