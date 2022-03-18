@@ -103,4 +103,4 @@ ext    | extension to be used for dest files.
 
 ## Images
 
-![Ganyu](./assets/img/banner.jpg)
+![Me](./assets/img/avatar.jpg)
