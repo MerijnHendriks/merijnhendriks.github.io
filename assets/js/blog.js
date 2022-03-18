@@ -37,7 +37,7 @@ class Loader {
     return DOMPurify.sanitize(html, options);
   }
 
-  static loadBlogPost(md, id = "blog-content") {
+  static loadMarkdown(md, id) {
     const html = Loader.convertMarkdown(md);
     const result = Loader.sanitizeHtml(html);
     const element = window.document.getElementById(id);
@@ -45,13 +45,15 @@ class Loader {
   }
 
   static loadBlogEntries(url, routes, id = "blog-entries") {
-    let html = "";
+    let html = `<h4>Archives</h4><ol class="list-unstyled mb-0">`;
 
     for (const page of routes) {
       if (page.visible) {
         html += `<li><a href="${url}?post=${page.path}">${page.name}</a></li>`;
       }
     }
+
+    html += "</ol>";
 
     const result = Loader.sanitizeHtml(html);
     const element = window.document.getElementById(id);
@@ -67,7 +69,7 @@ class Request {
 }
 
 class Router {
-  static getPostPath(name, routes) {
+  static getPagePath(name, routes) {
     if (name === "latest") {
       return routes[0].file;
     }
@@ -91,14 +93,19 @@ class Router {
     const json = await Request.get(`${url}assets/routes.json`);
     const routes = JSON.parse(json);
 
-    // get page info
+    // get about markdown
+    const aboutPath = Router.getPagePath("about", routes);
+    const aboutMd = await Request.get(`${url}${aboutPath}`);
+
+    // get page markdown
     const pageName = params.has("page") ? params.get("page") : "latest";
-    const pagePath = Router.getPostPath(pageName, routes);
+    const pagePath = Router.getPagePath(pageName, routes);
     const pageMd = await Request.get(`${url}${pagePath}`);
 
     // load html
     Loader.loadBlogEntries(url, routes);
-    Loader.loadBlogPost(pageMd);
+    Loader.loadMarkdown(aboutMd, "blog-about");
+    Loader.loadMarkdown(pageMd, "blog-article");
     Prism.highlightAll();
   }
 }

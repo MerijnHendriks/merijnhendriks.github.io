@@ -10,5 +10,11 @@
         "path": "404",
         "file": "assets/md/404.md",
         "visible": false
+    },
+    {
+        "name": "about",
+        "path": "about",
+        "file": "assets/md/about.md",
+        "visible": false
     }
 ]
