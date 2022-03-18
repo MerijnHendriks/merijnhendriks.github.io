@@ -6,7 +6,7 @@ class CustomRenderer extends marked.Renderer {
   }
 
   blockquote(quote) {
-    return `<blockquote class="blockquote p-3">${quote}</blockquote>`;
+    return `<blockquote class="blockquote px-3">${quote}</blockquote>`;
   }
 
   table(header, body) {
