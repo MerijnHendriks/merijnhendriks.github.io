@@ -71,9 +71,6 @@ class Loader
 
         // add to page
         item.innerHTML = result;
-
-        // highlight all code
-        Prism.highlightAll();
     }
 
     static loadBlogEntries(data, id = "blog-entries")
@@ -149,5 +146,8 @@ class Router
         // load post
         const text = await Request.get(`${url}${path}`);
         Loader.loadBlogPost(text);
+
+        // highlight all code
+        Prism.highlightAll();
     }
 }
