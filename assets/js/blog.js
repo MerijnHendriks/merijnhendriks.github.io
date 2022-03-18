@@ -91,7 +91,7 @@ class Loader
 
         for (const item of data)
         {
-            html += `<li><a href="${url}post=${item.path}">${post.name}</a></li>`;
+            html += `<li><a href="${url}post=${item.path}">${item.name}</a></li>`;
         }
 
         // add to page
