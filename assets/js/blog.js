@@ -69,18 +69,15 @@ class Request {
 class Router {
   async getPostPath(name, routes) {
     if (name === "latest") {
-      // use first entry in routes
       return routes[0].file;
     }
 
-    // search for entry in routes
     for (const page of routes) {
       if (page.path === name) {
         return page.file;
       }
     }
 
-    // post not found
     return "404";
   }
 
