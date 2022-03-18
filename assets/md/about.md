@@ -1,5 +1,3 @@
-![Me](./assets/img/avatar.jpg)
-
 #### About
 
 Hi! I'm a software architect residing in The Netherlands.
