@@ -1,7 +1,8 @@
 [
     {
-        "name": "Example",
-        "path": "example",
-        "file": "assets/md/example.md"
+        "name": "Test",
+        "path": "test",
+        "file": "assets/md/test.md",
+        "visible": true
     }
 ]

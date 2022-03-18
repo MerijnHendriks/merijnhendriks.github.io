@@ -45,15 +45,15 @@
         <!-- post archive -->
         <div class="mb-3">
           <h4>Archives</h4>
-          <ol class="list-unstyled mb-0" id="blog-entries">
-          </ol>
+          <ol class="list-unstyled mb-0" id="blog-entries"></ol>
         </div>
 
         <!-- links -->
         <div>
           <h4>Links</h4>
           <ol class="list-unstyled">
-            <li><a href="https://www.github.com/merijnhendriks">GitHub</a></li>
+            <li><a href="https://www.github.com/merijnhendriks">Github</a></li>
+            <li><a href="mailto:merijn.d.hendriks@gmail.com">Email</a></li>
           </ol>
         </div>
       </div>
@@ -66,7 +66,8 @@
   <script src="./assets/vendor/prism.js"></script>
   <script src="./assets/js/blog.js"></script>
   <script type="text/javascript">
-    window.onload = Router.getPage;
+    const router = new Router();
+    window.onload = router.getPage;
   </script>
 </body>
 
