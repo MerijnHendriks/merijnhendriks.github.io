@@ -80,7 +80,7 @@ class Router {
       }
     }
 
-    return "404";
+    return getPagePath("404", routes);
   }
 
   static async getPage() {
