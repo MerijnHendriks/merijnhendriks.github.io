@@ -45,7 +45,7 @@ class Loader {
   }
 
   static loadBlogEntries(url, routes, id = "blog-entries") {
-    let html = `<h4>Archives</h4><ol class="list-unstyled mb-0">`;
+    let html = `<h4>Archives</h4><ul>`;
 
     for (const page of routes) {
       if (page.visible) {
@@ -53,7 +53,7 @@ class Loader {
       }
     }
 
-    html += "</ol>";
+    html += "</ul>";
 
     const result = Loader.sanitizeHtml(html);
     const element = window.document.getElementById(id);
