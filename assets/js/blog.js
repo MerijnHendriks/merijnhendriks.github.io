@@ -67,7 +67,7 @@ class Request {
 }
 
 class Router {
-  static async getPostPath(name, routes) {
+  static getPostPath(name, routes) {
     if (name === "latest") {
       return routes[0].file;
     }
