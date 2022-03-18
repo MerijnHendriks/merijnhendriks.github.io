@@ -1,7 +1,8 @@
 #### About
 
 Hi! I'm a software architect residing in The Netherlands.
-When I'm not programming all day, you can find me playing D&D5E or MTG with friends, reading manga / watchin anime, playing video games or daydreaming.
+When I'm not programming all day, you can find me playing D&D5E or MTG or video games with friends, reading manga / watchin anime, or daydreaming.
+Love sushi, salmon, researching, working code and cute things.
 
 - Western zodiac: Sagittarius
 - Chinese zodiac: Earth Tiger
