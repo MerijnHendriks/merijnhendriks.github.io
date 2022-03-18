@@ -38,8 +38,7 @@ class Loader {
   }
 
   static loadMarkdown(md, id) {
-    const encoded = encodeURIComponent(md);
-    const html = Loader.convertMarkdown(encoded);
+    const html = Loader.convertMarkdown(md);
     const result = Loader.sanitizeHtml(html);
     const element = window.document.getElementById(id);
     element.innerHTML = result;
@@ -99,7 +98,7 @@ class Router {
     const aboutMd = await Request.get(`${url}${aboutPath}`);
 
     // get page markdown
-    const pageName = !params.has("page") ? "latest" : params.get("page");
+    const pageName = params.has("page") ? params.get("page") : "latest";
     const pagePath = Router.getPagePath(pageName, routes);
     const pageMd = await Request.get(`${url}${pagePath}`);
 
