@@ -20,7 +20,7 @@ class CustomRenderer extends marked.Renderer {
 }
 
 class Loader {
-  convertMarkdown(md) {
+  static convertMarkdown(md) {
     const options = {
       "breaks": true,
       "gfm": true,
@@ -32,19 +32,19 @@ class Loader {
     return marked.parse(md);
   }
 
-  sanitizeHtml(html) {
+  static sanitizeHtml(html) {
     const options = {"USE_PROFILES": {"html": true}};
     return DOMPurify.sanitize(html, options);
   }
 
-  loadBlogPost(md, id = "blog-content") {
-    const html = this.convertMarkdown(md);
-    const result = this.sanitizeHtml(html);
+  static loadBlogPost(md, id = "blog-content") {
+    const html = Loader.convertMarkdown(md);
+    const result = Loader.sanitizeHtml(html);
     const element = window.document.getElementById(id);
     element.innerHTML = result;
   }
 
-  loadBlogEntries(url, routes, id = "blog-entries") {
+  static loadBlogEntries(url, routes, id = "blog-entries") {
     let html = "";
 
     for (const page of routes) {
@@ -53,21 +53,21 @@ class Loader {
       }
     }
 
-    const result = this.sanitizeHtml(html);
+    const result = Loader.sanitizeHtml(html);
     const element = window.document.getElementById(id);
     element.innerHTML = result;
   }
 }
 
 class Request {
-  async get(url) {
+  static async get(url) {
     const response = await fetch(url);
     return (response.ok) ? await response.text() : "";
   }
 }
 
 class Router {
-  async getPostPath(name, routes) {
+  static async getPostPath(name, routes) {
     if (name === "latest") {
       return routes[0].file;
     }
@@ -81,27 +81,24 @@ class Router {
     return "404";
   }
 
-  async getPage() {
-    const loader = new Loader();
-    const request = new Request();
-
+  static async getPage() {
     // get url info
     const search = window.location.search;
     const url = window.location.href.replace(search, "");
     const params = new URLSearchParams(search);
 
     // get route
-    const json = await request.get(`${url}assets/routes.json`);
+    const json = await Request.get(`${url}assets/routes.json`);
     const routes = JSON.parse(json);
 
     // get page info
     const pageName = params.has("page") ? params.get("page") : "latest";
-    const pagePath = this.getPostPath(pageName, routes);
-    const pageMd = await request.get(`${url}${pagePath}`);
+    const pagePath = Router.getPostPath(pageName, routes);
+    const pageMd = await Request.get(`${url}${pagePath}`);
 
     // load html
-    loader.loadBlogEntries(url, routes);
-    loader.loadBlogPost(pageMd);
+    Loader.loadBlogEntries(url, routes);
+    Loader.loadBlogPost(pageMd);
     Prism.highlightAll();
   }
 }
