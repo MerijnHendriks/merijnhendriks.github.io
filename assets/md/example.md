@@ -78,28 +78,6 @@ int main()
 }
 ```
 
-diff
-
-```diff
-     #include <stdio.h>
-     #include <stdlib.h>
-
-     int main()
-     {
-         printf("hello world!");
--        return 0;
-+        return EXIT_SUCCESS;
-     }
-```
-
-shell
-
-```shell
-cd /usr/local/etc
-cp php.ini php.ini.bak
-vi php.ini
-```
-
 ## Tables
 
 Option | Description
@@ -119,9 +97,8 @@ ext    | extension to be used for dest files.
 
 ## Links
 
-[link text](http://dev.nodeca.com)
+[link text](https://www.cortoso.com)
 
 ## Images
 
-![Ninja](https://octodex.github.com/images/dojocat.jpg)
-![Stormtroopocat](https://octodex.github.com/images/stormtroopocat.jpg "The Stormtroopocat")
+![Ganyu](./assets/img/banner.jpg)
