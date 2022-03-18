@@ -1,0 +1,7 @@
+@charset "UTF-8";
+
+/* banner */
+.blog-banner {
+    background-image: url("../img/banner.jpg");
+    background-size: cover;
+}
