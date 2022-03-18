@@ -42,7 +42,7 @@ class Loader
         }
 
         marked.setOptions(options);
-        return marked(md);
+        return marked.parse(md);
     }
 
     static sanitizeHtml(html)
