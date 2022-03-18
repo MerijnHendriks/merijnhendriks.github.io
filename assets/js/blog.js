@@ -49,7 +49,7 @@ class Loader {
 
     for (const page of routes) {
       if (page.visible) {
-        html += `<li><a href="${url}?post=${page.path}">${page.name}</a></li>`;
+        html += `<li><a href="${url}?page=${page.path}">${page.name}</a></li>`;
       }
     }
 
