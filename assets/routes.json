@@ -4,5 +4,11 @@
         "path": "test",
         "file": "assets/md/test.md",
         "visible": true
+    },
+    {
+        "name": "404",
+        "path": "404",
+        "file": "assets/md/404.md",
+        "visible": false
     }
 ]
