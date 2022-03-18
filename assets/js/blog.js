@@ -26,6 +26,12 @@ class CustomRenderer extends marked.Renderer
 
 class Loader
 {
+    static getUrl()
+    {
+        const search = window.location.search;
+        return window.location.href.replace(search, "");
+    }
+
     static convertMarkdown(md)
     {
         const options = {
@@ -50,7 +56,7 @@ class Loader
         return DOMPurify.sanitize(html, options);
     }
     
-    static loadMarkdown(data, id = "blog-content")
+    static loadBlogPost(data, id = "blog-content")
     {
         let item = window.document.getElementById(id);
     
@@ -69,6 +75,29 @@ class Loader
         // highlight all code
         Prism.highlightAll();
     }
+
+    static loadBlogEntries(data, id = "blog-entries")
+    {
+        let item = window.document.getElementById(id);
+
+        if (item === undefined)
+        {
+            return;
+        }
+
+        // generate entries
+        const url = Loader.getUrl();
+        let html = "";
+
+        for (const item of data)
+        {
+            html += `<li><a href="${url}post=${item.path}">${post.name}</a></li>`;
+        }
+
+        // add to page
+        const result = Loader.sanitizeHtml(html);
+        item.innerHTML = result;
+    }
 }
 
 class Request
@@ -85,15 +114,15 @@ class Router
 {
     static async getPage()
     {
-        // get url
+        // get params
         const search = window.location.search;
-        const url = window.location.href.replace(search, "");
-
+        const params = new URLSearchParams(search);
+        
         // get routes
+        const url = Loader.getUrl();
         const routes = JSON.parse(await Request.get(`${url}assets/routes.json`));
 
-        // get post
-        const params = new URLSearchParams(search);
+        // get posts
         const post = params.has("post") ? params.get("post") : "latest";
         let path = "";
 
@@ -115,10 +144,10 @@ class Router
         }
 
         // load blog entries
-        // todo: program this
+        Loader.loadBlogEntries(routes);
 
         // load post
         const text = await Request.get(`${url}${path}`);
-        Loader.loadMarkdown(text);
+        Loader.loadBlogPost(text);
     }
 }
