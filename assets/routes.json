@@ -1,20 +1,26 @@
 [
     {
-        "name": "Test",
-        "path": "test",
-        "file": "assets/md/test.md",
+        "name": "2022-03-19: Hello, world!",
+        "path": "2022031-helloworld",
+        "file": "assets/md/2022031-helloworld.md",
         "visible": true
-    },
-    {
-        "name": "404",
-        "path": "404",
-        "file": "assets/md/404.md",
-        "visible": false
     },
     {
         "name": "about",
         "path": "about",
         "file": "assets/md/about.md",
+        "visible": false
+    },
+    {
+        "name": "Test",
+        "path": "test",
+        "file": "assets/md/test.md",
+        "visible": false
+    },
+    {
+        "name": "404",
+        "path": "404",
+        "file": "assets/md/404.md",
         "visible": false
     }
 ]
