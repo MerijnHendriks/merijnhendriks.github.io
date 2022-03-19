@@ -6,3 +6,7 @@ Hi! I'm a Dutch software architect. When I'm not programming all day, you can fi
 
 - [Github](https://www.github.com/merijnhendriks)
 - [Email](mailto:merijn.d.hendriks@gmail.com)
+
+#### Archive
+
+<div id="blog-entries"></div>

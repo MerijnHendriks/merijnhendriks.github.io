@@ -32,20 +32,14 @@ class Loader {
     return marked.parse(md);
   }
 
-  static sanitizeHtml(html) {
-    const options = {"USE_PROFILES": {"html": true}};
-    return DOMPurify.sanitize(html, options);
-  }
-
   static loadMarkdown(md, id) {
     const html = Loader.convertMarkdown(md);
-    const result = Loader.sanitizeHtml(html);
     const element = window.document.getElementById(id);
-    element.innerHTML = result;
+    element.innerHTML = html;
   }
 
   static loadBlogEntries(url, routes, id = "blog-entries") {
-    let html = `<h4>Archive</h4><ul>`;
+    let html = `<ul>`;
 
     for (const page of routes) {
       if (page.visible) {
@@ -55,9 +49,8 @@ class Loader {
 
     html += "</ul>";
 
-    const result = Loader.sanitizeHtml(html);
     const element = window.document.getElementById(id);
-    element.innerHTML = result;
+    element.innerHTML = html;
   }
 }
 
@@ -103,9 +96,9 @@ class Router {
     const pageMd = await Request.get(`${url}${pagePath}`);
 
     // load html
-    Loader.loadBlogEntries(url, routes);
     Loader.loadMarkdown(aboutMd, "blog-about");
     Loader.loadMarkdown(pageMd, "blog-article");
+    Loader.loadBlogEntries(url, routes);
     Prism.highlightAll();
   }
 }
