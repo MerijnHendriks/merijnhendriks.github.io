@@ -2,6 +2,12 @@
 
 /* banner */
 .blog-banner {
-    background-image: url("../img/banner.jpg");
+    background-image: url("../img/bg-big.jpg");
     background-size: cover;
+}
+
+@media (max-width: 960px) {
+    .blog-banner {
+        background-image: url("../img/bg-small.jpg");
+    }
 }
