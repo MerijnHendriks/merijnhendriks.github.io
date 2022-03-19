@@ -12,11 +12,6 @@ class CustomRenderer extends marked.Renderer {
   table(header, body) {
     return `<table class="table"><thead">${header}</thead><tbody>${body}</tbody></table>`;
   }
-
-  code(code, lang) {
-    const selected = (Prism.languages[lang]) ? lang : "plain";
-    return `<pre><code class="language-${selected}">${code}</code></pre>`;
-  }
 }
 
 class Loader {
@@ -25,7 +20,10 @@ class Loader {
       "breaks": true,
       "gfm": true,
       "renderer": new CustomRenderer(),
-      "xhtml": true
+      "highlight": function(code, lang) {
+        const selected = (Prism.languages[lang]) ? lang : "plain";
+        return Prism.highlight(code, Prism.languages[selected], selected);
+      }
     }
 
     marked.setOptions(options);
@@ -99,6 +97,5 @@ class Router {
     Loader.loadMarkdown(aboutMd, "blog-about");
     Loader.loadMarkdown(pageMd, "blog-article");
     Loader.loadBlogEntries(url, routes);
-    Prism.highlightAll();
   }
 }
