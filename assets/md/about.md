@@ -11,5 +11,5 @@ Love sushi, salmon, researching, working code and cute things.
 
 #### Links
 
-- Github: [link](https://www.github.com/merijnhendriks)
-- Email: [link](mailto:merijn.d.hendriks@gmail.com)
+- [Github](https://www.github.com/merijnhendriks)
+- [Email](mailto:merijn.d.hendriks@gmail.com)
