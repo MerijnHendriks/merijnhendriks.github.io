@@ -1,15 +1,7 @@
 @charset "UTF-8";
 
-body {
-    color: #F8B195;
-    background-color: #335C7D;
-}
-
+/* banner */
 .blog-banner {
     background-image: url("../img/banner.jpg");
     background-size: cover;
-}
-
-.blog-sidebar {
-    background-color: #2f5679;
 }
