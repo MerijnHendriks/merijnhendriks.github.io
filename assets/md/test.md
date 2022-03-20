@@ -62,7 +62,7 @@ int main()
 
 Unformatted
 
-```bollocks
+```
 #include <stdio.h>
 #include <stdlib.h>
 
