@@ -2,7 +2,7 @@
 
 class Loader {
   constructor() {
-    const options = {"extensions": [footnotes]};
+    const options = {"extensions": ["footnotes"]};
     this.mdparser = new showdown.Converter(options);
     this.mdparser.setOption("noHeaderId", true);
     this.mdparser.setOption("strikethrough", true);
