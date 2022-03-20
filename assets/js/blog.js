@@ -4,7 +4,6 @@ class Loader {
   constructor() {
     const options = {
       "extensions": ["footnotes"],
-      "noHeaderId": true,
       "strikethrough": true,
       "tables": true,
       "tasklists": true
