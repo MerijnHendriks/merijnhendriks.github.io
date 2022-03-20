@@ -11,7 +11,6 @@ class Loader {
     };
 
     this.mdparser = new showdown.Converter(options);
-    showdown.extension.footnotes.anchor = "";
   }
 
   injectStyling() {
@@ -43,6 +42,13 @@ class Loader {
       if (element.classList.length == 0) {
         element.classList.add("language-text");
       }
+    }
+
+    // remove backref in footnotes
+    const backrefs = document.getElementsByClassName("footnote-backref");
+    
+    while (backrefs.length > 0){
+        backrefs[0].parentNode.removeChild(backrefs[0]);
     }
   }
 
