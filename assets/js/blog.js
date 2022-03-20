@@ -19,12 +19,8 @@ class Loader {
     const options = {
       "breaks": true,
       "gfm": true,
-      "renderer": new CustomRenderer(),
-      "highlight": function(code, lang) {
-        const selected = (Prism.languages[lang]) ? lang : "plain";
-        return Prism.highlight(code, Prism.languages[selected], selected);
-      }
-    }
+      "renderer": new CustomRenderer()
+    };
 
     marked.setOptions(options);
     return marked.parse(md);
@@ -97,5 +93,8 @@ class Router {
     Loader.loadMarkdown(aboutMd, "blog-about");
     Loader.loadMarkdown(pageMd, "blog-article");
     Loader.loadBlogEntries(url, routes);
+    
+    // code highlighting
+    Prism.highlightAll();
   }
 }
