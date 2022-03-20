@@ -17,8 +17,6 @@ class CustomRenderer extends marked.Renderer {
 class Loader {
   static convertMarkdown(md) {
     const options = {
-      "breaks": true,
-      "gfm": true,
       "renderer": new CustomRenderer()
     };
 
