@@ -9,6 +9,38 @@ class Loader {
     this.mdparser.setOption("tasklists", true);
   }
 
+  injectStyling() {
+    // block quotes styling
+    const blockquotes = document.querySelectorAll("blockquote");
+
+    for (const element of blockquotes) {
+      element.classList.add("blockquote px-3");
+    }
+
+    // tables styling
+    const tables = document.querySelectorAll("table");
+
+    for (const element of tables) {
+      element.classList.add("table table-bordered");
+    }
+
+    // codeblock styling
+    const pres = document.querySelectorAll("pre");
+    const codes = document.querySelectorAll("code");
+
+    for (const element of pres) {
+      if (element.classList.length == 0) {
+        element.classList.add("language-plain");
+      }
+    }
+
+    for (const element of codes) {
+      if (element.classList.length == 0) {
+        element.classList.add("language-plain");
+      }
+    }
+  }
+
   loadMarkdown(md, id) {
     const html = this.mdparser.makeHtml(md);
     const element = window.document.getElementById(id);
@@ -79,6 +111,7 @@ class Router {
     loader.loadMarkdown(aboutMd, "blog-about");
     loader.loadMarkdown(pageMd, "blog-article");
     loader.loadBlogEntries(url, routes);
+    loader.injectStyling();
     
     // code highlighting
     Prism.highlightAll();
