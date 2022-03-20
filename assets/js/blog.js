@@ -1,36 +1,21 @@
 "use strict";
 
-class CustomRenderer extends marked.Renderer {
-  constructor() {
-    super();
-  }
-
-  blockquote(quote) {
-    return `<blockquote class="blockquote px-3">${quote}</blockquote>`;
-  }
-
-  table(header, body) {
-    return `<table class="table table-bordered"><tbody>${body}</tbody></table>`;
-  }
-}
-
 class Loader {
-  static convertMarkdown(md) {
-    const options = {
-      "renderer": new CustomRenderer()
-    };
-
-    marked.setOptions(options);
-    return marked.parse(md);
+  constructor() {
+    this.mdparser = new showdown.Converter();
+    this.mdparser.setOption("noHeaderId", true);
+    this.mdparser.setOption("strikethrough", true);
+    this.mdparser.setOption("tables", true);
+    this.mdparser.setOption("tasklists", true);
   }
 
-  static loadMarkdown(md, id) {
-    const html = Loader.convertMarkdown(md);
+  loadMarkdown(md, id) {
+    const html = this.mdparser.makeHtml(md);
     const element = window.document.getElementById(id);
     element.innerHTML = html;
   }
 
-  static loadBlogEntries(url, routes, id = "blog-entries") {
+  loadBlogEntries(url, routes, id = "blog-entries") {
     let html = `<ul>`;
 
     for (const page of routes) {
@@ -47,7 +32,7 @@ class Loader {
 }
 
 class Request {
-  static async get(url) {
+  async get(url) {
     const response = await fetch(url);
     return (response.ok) ? await response.text() : "";
   }
@@ -69,28 +54,31 @@ class Router {
   }
 
   static async getPage() {
+    const loader = new Loader();
+    const request = new Request();
+
     // get url info
     const search = window.location.search;
     const url = window.location.href.replace(search, "");
     const params = new URLSearchParams(search);
 
     // get route
-    const json = await Request.get(`${url}assets/routes.json`);
+    const json = await request.get(`${url}assets/routes.json`);
     const routes = JSON.parse(json);
 
     // get about markdown
     const aboutPath = Router.getPagePath("about", routes);
-    const aboutMd = await Request.get(`${url}${aboutPath}`);
+    const aboutMd = await request.get(`${url}${aboutPath}`);
 
     // get page markdown
     const pageName = params.has("page") ? params.get("page") : "latest";
     const pagePath = Router.getPagePath(pageName, routes);
-    const pageMd = await Request.get(`${url}${pagePath}`);
+    const pageMd = await request.get(`${url}${pagePath}`);
 
     // load html
-    Loader.loadMarkdown(aboutMd, "blog-about");
-    Loader.loadMarkdown(pageMd, "blog-article");
-    Loader.loadBlogEntries(url, routes);
+    loader.loadMarkdown(aboutMd, "blog-about");
+    loader.loadMarkdown(pageMd, "blog-article");
+    loader.loadBlogEntries(url, routes);
     
     // code highlighting
     Prism.highlightAll();
