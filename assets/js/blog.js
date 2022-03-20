@@ -11,7 +11,7 @@ class Loader {
     };
 
     this.mdparser = new showdown.Converter(options);
-    this.mdparser.extension.footnotes.anchor = "";
+    showdown.extension.footnotes.anchor = "";
   }
 
   injectStyling() {
