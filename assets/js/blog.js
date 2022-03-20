@@ -14,14 +14,14 @@ class Loader {
     const blockquotes = document.querySelectorAll("blockquote");
 
     for (const element of blockquotes) {
-      element.classList.add("blockquote px-3");
+      element.classList.add("blockquote", "px-3");
     }
 
     // tables styling
     const tables = document.querySelectorAll("table");
 
     for (const element of tables) {
-      element.classList.add("table table-bordered");
+      element.classList.add("table", "table-bordered");
     }
 
     // codeblock styling
@@ -30,13 +30,13 @@ class Loader {
 
     for (const element of pres) {
       if (element.classList.length == 0) {
-        element.classList.add("language-plain");
+        element.classList.add("language-text");
       }
     }
 
     for (const element of codes) {
       if (element.classList.length == 0) {
-        element.classList.add("language-plain");
+        element.classList.add("language-text");
       }
     }
   }
