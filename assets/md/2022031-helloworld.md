@@ -1,4 +1,4 @@
-# Hello world
+# Hello, world!
 
 I've been daydreaming alot about making my own blog.
 The articles that I would write and upload, the look of it, etc.
