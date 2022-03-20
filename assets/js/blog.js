@@ -2,12 +2,16 @@
 
 class Loader {
   constructor() {
-    const options = {"extensions": ["footnotes"]};
+    const options = {
+      "extensions": ["footnotes"],
+      "noHeaderId": true,
+      "strikethrough": true,
+      "tables": true,
+      "tasklists": true
+    };
+
     this.mdparser = new showdown.Converter(options);
-    this.mdparser.setOption("noHeaderId", true);
-    this.mdparser.setOption("strikethrough", true);
-    this.mdparser.setOption("tables", true);
-    this.mdparser.setOption("tasklists", true);
+    this.mdparser.extension.footnotes.anchor = "";
   }
 
   injectStyling() {
