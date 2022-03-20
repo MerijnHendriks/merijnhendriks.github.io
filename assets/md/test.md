@@ -104,3 +104,9 @@ ext    | extension to be used for dest files.
 ## Images
 
 ![Ganyu](./assets/img/bg/small.jpg)
+
+## Footnote
+
+This is an example of how to create a footnote[^1] in Markdown.
+
+[^1]: First Footnote
