@@ -2,7 +2,8 @@
 
 class Loader {
   constructor() {
-    this.mdparser = new showdown.Converter();
+    const options = {"extensions": [footnotes]};
+    this.mdparser = new showdown.Converter(options);
     this.mdparser.setOption("noHeaderId", true);
     this.mdparser.setOption("strikethrough", true);
     this.mdparser.setOption("tables", true);
@@ -111,6 +112,8 @@ class Router {
     loader.loadMarkdown(aboutMd, "blog-about");
     loader.loadMarkdown(pageMd, "blog-article");
     loader.loadBlogEntries(url, routes);
+
+    // inject missing html styling after markdown generation
     loader.injectStyling();
     
     // code highlighting
