@@ -10,7 +10,7 @@ class CustomRenderer extends marked.Renderer {
   }
 
   table(header, body) {
-    return `<table class="table"><thead">${header}</thead><tbody>${body}</tbody></table>`;
+    return `<table class="table table-bordered"><tbody>${body}</tbody></table>`;
   }
 }
 
