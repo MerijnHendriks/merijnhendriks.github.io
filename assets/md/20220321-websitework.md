@@ -1,0 +1,61 @@
+# Website work
+
+When I made this website, I focussed on making the concept work first and foremost.
+Now that it's working, im checking what I can improve on it.
+
+## Changes
+
+Yesterday I fixed some codeblock highlighting and added markdown footnote support.
+I also checked if there was a better (faster, lighter) markdown transformer available and migrated to it.
+Indeed there was: `showdown`.
+
+## Showdown
+
+It takes 5Kb more space than `marked`, but in return its four times as fast and has more options to tweak it to my likings.
+Only problem is that it's not very easy to customise the html generator, so I inject the classes I need and remove what I don't need after the fact.
+It's also a nice bonus that I can get footnote support externally without having to rely on a 5 years older customized version made by someone, or have to write this myself.
+
+I did considered:
+
+- `remarkable`: 120Kb, slowest, gone by a while without updates but extendable
+- `markdown-it`, 94kb, twice as slow as `marked`, actively maintained and many extensions available
+
+For all the markdown transformers out there, I'm quite happy with `showdown` for sure!
+
+## What's next?
+
+### Dark mode
+
+I really want to implement a dark mode for the website.
+People who put there device in dark mode want to have a good experience on the web as well, and it's probably not that much effort for me to implement it either so I might as well.
+I already have some ideas how I want to go about this, but we'll see how it turns out hahaha.
+
+### Static generation
+
+The weblog named `Unix Sheikh` has an [article](https://unixsheikh.com/articles/so-called-modern-web-developers-are-the-culprits.html) with some good advice:
+
+> - Test your product on a crappy laptop
+> - Learn how to make a website with just HTML and CSS on the frontend. [..]
+> - Stop making single page websites! The HTTP protocol is build to serve small individual and discrete requests, each with its own unique purpose. It makes no sense to load an entire website on to the browser in one go. [..]
+
+These three are all fixable for this website by using a static website generator like jekyll.
+But since I'm myself not very keen on using frameworks (I will gladly explain why in a later article), I'll just rip out the javascript code used on this website for generating the webpage and modify it to generate the html pages for me directly.
+
+Maybe I'll automate it using CI/CD, we'll see.
+
+### Self hosting
+
+Something I always wanted to do but never made time for.
+Who knows if I actually will do it this time after implementing the above two hahahaha.
+
+### More articles
+
+There is still plenty for me to share here, especially when it comes to my discoveries with the C language.
+Setting up an LLVM environment for cross-platform compilation, showing how one can emulate the internals of an object-oriented language, and more.
+
+![Kuriyama Mirai](./assets/img/20220321-websitework/kuriyama-mirai-c-programming-language.gif)
+
+Maybe I'll cover my work on SPTarkov project later, we'll see.
+There is for sure a whole lot I would love to ramble about regarding programming languages, or more like venting my fustrations with their designs and how programmers do things "the modern way" while doing it '80s style is often more effective.
+
+
