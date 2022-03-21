@@ -1,13 +1,18 @@
 @charset "UTF-8";
 
+/* sidebar */
+.blog-sidebar {
+    background-color: #e9ecef;
+}
+
 /* banner */
 .blog-banner {
-    background-image: url("../img/bg/big.jpg");
+    background-image: url("../img/bg/light-big.jpg");
     background-size: cover;
 }
 
 @media (max-width: 960px) {
     .blog-banner {
-        background-image: url("../img/bg/small.jpg");
+        background-image: url("../img/bg/light-small.jpg");
     }
 }
