@@ -7,20 +7,20 @@ Now that it's working, im checking what I can improve on it.
 
 Yesterday I fixed some codeblock highlighting and added markdown footnote support.
 I also checked if there was a better (faster, lighter) markdown transformer available and migrated to it.
-Indeed there was: `showdown`.
+Indeed there was: showdown.
 
 ## Showdown
 
-It takes 5Kb more space than `marked`, but in return its four times as fast and has more options to tweak it to my likings.
+It takes 5Kb more space than marked, but in return its four times as fast and has more options to tweak it to my likings.
 Only problem is that it's not very easy to customise the html generator, so I inject the classes I need and remove what I don't need after the fact.
 It's also a nice bonus that I can get footnote support externally without having to rely on a 5 years older customized version made by someone, or have to write this myself.
 
 I did considered:
 
-- `remarkable`: 120Kb, slowest, gone by a while without updates but extendable
-- `markdown-it`, 94kb, twice as slow as `marked`, actively maintained and many extensions available
+- remarkable: 120Kb, slowest, gone by a while without updates but extendable
+- markdown-it: 94kb, twice as slow as marked, actively maintained and many extensions available
 
-For all the markdown transformers out there, I'm quite happy with `showdown` for sure!
+For all the markdown transformers out there, I'm quite happy with showdown for sure!
 
 ## What's next?
 
