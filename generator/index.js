@@ -40,6 +40,7 @@ class MdConvert
 
 class HtmlInjector
 {
+    /** Highlight codeblocks */
     highlightCode(document)
     {
         const codes = document.querySelectorAll("code");
@@ -66,6 +67,7 @@ class HtmlInjector
         }
     }
 
+    /** Add background to (unformatted) codeblocks */
     addCodeBackground(document)
     {
         const codes = document.querySelectorAll("code");
@@ -84,6 +86,7 @@ class HtmlInjector
         }
     }
 
+    /** Add bootstrap styling to blockquotes */
     addBlockquoteStyling(document)
     {
         const blockquotes = document.querySelectorAll("blockquote");
@@ -94,6 +97,7 @@ class HtmlInjector
         }
     }
 
+    /** Add bootstrap styling to tables */
     addTableStyling(document)
     {
         const tables = document.querySelectorAll("table");
@@ -104,6 +108,7 @@ class HtmlInjector
         }
     }
 
+    /** Remove the emoji from the footnote refernces */
     removeFootnoteBackrefs(document)
     {
         const backrefs = document.getElementsByClassName("footnote-backref");
@@ -123,6 +128,7 @@ class BlogInjector
         this.mdConverter = new MdConvert();
     }
 
+    /** Insert the article into the template */
     addBlogArticle(html, page)
     {
         const md = fs.readFileSync(`./pages/${page.file}`).toString();
@@ -130,6 +136,7 @@ class BlogInjector
         return html.replace("<!-- __REPLACEME-BLOG-ARTICLE__ -->", article);
     }
 
+    /** Insert the sidebar archive into the template */
     addBlogArchive(html, pages)
     {
         let items = "";
@@ -153,7 +160,6 @@ class HtmlGenerator
     constructor()
     {
         const json = fs.readFileSync("./pages/index.json");
-
         this.pages = JSON.parse(json);
         this.blogInjector = new BlogInjector();
         this.htmlInjector = new HtmlInjector();
