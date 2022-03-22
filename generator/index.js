@@ -38,16 +38,15 @@ class MdConvert
     }
 }
 
-class CodeHighlighter
+class HtmlInjector
 {
-    highlight(html)
+    highlightCode(document)
     {
-        const document = DOMHelper.getDocument(html);
         const codes = document.querySelectorAll("code");
         
         for (const element of codes)
         {
-            // language-* is the first element
+            // language name is the first element
             const lang = element.className.split(" ")[0];
 
             if (!lang)
@@ -55,26 +54,20 @@ class CodeHighlighter
                 // no language defined
                 continue;
             }
-
-            // remove language name from class
-            element.classList.remove(lang);
-
-            // install language if it doesnt exist
+            
             if (!prism.languages[lang])
             {
+                // install language if it wasnt loaded before
                 require(`prismjs/components/prism-${lang}.js`);
             }
 
-            // highlight element
+            element.classList.remove(lang);
             prism.highlightElement(element);
         }
-
-        return DOMHelper.getHtml(document);
     }
 
-    addBackground(html)
+    addCodeBackground(document)
     {
-        const document = DOMHelper.getDocument(html);
         const codes = document.querySelectorAll("code");
       
         for (const element of codes)
@@ -89,57 +82,36 @@ class CodeHighlighter
                 element.classList.remove(lang);
             }
         }
-
-        return DOMHelper.getHtml(document);
     }
 
-    run(html)
+    addBlockquoteStyling(document)
     {
-        html = this.highlight(html);
-        html = this.addBackground(html);
-        return html;
-    }
-}
-
-class HtmlInjector
-{
-    addBlockquoteStyling(html)
-    {
-        const document = DOMHelper.getDocument(html);
         const blockquotes = document.querySelectorAll("blockquote");
 
         for (const element of blockquotes)
         {
             element.classList.add("blockquote", "px-3");
         }
-
-        return DOMHelper.getHtml(document);
     }
 
-    addTableStyling(html)
+    addTableStyling(document)
     {
-        const document = DOMHelper.getDocument(html);
         const tables = document.querySelectorAll("table");
 
         for (const element of tables)
         {
             element.classList.add("table", "table-bordered");
         }
-
-        return DOMHelper.getHtml(document);
     }
 
-    removeFootnoteBackrefs(html)
+    removeFootnoteBackrefs(document)
     {
-        const document = DOMHelper.getDocument(html);
         const backrefs = document.getElementsByClassName("footnote-backref");
         
         while (backrefs.length > 0)
         {
             backrefs[0].parentNode.removeChild(backrefs[0]);
         }
-
-        return DOMHelper.getHtml(document);
     }
 }
 
@@ -151,9 +123,9 @@ class BlogInjector
         this.mdConverter = new MdConvert();
     }
 
-    addBlogArticle(html, pages, index)
+    addBlogArticle(html, page)
     {
-        const md = fs.readFileSync(`./pages/${pages[index].file}`).toString();
+        const md = fs.readFileSync(`./pages/${page.file}`).toString();
         const article = this.mdConverter.run(md);
         return html.replace("<!-- __REPLACEME-BLOG-ARTICLE__ -->", article);
     }
@@ -185,29 +157,26 @@ class HtmlGenerator
         this.pages = JSON.parse(json);
         this.blogInjector = new BlogInjector();
         this.htmlInjector = new HtmlInjector();
-        this.codeHighlighter = new CodeHighlighter();
     }
 
     run()
     {
-        for (let i = 0; i < this.pages.length; i++)
+        for (const page of this.pages)
         {
-            const name = (i !== 0) ? this.pages[i].path : "index.html";
             let html = fs.readFileSync("./templates/base.html").toString();
-            
-            // inject blog components
-            html = this.blogInjector.addBlogArticle(html, this.pages, i);
+            html = this.blogInjector.addBlogArticle(html, page);
             html = this.blogInjector.addBlogArchive(html, this.pages);
-            
-            // inject code highlighting
-            html = this.codeHighlighter.run(html);
 
-            // inject element classes
-            html = this.htmlInjector.addBlockquoteStyling(html);
-            html = this.htmlInjector.addTableStyling(html);
-            html = this.htmlInjector.removeFootnoteBackrefs(html);
+            const document = DOMHelper.getDocument(html);
+            this.htmlInjector.highlightCode(document);
+            this.htmlInjector.addCodeBackground(document);
+            this.htmlInjector.addBlockquoteStyling(document);
+            this.htmlInjector.addTableStyling(document);
+            this.htmlInjector.removeFootnoteBackrefs(document);
 
-            fs.writeFileSync(`../${name}`, html);
+            const name = (this.pages[0].name !== page.name) ? page.path : "index.html";
+            const result = DOMHelper.getHtml(document);
+            fs.writeFileSync(`../${name}`, result);
         }
     }
 }
