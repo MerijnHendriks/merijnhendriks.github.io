@@ -162,13 +162,14 @@ class BlogInjector
     {
         let items = "";
 
-        for (const page of pages)
+        for (let i = 0; i < pages; i++)
         {
-            let name = page.name;
+            const page = pages[i];
+            const path = (i !== 0) ? page.path : "index.html";
 
             if (page.visible)
             {
-                items += `<li><a href="${this.url}/${page.path}">${name}</a></li>`;
+                items += `<li><a href="${this.url}/${path}">${page.name}</a></li>`;
             }
         }
 
