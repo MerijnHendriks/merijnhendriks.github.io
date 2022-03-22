@@ -1,5 +1,11 @@
 [
     {
+        "name": "2022-03-22: Static website generator",
+        "path": "20220322-staticgenerator.html",
+        "file": "20220322-staticgenerator.md",
+        "visible": true
+    },
+    {
         "name": "2022-03-21: Determination",
         "path": "20220321-determination.html",
         "file": "20220321-determination.md",

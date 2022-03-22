@@ -27,35 +27,37 @@
   <!-- blog -->
   <div class="row g-0">
     <!-- post-->
-    <div class="col-md-8 p-5">
-      <div class="blog-post">
-        <h1 id="determination">Determination</h1>
-<p>I discovered Wirtual's <a href="https://www.youtube.com/channel/UCt-HTfaCUz8QIoknqyXKYiw">channel</a> today and watched quite a bit.
-He's a Trackmania (racing game) speedrunner who won world records and gets into the history of competitions on tracks of the game.
-His videos really captivated me.
-When I ended up asking myself "why?", I realised it soon enough.</p>
-<p>Curiosity and determination.</p>
-<p>I've had a knack for working with computers, finding and optimizing patterns as well as visualizing these steps.
-Needless to say I got into programming at an early age.
-While I have talent, it can only bring you so far.
-Most talented people tend to get lazy and fustrated because they expect the skill to come to them naturally.
-But when you combine talent with curiosity, determination and actually grinding for it to get there, brilliance is born.</p>
-<p>I pick a problem that I am attracted to and want to solve it.
-The goal is not fixing the problem, but the self improvement from trying to.
-The journey of fixing the problem is what is rewarding, because you learn something new every step of the way.</p>
-<p>The reason why I am good at programming today is because I rarely have I day where I'm not completely obsessed with developing what I want to create.
-It's almost mental to program every day to hone your skills.
-Very few people are capable of doing this and I certainly would advice against it if you don't do it out of your own volition.</p>
-<p>But while I am very good at what I do, I will never be the best, nor do I need to be.
-That's absolutely not a bad thing, because it means that there is still plenty for me to discover and learn.
-And thus I try to keep an open mind, see what crosses my path, try it and decide what I'll do with it.</p>
-<p>My grandpa used to say (in Dutch): "Onderzoek alles en behoud het goede".
-It is very hard to translate this sentence because "goede" has many meanings in Dutch.
-But it's among the lines of: "Seek new things with curiousity and strive to improve yourself".
-Easier said than done, but it has never failed me.
-Even if it's something I didn't like, it still broadens my vision.</p>
-      </div>
-    </div>
+    <div class="col-md-8 p-5" id="blog-article"><h1 id="staticwebsitegenerator">Static website generator</h1>
+<p>Yesterday night around 23:00 I was getting ready to go to bed, until suddenly I had a brilliant idea.
+"Lets put together the static website generator!"
+Initially I wanted to wait until tomorrow, but we all know how things like this go.
+"It can't be that hard, right?, It can't take that long, right?".</p>
+<p>…and thus I proceeded the next 4 hours reading up (scarse) documentation on JSDOM and Prism to get it to work.
+But here we are, it's done and it runs like a charm.</p>
+<h2 id="options">Options</h2>
+<p>Personally I'm not entirely happy about using JS for this, but it's the only language with decent syntax highlighters that suit my needs.
+I tried to replace JSDOM with Cheerio since the latter one has less dependencies.
+However the jQuery syntax is annoying and it just doesn't wanna play nice with editing individual nodes with the same tags containing different text, so I dropped the idea.</p>
+<p>As for compression, I could probably squeeze a bit more out of it by going from jpg to webp, but to me that is not worth it.
+I do intent to strip the bootstrap css so I can modify it to my own needs (remove most of the clutter).</p>
+<p>Really glad that I'm not depending on Jekyll at least (industry-standard tool for generating static webpages).
+Ruby ain't my forte and it seemed way to complex for what I actually need.</p>
+<h2 id="results">Results</h2>
+<p>What I am very happy about is that it's running really fast on older browsers and on bad network connections.</p>
+<ul>
+<li>Mobile version: ~500Kb and takes ~1sec to load on heavily loaded public wifi</li>
+<li>Desktop version:  &lt; 1Mb and still looks good on 4k monitors</li>
+</ul>
+<p>If that size is still too heavy for someone, he is free to disable image loading on the website as nothing will break.
+I also really like the idea of not having scripts running client-side.
+Perhaps the biggest upside from all of this is that now my website can be archived by archive.org or alike.</p>
+<h2 id="whatsnext">What's next</h2>
+<ul>
+<li>Revamp the index page so I don't have to regenerate all pages every single time.</li>
+<li>Getting rid of bootstrap css that I don't use</li>
+<li>Dark mode for the website</li>
+</ul>
+<p>Enough ideas at least, we'll see what comes of it!</p></div>
 
     <!-- sidebar -->
     <div class="col-md-4 p-5 blog-sidebar">
@@ -69,9 +71,7 @@ Even if it's something I didn't like, it still broadens my vision.</p>
       </ul>
       
       <h4>Archive</h4>
-      <ul>
-        <li><a href="https://merijnhendriks.github.io/index.html">2022-03-21: Determination</a></li><li><a href="https://merijnhendriks.github.io/20220321-websitework.html">2022-03-21: Website work</a></li><li><a href="https://merijnhendriks.github.io/20220319-helloworld.html">2022-03-19: Hello, world!</a></li>
-      </ul>
+      <ul id="blog-archive"><li><a href="https://merijnhendriks.github.io/index.html">2022-03-22: Static website generator</a></li><li><a href="https://merijnhendriks.github.io/20220321-determination.html">2022-03-21: Determination</a></li><li><a href="https://merijnhendriks.github.io/20220321-websitework.html">2022-03-21: Website work</a></li><li><a href="https://merijnhendriks.github.io/20220319-helloworld.html">2022-03-19: Hello, world!</a></li></ul>
     </div>
   </div>
 
