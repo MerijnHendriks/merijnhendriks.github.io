@@ -1,0 +1,32 @@
+[
+    {
+        "name": "2022-03-21: Determination",
+        "path": "20220321-determination.html",
+        "file": "20220321-determination.md",
+        "visible": true
+    },
+    {
+        "name": "2022-03-21: Website work",
+        "path": "20220321-websitework.html",
+        "file": "20220321-websitework.md",
+        "visible": true
+    },
+    {
+        "name": "2022-03-19: Hello, world!",
+        "path": "20220319-helloworld.html",
+        "file": "20220319-helloworld.md",
+        "visible": true
+    },
+    {
+        "name": "Test",
+        "path": "test.html",
+        "file": "test.md",
+        "visible": false
+    },
+    {
+        "name": "404",
+        "path": "404.html",
+        "file": "404.md",
+        "visible": false
+    }
+]

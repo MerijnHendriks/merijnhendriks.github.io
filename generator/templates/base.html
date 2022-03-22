@@ -11,7 +11,6 @@
 
   <!-- favicon -->
   <link rel="icon" type="image/x-icon" href="./assets/img/favicon.ico">
-  <!-- todo: add more, view-source:https://getbootstrap.com/docs/5.1/examples/jumbotron/ --->
 
   <!-- css -->
   <link rel="stylesheet" type="text/css" href="./assets/vendor/bootstrap.min.css" />
@@ -32,22 +31,28 @@
   <div class="row g-0">
     <!-- post-->
     <div class="col-md-8 p-5">
-      <div class="blog-post" id="blog-article"></div>
-      <noscript>Javascript is disabled. Please enable it and reload the page.</noscript>
+      <div class="blog-post" id="blog-article">
+        <!-- __REPLACEME-BLOG-ARTICLE__ -->
+      </div>
     </div>
 
     <!-- sidebar -->
-    <div class="col-md-4 p-5 blog-sidebar" id="blog-about"></div>
+    <div class="col-md-4 p-5 blog-sidebar" id="blog-about">
+      <h4>About</h4>
+      <p>Hi! I'm a Dutch software architect. When I'm not programming all day, you can find me playing D&D5E / MTG / video games with friends, reading manga / watchin anime, or daydreaming. Love sushi, salmon, researching, making things work and cute things.</p>
+      
+      <h4>Links</h4>
+      <ul>
+        <li><a href="https://www.github.com/merijnhendriks">Github</a></li>
+        <li><a href="mailto:merijn.d.hendriks@gmail.com">Email</a></li>
+      </ul>
+      
+      <h4>Archive</h4>
+      <ul id="blog-entries">
+        <!-- __REPLACEME-BLOG-ARCHIVE__ -->
+      </ul>
+    </div>
   </div>
-
-  <!-- js -->
-  <script src="./assets/vendor/showdown.min.js"></script>
-  <script src="./assets/vendor/showdown-ghost-footnotes.min.js"></script>
-  <script src="./assets/vendor/prism.js"></script>
-  <script src="./assets/js/blog.js"></script>
-  <script type="text/javascript">
-    window.onload = Router.getPage;
-  </script>
 </body>
 
 </html>

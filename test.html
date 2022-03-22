@@ -1,0 +1,195 @@
+<html lang="en"><head>
+  <!-- metadata -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="My personal blog">
+  <meta name="author" content="Merijn Hendriks">
+  <title>Merijn Hendriks</title>
+
+  <!-- favicon -->
+  <link rel="icon" type="image/x-icon" href="./assets/img/favicon.ico">
+
+  <!-- css -->
+  <link rel="stylesheet" type="text/css" href="./assets/vendor/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="./assets/vendor/prism-nord.css">
+  <link rel="stylesheet" type="text/css" href="./assets/css/styles.css">
+</head>
+
+<body>
+  <!-- banner -->
+  <div class="p-5 text-dark blog-banner">
+    <div class="container-fluid py-5">
+      <h1 class="display-5 fw-bold">Merijn Hendriks</h1>
+      <p class="col-md-8 fs-4">Programmer, Creative, Nerd</p>
+    </div>
+  </div>
+
+  <!-- blog -->
+  <div class="row g-0">
+    <!-- post-->
+    <div class="col-md-8 p-5">
+      <div class="blog-post" id="blog-article">
+        <h1 id="h1heading">h1 Heading</h1>
+<h2 id="h2heading">h2 Heading</h2>
+<h3 id="h3heading">h3 Heading</h3>
+<h4 id="h4heading">h4 Heading</h4>
+<h5 id="h5heading">h5 Heading</h5>
+<h6 id="h6heading">h6 Heading</h6>
+<h2 id="horizontalrules">Horizontal Rules</h2>
+<hr>
+<h2 id="emphasis">Emphasis</h2>
+<p><strong>This is bold text</strong>
+<em>This is italic text</em>
+<del>Strikethrough</del></p>
+<h2 id="blockquotes">Blockquotes</h2>
+<blockquote class="blockquote px-3">
+  <p>Blockquote woop woop!</p>
+  <blockquote class="blockquote px-3">
+    <p>…it can also be nested by using additional greater-than signs right next to each other…</p>
+  </blockquote>
+</blockquote>
+<h2 id="lists">Lists</h2>
+<p>Unordered</p>
+<ul>
+<li>Create a list by starting a line with <code>+</code>, <code>-</code>, or <code>*</code></li>
+<li>Sub-lists are made by indenting 2 spaces:</li>
+<li>Marker character change forces new list start:<ul>
+<li>Ac tristique libero volutpat at</li>
+<li>Facilisis in pretium nisl aliquet</li>
+<li>Nulla volutpat aliquam velit</li></ul></li>
+<li>Very easy!</li>
+</ul>
+<p>Ordered</p>
+<ol>
+<li>Lorem ipsum dolor sit amet</li>
+<li>Consectetur adipiscing elit</li>
+<li>Integer molestie lorem at massa</li>
+</ol>
+<h2 id="code">Code</h2>
+<p>Inline <code>code</code></p>
+<p>Syntax highlighting</p>
+<pre class="language-c" tabindex="0"><code class=""><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h&gt;</span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"hello world!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> EXIT_SUCCESS<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Unformatted</p>
+<pre class="language-txt"><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main()
+{
+    printf("hello world!");
+    return EXIT_SUCCESS;
+}
+</code></pre>
+<h2 id="tables">Tables</h2>
+<table class="table table-bordered">
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>data</td>
+<td>path to data files to supply the data that will be passed into templates.</td>
+</tr>
+<tr>
+<td>engine</td>
+<td>engine to be used for processing templates. Handlebars is the default.</td>
+</tr>
+<tr>
+<td>ext</td>
+<td>extension to be used for dest files.</td>
+</tr>
+</tbody>
+</table>
+<p>Inverted table</p>
+<table class="table table-bordered">
+<thead>
+<tr>
+<th style="text-align:right;">Option</th>
+<th style="text-align:right;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">data</td>
+<td style="text-align:right;">path to data files to supply the data that will be passed into templates.</td>
+</tr>
+<tr>
+<td style="text-align:right;">engine</td>
+<td style="text-align:right;">engine to be used for processing templates. Handlebars is the default.</td>
+</tr>
+<tr>
+<td style="text-align:right;">ext</td>
+<td style="text-align:right;">extension to be used for dest files.</td>
+</tr>
+</tbody>
+</table>
+<p>Centered table</p>
+<table class="table table-bordered">
+<thead>
+<tr>
+<th style="text-align:center;">Option</th>
+<th style="text-align:center;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">data</td>
+<td style="text-align:center;">path to data files to supply the data that will be passed into templates.</td>
+</tr>
+<tr>
+<td style="text-align:center;">engine</td>
+<td style="text-align:center;">engine to be used for processing templates. Handlebars is the default.</td>
+</tr>
+<tr>
+<td style="text-align:center;">ext</td>
+<td style="text-align:center;">extension to be used for dest files.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="links">Links</h2>
+<p><a href="https://www.cortoso.com">link text</a></p>
+<h2 id="images">Images</h2>
+<p><img src="./assets/img/bg/light-small.jpg" alt="Ganyu"></p>
+<h2 id="footnote">Footnote</h2>
+<p>This is an example of how to create a footnote<sup id="fnref-1"><a href="#fn-1" rel="footnote" title="go to footnote">1</a></sup> in Markdown.</p>
+<div class="footnotes">
+<hr>
+<ol>
+<li id="fn-1"><p>First Footnote
+</p></li>
+</ol>
+</div>
+
+      </div>
+    </div>
+
+    <!-- sidebar -->
+    <div class="col-md-4 p-5 blog-sidebar" id="blog-about">
+      <h4>About</h4>
+      <p>Hi! I'm a Dutch software architect. When I'm not programming all day, you can find me playing D&amp;D5E / MTG / video games with friends, reading manga / watchin anime, or daydreaming. Love sushi, salmon, researching, making things work and cute things.</p>
+      
+      <h4>Links</h4>
+      <ul>
+        <li><a href="https://www.github.com/merijnhendriks">Github</a></li>
+        <li><a href="mailto:merijn.d.hendriks@gmail.com">Email</a></li>
+      </ul>
+      
+      <h4>Archive</h4>
+      <ul id="blog-entries">
+        <li><a href="https://merijnhendriks.github.io/20220321-determination.html">2022-03-21: Determination</a></li><li><a href="https://merijnhendriks.github.io/20220321-websitework.html">2022-03-21: Website work</a></li><li><a href="https://merijnhendriks.github.io/20220319-helloworld.html">2022-03-19: Hello, world!</a></li>
+      </ul>
+    </div>
+  </div>
+
+
+</body></html>
