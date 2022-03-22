@@ -6,6 +6,12 @@ const { JSDOM } = require("jsdom");
 
 const url = "https://merijnhendriks.github.io";
 
+/** Get page output path */
+function getPagePath(pages, page)
+{
+    return (pages[0].name !== page.name) ? page.path : "index.html";
+}
+
 /** convert markdown to html */
 function mdToHtml(md)
 {
@@ -99,22 +105,18 @@ function removeFootnoteBackrefs(document)
 }
 
 /** Insert the article into the template */
-function addBlogArticle(html, page)
+function addBlogArticle(document, page)
 {
+    const element = document.getElementById("blog-article");
     const md = fs.readFileSync(`./pages/${page.file}`).toString();
-    const article = mdToHtml(md);
-    return html.replace("<!-- __REPLACEME-BLOG-ARTICLE__ -->", article);
-}
-
-function getPagePath(pages, page)
-{
-    return (pages[0].name !== page.name) ? page.path : "index.html";
+    element.innerHTML = mdToHtml(md);
 }
 
 /** Insert the sidebar archive into the template */
-function addBlogArchive(html, pages)
+function addBlogArchive(document, pages)
 {
-    let items = "";
+    const element = document.getElementById("blog-archive");
+    let html = "";
 
     for (const page of pages)
     {
@@ -122,11 +124,11 @@ function addBlogArchive(html, pages)
 
         if (page.visible)
         {
-            items += `<li><a href="${url}/${path}">${page.name}</a></li>`;
+            html += `<li><a href="${url}/${path}">${page.name}</a></li>`;
         }
     }
 
-    return html.replace("<!-- __REPLACEME-BLOG-ARCHIVE__ -->", items);
+    element.innerHTML = html;
 }
 
 function main()
@@ -136,21 +138,20 @@ function main()
 
     for (const page of pages)
     {
-        let html = fs.readFileSync("./templates/base.html").toString();
-        html = addBlogArchive(html, pages);
-        html = addBlogArticle(html, page);
-
+        const path = getPagePath(pages, page);
+        const html = fs.readFileSync("./templates/base.html").toString();
         const dom = new JSDOM(html);
         const document = dom.window.document;
+
+        addBlogArticle(document, page);
+        addBlogArchive(document, pages);
         highlightCode(document);
         addCodeBackground(document);
         addBlockquoteStyling(document);
         addTableStyling(document);
         removeFootnoteBackrefs(document);
 
-        const path = getPagePath(pages, page);
-        const result = document.documentElement.outerHTML;
-        fs.writeFileSync(`../${path}`, result);
+        fs.writeFileSync(`../${path}`, document.documentElement.outerHTML);
     }
 }
 
