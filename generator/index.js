@@ -162,10 +162,9 @@ class BlogInjector
     {
         let items = "";
 
-        for (let i = 0; i < pages; i++)
+        for (const page of pages)
         {
-            const page = pages[i];
-            const path = (i !== 0) ? page.path : "index.html";
+            const path = (pages[0].name !== page.name) ? page.path : "index.html";
 
             if (page.visible)
             {
