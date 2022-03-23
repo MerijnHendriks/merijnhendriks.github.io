@@ -106,12 +106,22 @@ function addBlogArticle(document, page)
     element.innerHTML = mdToHtml(md);
 }
 
-/** Generate index.html */
-function generateBlogIndex(pages)
+/** Generate page */
+function generatePage(filename, callback, pages, page = null)
 {
     const html = fs.readFileSync("./templates/base.html").toString();
     const dom = new JSDOM(html);
     const document = dom.window.document;
+
+    callback(document, pages, page);
+
+    // add doctype to prevent quicks mode warning
+    fs.writeFileSync(filename, `<!DOCTYPE html>${document.documentElement.outerHTML}`);
+}
+
+/** Generate index.html */
+function generateBlogIndex(document, pages, page)
+{
     const element = document.getElementById("blog-content");
     let list = "";
 
@@ -123,36 +133,30 @@ function generateBlogIndex(pages)
         }
     }
 
-    element.innerHTML = `<h1>Articles</h1><ul>${list}</ul>`;
-    fs.writeFileSync(`../index.html`, document.documentElement.outerHTML);
+    element.innerHTML = `<h1>Articles</h1><ul>${list}</ul>`;   
 }
 
-/** Generate articles */
-function generateBlogArticle(pages, page) {
-    const html = fs.readFileSync("./templates/base.html").toString();
-    const dom = new JSDOM(html);
-    const document = dom.window.document;
-
+/** Generate article */
+function generateBlogArticle(document, pages, page) {
     addBlogArticle(document, page);
     highlightCode(document);
     addCodeBackground(document);
     addBlockquoteStyling(document);
     addTableStyling(document);
     removeFootnoteBackrefs(document);
-
-    fs.writeFileSync(`../${page.path}`, document.documentElement.outerHTML);
 }
 
+/** Application logic */
 function main()
 {
     const json = fs.readFileSync("./pages/index.json");
     const pages = JSON.parse(json);
 
-    generateBlogIndex(pages);
+    generatePage("../index.html", generateBlogIndex, pages);
 
     for (const page of pages)
     {
-        generateBlogArticle(pages, page);
+        generatePage(`../${page.path}`, generateBlogArticle, pages, page);
     }
 }
 
