@@ -151,7 +151,9 @@ function main()
         addTableStyling(document);
         removeFootnoteBackrefs(document);
 
-        fs.writeFileSync(`../${path}`, document.documentElement.outerHTML);
+        // fix quirks mode
+        const result = `<!DOCTYPE html>${document.documentElement.outerHTML}`;
+        fs.writeFileSync(`../${path}`, result);
     }
 }
 
