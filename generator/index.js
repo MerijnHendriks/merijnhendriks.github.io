@@ -6,12 +6,6 @@ const { JSDOM } = require("jsdom");
 
 const url = "https://merijnhendriks.github.io";
 
-/** Get page output path */
-function getPagePath(pages, page)
-{
-    return (pages[0].name !== page.name) ? page.path : "index.html";
-}
-
 /** convert markdown to html */
 function mdToHtml(md)
 {
@@ -107,28 +101,46 @@ function removeFootnoteBackrefs(document)
 /** Insert the article into the template */
 function addBlogArticle(document, page)
 {
-    const element = document.getElementById("blog-article");
+    const element = document.getElementById("blog-content");
     const md = fs.readFileSync(`./pages/${page.file}`).toString();
     element.innerHTML = mdToHtml(md);
 }
 
-/** Insert the sidebar archive into the template */
-function addBlogArchive(document, pages)
+/** Generate index.html */
+function generateBlogIndex(pages)
 {
-    const element = document.getElementById("blog-archive");
-    let html = "";
+    const html = fs.readFileSync("./templates/base.html").toString();
+    const dom = new JSDOM(html);
+    const document = dom.window.document;
+    const element = document.getElementById("blog-content");
+    let list = "";
 
     for (const page of pages)
     {
-        const path = getPagePath(pages, page);
-
         if (page.visible)
         {
-            html += `<li><a href="${url}/${path}">${page.name}</a></li>`;
+            list += `<li><a href="${url}/${page.path}">${page.name}</a></li>`;
         }
     }
 
-    element.innerHTML = html;
+    element.innerHTML = `<h1>Articles</h1><ul>${list}</ul>`;
+    fs.writeFileSync(`../index.html`, document.documentElement.outerHTML);
+}
+
+/** Generate articles */
+function generateBlogArticle(pages, page) {
+    const html = fs.readFileSync("./templates/base.html").toString();
+    const dom = new JSDOM(html);
+    const document = dom.window.document;
+
+    addBlogArticle(document, page);
+    highlightCode(document);
+    addCodeBackground(document);
+    addBlockquoteStyling(document);
+    addTableStyling(document);
+    removeFootnoteBackrefs(document);
+
+    fs.writeFileSync(`../${page.path}`, document.documentElement.outerHTML);
 }
 
 function main()
@@ -136,22 +148,11 @@ function main()
     const json = fs.readFileSync("./pages/index.json");
     const pages = JSON.parse(json);
 
+    generateBlogIndex(pages);
+
     for (const page of pages)
     {
-        const path = getPagePath(pages, page);
-        const html = fs.readFileSync("./templates/base.html").toString();
-        const dom = new JSDOM(html);
-        const document = dom.window.document;
-
-        addBlogArticle(document, page);
-        addBlogArchive(document, pages);
-        highlightCode(document);
-        addCodeBackground(document);
-        addBlockquoteStyling(document);
-        addTableStyling(document);
-        removeFootnoteBackrefs(document);
-
-        fs.writeFileSync(`../${path}`, document.documentElement.outerHTML);
+        generateBlogArticle(pages, page);
     }
 }
 
