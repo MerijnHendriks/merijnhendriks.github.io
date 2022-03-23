@@ -1,10 +1,10 @@
 const fs = require("fs");
+const path = require("path");
 const prism = require("prismjs");
 const showdown = require("showdown");
 const footnotes = require("showdown-ghost-footnotes");
 const { JSDOM } = require("jsdom");
-
-const url = "https://merijnhendriks.github.io";
+const articles = require("./configs/articles.json");
 
 /** convert markdown to html */
 function mdToHtml(md)
@@ -102,38 +102,8 @@ function removeFootnoteBackrefs(document)
 function addBlogArticle(document, page)
 {
     const element = document.getElementById("blog-content");
-    const md = fs.readFileSync(`./pages/${page.file}`).toString();
+    const md = fs.readFileSync(`./pages/${page}.md`).toString();
     element.innerHTML = mdToHtml(md);
-}
-
-/** Generate page */
-function generatePage(filename, callback, pages, page = null)
-{
-    const html = fs.readFileSync("./templates/base.html").toString();
-    const dom = new JSDOM(html);
-    const document = dom.window.document;
-
-    callback(document, pages, page);
-
-    // add doctype to prevent quicks mode warning
-    fs.writeFileSync(filename, `<!DOCTYPE html>${document.documentElement.outerHTML}`);
-}
-
-/** Generate index.html */
-function generateBlogIndex(document, pages, page)
-{
-    const element = document.getElementById("blog-content");
-    let list = "";
-
-    for (const page of pages)
-    {
-        if (page.visible)
-        {
-            list += `<li><a href="./${page.path}">${page.name}</a></li>`;
-        }
-    }
-
-    element.innerHTML = `<h1>Articles</h1><ul>${list}</ul>`;   
 }
 
 /** Generate article */
@@ -146,18 +116,101 @@ function generateBlogArticle(document, pages, page) {
     removeFootnoteBackrefs(document);
 }
 
-/** Application logic */
-function main()
+/** If the page should be excluded from the article list */
+function isExcluded(page)
 {
-    const json = fs.readFileSync("./pages/index.json");
-    const pages = JSON.parse(json);
+    for (const file of articles.excluded)
+    {
+        if (page === file)
+        {
+            return true;
+        }
+    }
 
-    generatePage("../index.html", generateBlogIndex, pages);
+    return false;
+}
+
+/** Get date from filename */
+function getDate(page)
+{
+    const year = page.substring(0, 4);
+    const month = page.substring(4, 6);
+    const day = page.substring(6, 8);
+    return `${year}-${month}-${day}`;
+}
+
+/** Get title from markdown file */
+function getTitle(page)
+{
+    const md = fs.readFileSync(`./pages/${page}.md`).toString();
+    const line = (md.match(/(^.*)/) || [])[1] || "";
+    return line.substring(2);
+}
+
+/** Generate index.html */
+function generateBlogIndex(document, pages)
+{
+    const element = document.getElementById("blog-content");
+    let list = "";
 
     for (const page of pages)
     {
-        generatePage(`../${page.path}`, generateBlogArticle, pages, page);
+        if (!isExcluded(page))
+        {
+            const title = `${getDate(page)}: ${getTitle(page)}`;
+            list += `<li><a href="./${page}.html">${title}</a></li>`;
+        }
     }
+
+    element.innerHTML = `<h1>Articles</h1><ul>${list}</ul>`;   
+}
+
+/** Generate page */
+function generatePage(file, callback, pages, page = "")
+{
+    const html = fs.readFileSync("./templates/base.html").toString();
+    const dom = new JSDOM(html);
+    const document = dom.window.document;
+
+    callback(document, pages, page);
+
+    // add doctype to prevent quicks mode warning
+    fs.writeFileSync(file, `<!DOCTYPE html>${document.documentElement.outerHTML}`);
+}
+
+/** Get all files in a directory */
+function getFiles(filepath)
+{
+    return fs.readdirSync(filepath).filter((item) => {
+        return fs.statSync(path.join(filepath, item)).isFile();
+    });
+}
+
+/** Get filename without extension */
+function getFilename(filepath)
+{
+    return filepath.split('.').slice(0, -1).join('.');
+}
+
+/** Application logic */
+function main()
+{
+    // get all files of directory in decending order
+    const pages = getFiles("./pages").sort().reverse();
+
+    // remove file extension
+    for (let i = 0; i < pages.length; i++)
+    {
+        pages[i] = getFilename(pages[i]);
+    }
+
+    // generate pages
+    for (const page of pages)
+    {
+        generatePage(`../${page}.html`, generateBlogArticle, pages, page);
+    }
+
+    generatePage("../index.html", generateBlogIndex, pages);
 }
 
 // run the code
