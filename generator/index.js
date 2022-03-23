@@ -129,7 +129,7 @@ function generateBlogIndex(document, pages, page)
     {
         if (page.visible)
         {
-            list += `<li><a href="${url}/${page.path}">${page.name}</a></li>`;
+            list += `<li><a href="./${page.path}">${page.name}</a></li>`;
         }
     }
 
