@@ -1,5 +1,11 @@
 [
     {
+        "name": "2022-03-23: Custom bootstrap",
+        "path": "20220323-custombootstrap.html",
+        "file": "20220323-custombootstrap.md",
+        "visible": true
+    },
+    {
         "name": "2022-03-22: Static website generator",
         "path": "20220322-staticgenerator.html",
         "file": "20220322-staticgenerator.md",
