@@ -248,8 +248,16 @@ function generatePage(file, callback, pages, page = "")
 /** Generate all static pages */
 function generateAllPages()
 {
-    // get all files of directory in decending order
-    const pages = getFiles("./md").sort().reverse();
+    const filepath = "./md";
+    const pages = getFiles(filepath)
+    
+    // sort pages
+    pages.sort().reverse();
+    pages.sort((a, b) => {
+        const fileA = fs.statSync(`${filepath}/${a}`);
+        const fileB = fs.statSync(`${filepath}/${b}`);        
+        return new Date(fileB.birthtime).getTime() - new Date(fileA.birthtime).getTime();
+    });
 
     // remove file extension
     for (let i = 0; i < pages.length; i++)
