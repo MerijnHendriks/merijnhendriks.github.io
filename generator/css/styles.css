@@ -7,12 +7,6 @@
 
 /* banner */
 .blog-banner {
-    background-image: url("../img/bg/light-big.jpg");
+    background-image: url("../img/bg.jpg");
     background-size: cover;
-}
-
-@media (max-width: 960px) {
-    .blog-banner {
-        background-image: url("../img/bg/light-small.jpg");
-    }
 }
