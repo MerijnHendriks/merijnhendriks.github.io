@@ -103,7 +103,7 @@ ext    | extension to be used for dest files.
 
 ## Images
 
-![Ganyu](./assets/img/bg/light-small.jpg)
+![img](./assets/img/20220324-2/blossom.jpg)
 
 ## Footnote
 
