@@ -104,7 +104,7 @@ function removeFootnoteBackrefs(document)
 function addBlogArticle(document, page)
 {
     const element = document.getElementById("blog-content");
-    const md = fs.readFileSync(`./pages/${page}.md`).toString();
+    const md = fs.readFileSync(`./md/${page}.md`).toString();
     element.innerHTML = mdToHtml(md);
 }
 
@@ -144,7 +144,7 @@ function getDate(page)
 /** Get title from markdown file */
 function getTitle(page)
 {
-    const md = fs.readFileSync(`./pages/${page}.md`).toString();
+    const md = fs.readFileSync(`./md/${page}.md`).toString();
     const line = (md.match(/(^.*)/) || [])[1] || "";
     return line.substring(2);
 }
@@ -184,7 +184,7 @@ function minifyHtml(html)
 /** Generate page */
 function generatePage(file, callback, pages, page = "")
 {
-    const html = fs.readFileSync("./templates/base.html").toString();
+    const html = fs.readFileSync("./html/template.html").toString();
     const dom = new JSDOM(html);
     const document = dom.window.document;
 
@@ -214,7 +214,7 @@ function getFilename(filepath)
 function main()
 {
     // get all files of directory in decending order
-    const pages = getFiles("./pages").sort().reverse();
+    const pages = getFiles("./md").sort().reverse();
 
     // remove file extension
     for (let i = 0; i < pages.length; i++)
