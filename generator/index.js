@@ -1,12 +1,22 @@
 const fs = require("fs");
 const path = require("path");
+
+/** code highlighting  */
 const prism = require("prismjs");
+
+/** md to html */
 const showdown = require("showdown");
 const footnotes = require("showdown-ghost-footnotes");
 const { JSDOM } = require("jsdom");
+
+/** optimizers */
 const htmlMinify = require("html-minifier").minify;
 const CleanCSS = require("clean-css");
+
+/** configs */
 const articles = require("./configs/articles.json");
+
+
 
 /** Create a directory recursively */
 function createDir(filepath)
@@ -257,7 +267,7 @@ function generateAllPages()
 }
 
 /** Generate all css files */
-function generateAllAssets()
+function generateCSS()
 {
     let files = getFiles("./css");
 
@@ -270,6 +280,12 @@ function generateAllAssets()
     // minify all into one stylesheet
     const minified = new CleanCSS().minify(files).styles;
     writeFile(`../assets/css/bundle.css`, minified);
+}
+
+/** Generate all asset files */
+function generateAllAssets()
+{
+    generateCSS();
 }
 
 /** Application logic */
