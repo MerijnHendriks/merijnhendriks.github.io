@@ -320,3 +320,20 @@ th {
     font-weight: 300;
     line-height: 1.2;
 }
+
+/* flex */
+.d-flex {
+    display: flex !important;
+}
+
+.min-vh-100 {
+    min-height: 100vh !important;
+}
+
+.flex-column {
+    flex-direction: column !important;
+}
+
+.flex-grow-1 {
+    flex-grow: 1 !important;
+}

@@ -1,16 +1,5 @@
 @charset "UTF-8";
 
-/* flex */
-.blog-container {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-.row {
-    flex-grow: 1;
-}
-
 /* sidebar */
 .blog-sidebar {
     background-color: #e9ecef;
