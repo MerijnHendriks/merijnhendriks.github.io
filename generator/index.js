@@ -88,7 +88,7 @@ function mdToHtml(md)
 function highlightCode(document)
 {
     const codes = document.querySelectorAll("code");
-    
+
     for (const element of codes)
     {
         // language name is the first element
@@ -99,7 +99,7 @@ function highlightCode(document)
             // no language defined
             continue;
         }
-        
+
         if (!prism.languages[lang])
         {
             // install language if it wasnt loaded before
@@ -115,7 +115,7 @@ function highlightCode(document)
 function addCodeBackground(document)
 {
     const codes = document.querySelectorAll("code");
-  
+
     for (const element of codes)
     {
         // language-* is the first element
@@ -236,7 +236,7 @@ function generatePage(file, callback, pages, page = "")
     const html = readFile("./html/template.html");
     const dom = new JSDOM(html);
     const document = dom.window.document;
-
+7
     callback(document, pages, page);
 
     // add doctype to prevent quicks mode warning
@@ -250,7 +250,7 @@ function generateAllPages()
 {
     const filepath = "./md";
     const pages = getFiles(filepath)
-    
+
     // sort pages
     pages.sort().reverse();
     pages.sort((a, b) => {
