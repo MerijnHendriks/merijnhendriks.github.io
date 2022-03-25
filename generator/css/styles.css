@@ -2,11 +2,12 @@
 
 /* sidebar */
 .blog-sidebar {
-    background-color: #e9ecef;
+    background-color: #f9fbf2;
 }
 
 /* banner */
 .blog-banner {
-    background-image: url("../img/bg.svg");
+    color: #fff;
+    background-image: url("../img/bg/default.svg");
     background-size: contain;
 }
