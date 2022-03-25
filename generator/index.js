@@ -236,7 +236,7 @@ function generatePage(file, callback, pages, page = "")
     const html = readFile("./html/template.html");
     const dom = new JSDOM(html);
     const document = dom.window.document;
-7
+
     callback(document, pages, page);
 
     // add doctype to prevent quicks mode warning
