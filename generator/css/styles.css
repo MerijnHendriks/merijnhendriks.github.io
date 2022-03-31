@@ -16,3 +16,8 @@ img {
     background-image: url("../img/bg/default.svg");
     background-size: contain;
 }
+
+.blog-banner > * > * > a {
+    color: #fff;
+    text-decoration: none;
+}
