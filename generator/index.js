@@ -76,6 +76,7 @@ function mdToHtml(md)
 {
     const converter = new showdown.Converter({
         "extensions": [footnotes],
+        "ghCompatibleHeaderId": true,
         "strikethrough": true,
         "tables": true,
         "tasklists": true
