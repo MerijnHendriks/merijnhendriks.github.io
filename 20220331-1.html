@@ -13,12 +13,12 @@
 <span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token keyword">int</span> s <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
 
-loop<span class="token operator">:</span>
+loop_begin<span class="token operator">:</span>
 <span class="token keyword">if</span> <span class="token punctuation">(</span>i <span class="token operator">&lt;</span> s<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
     <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token operator">++</span>i<span class="token punctuation">;</span>
-    <span class="token keyword">goto</span> loop<span class="token punctuation">;</span>
+    <span class="token keyword">goto</span> loop_begin<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 </code></pre> <p>I think both a very self-explanatory. Pretty easy to emulate, but having a dedicated <code>while</code> control statement is really sweet. One line less code, clear denotion of scope and easier to read.</p> <h2 id="do-while">Do-while</h2> <pre class="language-c" tabindex="0"><code><span class="token comment">/* do-while: keyword */</span>
 
@@ -36,10 +36,10 @@ loop<span class="token operator">:</span>
 <span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token keyword">int</span> s <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
 
-loop<span class="token operator">:</span>
+loop_begin<span class="token operator">:</span>
 <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token operator">++</span>i<span class="token punctuation">;</span>
-<span class="token keyword">if</span> <span class="token punctuation">(</span>i <span class="token operator">&lt;</span> s<span class="token punctuation">)</span> <span class="token keyword">goto</span> loop<span class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>i <span class="token operator">&lt;</span> s<span class="token punctuation">)</span> <span class="token keyword">goto</span> loop_begin<span class="token punctuation">;</span>
 </code></pre> <p>To my surprise the <code>goto</code> variant is about two lines smaller than the control structure variant, as well as the shortest loop variant in line count (with allman, for otbs its the same). In addition, it is in my opinion slightly to read as well because it's explicit in code flow.</p> <h2 id="break">Break</h2> <pre class="language-c" tabindex="0"><code><span class="token comment">/* break: keyword */</span>
 
 <span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
