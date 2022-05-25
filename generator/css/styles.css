@@ -13,8 +13,15 @@ img {
 /* banner */
 .blog-banner {
     color: #fff;
-    background-image: url("../img/bg/default.svg");
-    background-size: contain;
+    background: linear-gradient(180deg,
+        rgba(249,178,148,1) 0%,
+        rgba(249,178,148,1) 53%,
+        rgba(241,114,128,1) 53%,
+        rgba(241,114,128,1) 69%,
+        rgba(192,108,134,1) 69%,
+        rgba(192,108,134,1) 85%,
+        rgba(109,92,126,1) 85%,
+        rgba(109,92,126,1) 100%); 
 }
 
 .blog-banner > * > * > a {
