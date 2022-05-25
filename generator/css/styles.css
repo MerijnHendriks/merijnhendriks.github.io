@@ -5,6 +5,11 @@ img {
     max-width: 100%;
 }
 
+/* blockquote */
+.blockquote {
+    font-size: 1rem;
+}
+
 /* sidebar */
 .blog-sidebar {
     background-color: #f9fbf2;
