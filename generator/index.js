@@ -138,7 +138,7 @@ function addBlockquoteStyling(document)
 
     for (const element of blockquotes)
     {
-        element.classList.add("blockquote", "px-3");
+        element.classList.add("blockquote", "blog-blockquote", "px-3");
     }
 }
 
