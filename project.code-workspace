@@ -1,0 +1,39 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.exclude": {
+			"*.html": true,
+		}
+	},
+	"tasks": {
+		"version": "2.0.0",
+		"tasks": [
+			{
+				"label": "setup",
+				"type": "shell",
+				"command": "npm install",
+				"options": {
+					"cwd": "${workspaceFolder}/generator/"
+				},
+				"problemMatcher": []
+			},
+			{
+				"label": "build",
+				"type": "shell",
+				"command": "npm run build",
+				"options": {
+					"cwd": "${workspaceFolder}/generator/"
+				},
+				"problemMatcher": [],
+				"group": {
+					"kind": "build",
+					"isDefault": true
+				}
+			}
+		]
+	}
+}
