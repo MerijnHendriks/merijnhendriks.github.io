@@ -1,5 +1,3 @@
-# Articles
-
 ## OOP-C89
 
 - [2022-05-27 - virtual inheritance](20220527-4.html)
