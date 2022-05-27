@@ -103,7 +103,7 @@
     A<span class="token operator">*</span> virt<span class="token punctuation">;</span>
     <span class="token keyword">int</span> y<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span>
-</code></pre> <p>By making it a pointer, we force forwarding of initialization so we can obtain the right instance of <code>A</code> when it's available. This does mean that we have to create an instance of <code>A</code> and initialize it separately.</p> <p>We have to do this in order to successfully initialize <code>D</code>:</p> <pre class="language-c" tabindex="0"><code>A a<span class="token punctuation">;</span>
+</code></pre> <p>By making it a pointer, we force forwarding of initialization so we can obtain the right instance of <code>A</code> when it's available. This does mean that we have to create an instance of <code>A</code> and initialize it separately.</p> <p>Here is how you successfully initialize <code>D</code>:</p> <pre class="language-c" tabindex="0"><code>A a<span class="token punctuation">;</span>
 D d<span class="token punctuation">;</span>
 
 <span class="token function">A_ctor</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>a<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
