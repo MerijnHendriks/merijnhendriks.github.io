@@ -1,5 +1,6 @@
 ## OOP-C89
 
+- [2022-05-28 - polymorphism](20220528-1.html)
 - [2022-05-27 - virtual inheritance](20220527-4.html)
 - [2022-05-27 - interface inheritance](20220527-3.html)
 - [2022-05-27 - casting](20220527-2.html)
