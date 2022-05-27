@@ -13,9 +13,6 @@ const { JSDOM } = require("jsdom");
 const htmlMinify = require("html-minifier").minify;
 const CleanCSS = require("clean-css");
 
-/** configs */
-const articles = require("./configs/articles.json");
-
 
 
 /** Create a directory recursively */
@@ -182,55 +179,6 @@ function generateBlogArticle(document, pages, page) {
     removeFootnoteBackrefs(document);
 }
 
-/** If the page should be excluded from the article list */
-function isExcluded(page)
-{
-    for (const file of articles.excluded)
-    {
-        if (page === file)
-        {
-            return true;
-        }
-    }
-
-    return false;
-}
-
-/** Get date from filename */
-function getDate(page)
-{
-    const year = page.substring(0, 4);
-    const month = page.substring(4, 6);
-    const day = page.substring(6, 8);
-    return `${year}-${month}-${day}`;
-}
-
-/** Get title from markdown file */
-function getTitle(page)
-{
-    const md = readFile(`./md/${page}.md`);
-    const line = (md.match(/(^.*)/) || [])[1] || "";
-    return line.substring(2);
-}
-
-/** Generate index.html */
-function generateBlogIndex(document, pages)
-{
-    const element = document.getElementById("blog-content");
-    let list = "";
-
-    for (const page of pages)
-    {
-        if (!isExcluded(page))
-        {
-            const title = `${getDate(page)}: ${getTitle(page)}`;
-            list += `<li><a href="./${page}.html">${title}</a></li>`;
-        }
-    }
-
-    element.innerHTML = `<h1>Articles</h1><ul>${list}</ul>`;   
-}
-
 /** Generate page */
 function generatePage(file, callback, pages, page = "")
 {
@@ -252,14 +200,6 @@ function generateAllPages()
     const filepath = "./md";
     const pages = getFiles(filepath)
 
-    // sort pages
-    pages.sort().reverse();
-    pages.sort((a, b) => {
-        const fileA = fs.statSync(`${filepath}/${a}`);
-        const fileB = fs.statSync(`${filepath}/${b}`);        
-        return new Date(fileB.birthtime).getTime() - new Date(fileA.birthtime).getTime();
-    });
-
     // remove file extension
     for (let i = 0; i < pages.length; i++)
     {
@@ -271,8 +211,6 @@ function generateAllPages()
     {
         generatePage(`../${page}.html`, generateBlogArticle, pages, page);
     }
-
-    generatePage("../index.html", generateBlogIndex, pages);
 }
 
 /** Generate all css files */
