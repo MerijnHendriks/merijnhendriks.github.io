@@ -17,4 +17,4 @@
 
 ## Other
 
-- [2022-05-25 - Hello, world! (again)](20220205-1.html)
+- [2022-05-25 - Hello, world! (again)](20220525-1.html)
