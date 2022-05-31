@@ -201,8 +201,8 @@ function generateCssBundle()
     }
 
     // minify all into one stylesheet
-    const minified = new CleanCSS().minify(files).styles;
-    writeFile(`../assets/css/bundle.css`, minified);
+    const minified = new CleanCSS().minify(files);
+    writeFile(`../assets/css/bundle.css`, minified.styles);
 }
 
 /** Application logic */
