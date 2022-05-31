@@ -37,3 +37,4 @@ Anything related to the development of this blog
 Stuff that fits no other category.
 
 - [2022-05-25 - Hello, world! (again)](20220525-1.html)
+- [2022-03-24 - Blossom](20220324-1.html)
