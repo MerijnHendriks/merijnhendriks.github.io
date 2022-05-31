@@ -9,7 +9,7 @@ const CleanCSS = require("clean-css");
 
 /** globals */
 const md = new MarkdownIt();
-md.use(prism);
+md.use(prism, { "defaultLanguage": "txt" });
 
 /** Create a directory recursively */
 function createDir(filepath)
