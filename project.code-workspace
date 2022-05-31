@@ -9,6 +9,11 @@
 			"*.html": true,
 		}
 	},
+	"extensions": {
+		"recommendations": [
+			"Vue.volar"
+		]
+	},
 	"tasks": {
 		"version": "2.0.0",
 		"tasks": [
