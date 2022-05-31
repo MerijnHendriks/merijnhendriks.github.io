@@ -8,8 +8,7 @@
         "html-minifier": "4.0.0",
         "jsdom": "19.0.0",
         "prismjs": "1.27.0",
-        "showdown": "2.0.3",
-        "showdown-ghost-footnotes": "0.0.6"
+        "showdown": "2.0.3"
     },
     "scripts": {
         "build": "node index.js"

@@ -1,24 +1,17 @@
+/** imports */
 const fs = require("fs");
 const path = require("path");
-
-/** code highlighting  */
-const prism = require("prismjs");
-
-/** md to html */
-const showdown = require("showdown");
-const footnotes = require("showdown-ghost-footnotes");
-const { JSDOM } = require("jsdom");
-
-/** optimizers */
-const htmlMinify = require("html-minifier").minify;
 const CleanCSS = require("clean-css");
-
-
+const htmlMinifier = require("html-minifier");
+const { JSDOM } = require("jsdom");
+const prism = require("prismjs");
+const showdown = require("showdown");
 
 /** Create a directory recursively */
 function createDir(filepath)
 {
-    fs.mkdirSync(filepath.substr(0, filepath.lastIndexOf("/")), { "recursive": true });
+    const target = filepath.substr(0, filepath.lastIndexOf("/"));
+    fs.mkdirSync(target, { "recursive": true });
 }
 
 /** Write file to disk */
@@ -55,7 +48,7 @@ function getFilename(filepath)
 /** Minify html page */
 function minifyHtml(html)
 {
-    return htmlMinify(html, {
+    return htmlMinifier.minify(html, {
         "collapseInlineTagWhitespace": true,
         "collapseWhitespace": true,
         "conservativeCollapse": true,
@@ -72,11 +65,7 @@ function minifyHtml(html)
 function mdToHtml(md)
 {
     const converter = new showdown.Converter({
-        "extensions": [footnotes],
-        "ghCompatibleHeaderId": true,
-        "strikethrough": true,
-        "tables": true,
-        "tasklists": true
+        "ghCompatibleHeaderId": true
     });
 
     return converter.makeHtml(md);
@@ -100,7 +89,7 @@ function highlightCode(document)
 
         if (!prism.languages[lang])
         {
-            // install language if it wasnt loaded before
+            // load language if it wasnt loaded before
             require(`prismjs/components/prism-${lang}.js`);
         }
 
@@ -150,17 +139,6 @@ function addTableStyling(document)
     }
 }
 
-/** Remove the emoji from the footnote refernces */
-function removeFootnoteBackrefs(document)
-{
-    const backrefs = document.getElementsByClassName("footnote-backref");
-    
-    while (backrefs.length > 0)
-    {
-        backrefs[0].parentNode.removeChild(backrefs[0]);
-    }
-}
-
 /** Insert the article into the template */
 function addBlogArticle(document, page)
 {
@@ -169,28 +147,23 @@ function addBlogArticle(document, page)
     element.innerHTML = mdToHtml(md);
 }
 
-/** Generate article */
-function generateBlogArticle(document, pages, page) {
-    addBlogArticle(document, page);
-    highlightCode(document);
-    addCodeBackground(document);
-    addBlockquoteStyling(document);
-    addTableStyling(document);
-    removeFootnoteBackrefs(document);
-}
-
 /** Generate page */
-function generatePage(file, callback, pages, page = "")
+function generatePage(file, page)
 {
     const html = readFile("./html/template.html");
     const dom = new JSDOM(html);
     const document = dom.window.document;
 
-    callback(document, pages, page);
+    addBlogArticle(document, page);
+    highlightCode(document);
+    addCodeBackground(document);
+    addBlockquoteStyling(document);
+    addTableStyling(document);
 
     // add doctype to prevent quicks mode warning
     const result = document.documentElement.outerHTML;
     const minified = `<!DOCTYPE html>${minifyHtml(result)}`;
+
     writeFile(file, minified);
 }
 
@@ -209,13 +182,16 @@ function generateAllPages()
     // generate pages
     for (const page of pages)
     {
-        generatePage(`../${page}.html`, generateBlogArticle, pages, page);
+        console.log(`Generating page: ${page}`);
+        generatePage(`../${page}.html`, page);
     }
 }
 
-/** Generate all css files */
-function generateCSS()
+/** Generate css bundle */
+function generateCssBundle()
 {
+    console.log("Generating file: css bundle");
+
     let files = getFiles("./css");
 
     // set path
@@ -229,17 +205,11 @@ function generateCSS()
     writeFile(`../assets/css/bundle.css`, minified);
 }
 
-/** Generate all asset files */
-function generateAllAssets()
-{
-    generateCSS();
-}
-
 /** Application logic */
 function main()
 {
     generateAllPages();
-    generateAllAssets();
+    generateCssBundle();
 }
 
 // run the code
