@@ -26,6 +26,12 @@ Fun with `goto`.
 - [2022-05-25 - loops](20220525-3.html)
 - [2022-05-25 - thoughts](20220525-2.html)
 
+## Website
+
+Anything related to the development of this blog
+
+- [2022-06-01 - Website update](20220601-1.html)
+
 ## Other
 
 Stuff that fits no other category.

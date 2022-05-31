@@ -5,6 +5,7 @@ const { JSDOM } = require("jsdom");
 const MarkdownIt = require("markdown-it");
 const prism = require("markdown-it-prism");
 const frontmatter = require("markdown-it-title");
+const { html5Media } = require("markdown-it-html5-media");
 const htmlMinifier = require("html-minifier");
 const CleanCSS = require("clean-css");
 
@@ -67,7 +68,8 @@ function mdToHtml(markdown, meta)
 {
     const md = new MarkdownIt();
     md.use(prism, { "defaultLanguage": "txt" });
-    md.use(frontmatter, { "excerpt": 1 })
+    md.use(frontmatter, { "excerpt": 1 });
+    md.use(html5Media);
     return md.render(markdown, meta);
 }
 
