@@ -82,7 +82,7 @@ function addBlogArticle(document, filename, meta)
 /** Add title and metadata description */
 function addMetadata(document, meta)
 {
-    const description = meta.excerpt[0].substr(0, 80);
+    const description = `${meta.excerpt[0].substr(0, 80)}...`;
     document.title = meta.title;
     document.querySelector('meta[name="description"]')
         .setAttribute("content", description);
