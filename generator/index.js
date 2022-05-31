@@ -7,6 +7,11 @@ const { JSDOM } = require("jsdom");
 const prism = require("prismjs");
 const showdown = require("showdown");
 
+/** globals */
+const markdownConverter = new showdown.Converter({
+    "ghCompatibleHeaderId": true
+});
+
 /** Create a directory recursively */
 function createDir(filepath)
 {
@@ -64,11 +69,7 @@ function minifyHtml(html)
 /** convert markdown to html */
 function mdToHtml(md)
 {
-    const converter = new showdown.Converter({
-        "ghCompatibleHeaderId": true
-    });
-
-    return converter.makeHtml(md);
+    return markdownConverter.makeHtml(md);
 }
 
 /** Highlight codeblocks */
@@ -140,50 +141,43 @@ function addTableStyling(document)
 }
 
 /** Insert the article into the template */
-function addBlogArticle(document, page)
+function addBlogArticle(document, filename)
 {
     const element = document.getElementById("blog-content");
-    const md = readFile(`./md/${page}.md`);
+    const md = readFile(`./md/${filename}.md`);
     element.innerHTML = mdToHtml(md);
 }
 
 /** Generate page */
-function generatePage(file, page)
+function generatePage(filename)
 {
     const html = readFile("./html/template.html");
     const dom = new JSDOM(html);
     const document = dom.window.document;
 
-    addBlogArticle(document, page);
+    addBlogArticle(document, filename);
     highlightCode(document);
     addCodeBackground(document);
     addBlockquoteStyling(document);
     addTableStyling(document);
 
     // add doctype to prevent quicks mode warning
-    const result = document.documentElement.outerHTML;
-    const minified = `<!DOCTYPE html>${minifyHtml(result)}`;
-
-    writeFile(file, minified);
+    const result = `<!DOCTYPE html>${document.documentElement.outerHTML}`;
+    return minifyHtml(result);
 }
 
 /** Generate all static pages */
 function generateAllPages()
 {
     const filepath = "./md";
-    const pages = getFiles(filepath)
+    const files = getFiles(filepath);
 
-    // remove file extension
-    for (let i = 0; i < pages.length; i++)
+    for (const file of files)
     {
-        pages[i] = getFilename(pages[i]);
-    }
-
-    // generate pages
-    for (const page of pages)
-    {
-        console.log(`Generating page: ${page}`);
-        generatePage(`../${page}.html`, page);
+        const filename = getFilename(file);
+        console.log(`Generating page: ${filename}`);
+        const html = generatePage(filename);
+        writeFile(`../${filename}.html`, html);
     }
 }
 
@@ -194,13 +188,13 @@ function generateCssBundle()
 
     let files = getFiles("./css");
 
-    // set path
+    // set correct path
     for (let i = 0; i < files.length; i++)
     {
         files[i] = `./css/${files[i]}`;   
     }
 
-    // minify all into one stylesheet
+    // minify all stylesheets into one bundle
     const minified = new CleanCSS().minify(files);
     writeFile(`../assets/css/bundle.css`, minified.styles);
 }
