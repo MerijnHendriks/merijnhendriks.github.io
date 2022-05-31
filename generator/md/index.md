@@ -9,22 +9,22 @@ more things later.
 
 Demonstrating the inner workings of OOP in C.
 
-- [2022-05-28 - polymorphism](20220528-1.html)
-- [2022-05-27 - virtual inheritance](20220527-4.html)
-- [2022-05-27 - interface inheritance](20220527-3.html)
-- [2022-05-27 - casting](20220527-2.html)
-- [2022-05-27 - simple inheritance](20220527-1.html)
-- [2022-05-26 - class](20220526-1.html)
-- [2022-05-25 - thoughts](20220525-6.html)
+- [2022-05-28 - Polymorphism](20220528-1.html)
+- [2022-05-27 - Virtual inheritance](20220527-4.html)
+- [2022-05-27 - Interface inheritance](20220527-3.html)
+- [2022-05-27 - Casting](20220527-2.html)
+- [2022-05-27 - Aimple inheritance](20220527-1.html)
+- [2022-05-26 - Class](20220526-1.html)
+- [2022-05-25 - Thoughts](20220525-6.html)
 
 ### Goto
 
 Fun with `goto`.
 
-- [2022-05-25 - cleanup](20220525-5.html)
-- [2022-05-25 - switch-case](20220525-4.html)
-- [2022-05-25 - loops](20220525-3.html)
-- [2022-05-25 - thoughts](20220525-2.html)
+- [2022-05-25 - Cleanup](20220525-5.html)
+- [2022-05-25 - Switch-case](20220525-4.html)
+- [2022-05-25 - Loops](20220525-3.html)
+- [2022-05-25 - Thoughts](20220525-2.html)
 
 ## Website
 
