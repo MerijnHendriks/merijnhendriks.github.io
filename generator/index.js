@@ -1,16 +1,15 @@
 /** imports */
 const fs = require("fs");
 const path = require("path");
-const CleanCSS = require("clean-css");
-const htmlMinifier = require("html-minifier");
 const { JSDOM } = require("jsdom");
-const prism = require("prismjs");
-const showdown = require("showdown");
+const MarkdownIt = require("markdown-it");
+const prism = require("markdown-it-prism");
+const htmlMinifier = require("html-minifier");
+const CleanCSS = require("clean-css");
 
 /** globals */
-const markdownConverter = new showdown.Converter({
-    "ghCompatibleHeaderId": true
-});
+const md = new MarkdownIt();
+md.use(prism);
 
 /** Create a directory recursively */
 function createDir(filepath)
@@ -67,55 +66,9 @@ function minifyHtml(html)
 }
 
 /** convert markdown to html */
-function mdToHtml(md)
+function mdToHtml(markdown)
 {
-    return markdownConverter.makeHtml(md);
-}
-
-/** Highlight codeblocks */
-function highlightCode(document)
-{
-    const codes = document.querySelectorAll("code");
-
-    for (const element of codes)
-    {
-        // language name is the first element
-        const lang = element.className.split(" ")[0];
-
-        if (!lang)
-        {
-            // no language defined
-            continue;
-        }
-
-        if (!prism.languages[lang])
-        {
-            // load language if it wasnt loaded before
-            require(`prismjs/components/prism-${lang}.js`);
-        }
-
-        element.classList.remove(lang);
-        prism.highlightElement(element);
-    }
-}
-
-/** Add background to (unformatted) codeblocks */
-function addCodeBackground(document)
-{
-    const codes = document.querySelectorAll("code");
-
-    for (const element of codes)
-    {
-        // language-* is the first element
-        const lang = element.className.split(" ")[0] || "language-txt";
-
-        if (element.parentElement.tagName === "PRE")
-        {
-            // move language class
-            element.parentElement.classList.add(lang);
-            element.classList.remove(lang);
-        }
-    }
+    return md.render(markdown);
 }
 
 /** Add bootstrap styling to blockquotes */
@@ -156,8 +109,6 @@ function generatePage(filename)
     const document = dom.window.document;
 
     addBlogArticle(document, filename);
-    highlightCode(document);
-    addCodeBackground(document);
     addBlockquoteStyling(document);
     addTableStyling(document);
 

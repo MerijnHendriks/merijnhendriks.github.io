@@ -1,0 +1,17 @@
+{
+    "name": "md-blog-gen",
+    "author": "merijnhendriks",
+    "version": "1.0.0",
+    "main": "index.js",
+    "private": true,
+    "devDependencies": {
+        "clean-css": "5.2.4",
+        "html-minifier": "4.0.0",
+        "jsdom": "19.0.0",
+        "markdown-it": "^12.3.0",
+        "markdown-it-prism": "^2.2.4"
+    },
+    "scripts": {
+        "build": "node index.js"
+    }
+}
