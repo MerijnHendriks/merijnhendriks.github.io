@@ -1,19 +1,4 @@
-<!DOCTYPE html><html lang="en"><head> <meta charset="utf-8"> <meta name="viewport" content="width=device-width,initial-scale=1"> <meta name="description" content="In the previous article I demonstated quickly the atonomy of a class and how to ..."> <meta name="author" content="Merijn Hendriks"> <link rel="icon" type="image/x-icon" href="./assets/img/favicon.ico"> <link rel="stylesheet" type="text/css" href="./assets/css/bundle.css"> <title>OOP: Single inheritance</title></head> <body> <div class="container-fluid min-vh-100 d-flex flex-column"> <div class="p-5 blog-banner"> <div class="container-fluid py-5"> <h1 class="display-5 fw-bold"><a href="./index.html">Merijn Hendriks</a></h1> <p class="col-md-8 fs-4">Programmer, Creative, Nerd</p> </div> </div> <div class="row flex-grow-1"> <div class="col-md-8 p-5" id="blog-content"><h1>OOP: Single inheritance</h1> <p>In the previous article I demonstated quickly the atonomy of a class and how to emulate this in C89. Today I'll cover briefly single inheritance, aka where a class can only inherit from another class.</p> <h2>Implementing inheritance</h2> <p>The concept itself is pretty simple, the child class embeds the super class in order to contain it's functionality. Let's take this example:</p> <pre class="language-csharp"><code class="language-csharp"><span class="token keyword">class</span> <span class="token class-name">Foo</span>
-<span class="token punctuation">{</span>
-    <span class="token class-name"><span class="token keyword">int</span></span> x<span class="token punctuation">;</span>
-
-    <span class="token function">Foo</span><span class="token punctuation">(</span><span class="token class-name"><span class="token keyword">int</span></span> x<span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        <span class="token keyword">this</span><span class="token punctuation">.</span>x <span class="token operator">=</span> x<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-
-    <span class="token return-type class-name"><span class="token keyword">int</span></span> <span class="token function">getX</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>x<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">class</span> <span class="token class-name">Bar</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">Foo</span></span>
+<!DOCTYPE html><html lang="en"><head> <meta charset="utf-8"> <meta name="viewport" content="width=device-width,initial-scale=1"> <meta name="description" content="In the previous article I demonstated quickly the atonomy of a class and how to ..."> <meta name="author" content="Merijn Hendriks"> <link rel="icon" type="image/x-icon" href="./assets/img/favicon.ico"> <link rel="stylesheet" type="text/css" href="./assets/css/bundle.css"> <title>OOP: Single inheritance</title></head> <body> <div class="container-fluid min-vh-100 d-flex flex-column"> <div class="p-5 blog-banner"> <div class="container-fluid py-5"> <h1 class="display-5 fw-bold"><a href="./index.html">Merijn Hendriks</a></h1> <p class="col-md-8 fs-4">Programmer, Creative, Nerd</p> </div> </div> <div class="row flex-grow-1"> <div class="col-md-8 p-5" id="blog-content"><h1>OOP: Single inheritance</h1> <p>In the previous article I demonstated quickly the atonomy of a class and how to emulate this in C89. Today I'll cover briefly single inheritance, aka where a class can only inherit from another class.</p> <h2>Implementing inheritance</h2> <p>The concept itself is pretty simple, the child class embeds the super class in order to contain it's functionality. Let's take this example using <code>Foo</code> from the previous article:</p> <pre class="language-csharp"><code class="language-csharp"><span class="token keyword">class</span> <span class="token class-name">Bar</span> <span class="token punctuation">:</span> <span class="token type-list"><span class="token class-name">Foo</span></span>
 <span class="token punctuation">{</span>
     <span class="token class-name"><span class="token keyword">int</span></span> y<span class="token punctuation">;</span>
 
@@ -27,29 +12,13 @@
         <span class="token keyword">return</span> <span class="token keyword">this</span><span class="token punctuation">.</span>y<span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
-</code></pre> <p><code>Bar</code> "extends" <code>Foo</code> by adding a new field <code>y</code> and a new method <code>getY</code>. In order to initialize both, we call the super's constructor.</p> <p>Let's try to accomplish the same in C89:</p> <pre class="language-c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">Foo</span> Foo<span class="token punctuation">;</span>
-<span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">Bar</span> Bar<span class="token punctuation">;</span>
-
-<span class="token keyword">struct</span> <span class="token class-name">Foo</span>
-<span class="token punctuation">{</span>
-    <span class="token keyword">int</span> x<span class="token punctuation">;</span>
-<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre> <p><code>Bar</code> "extends" <code>Foo</code> by adding a new field <code>y</code> and a new method <code>getY</code>. In order to initialize both, we call the super's constructor.</p> <p>Let's try to accomplish the same in C89:</p> <pre class="language-c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">Bar</span> Bar<span class="token punctuation">;</span>
 
 <span class="token keyword">struct</span> <span class="token class-name">Bar</span>
 <span class="token punctuation">{</span>
     Foo base<span class="token punctuation">;</span>
     <span class="token keyword">int</span> y<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span>
-
-<span class="token keyword">void</span> <span class="token function">Foo_ctor</span><span class="token punctuation">(</span>Foo<span class="token operator">*</span> self<span class="token punctuation">,</span> <span class="token keyword">int</span> x<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    self<span class="token operator">-&gt;</span>x <span class="token operator">=</span> x<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
-
-<span class="token keyword">int</span> <span class="token function">Foo_getX</span><span class="token punctuation">(</span>Foo<span class="token operator">*</span> self<span class="token punctuation">)</span>
-<span class="token punctuation">{</span>
-    <span class="token keyword">return</span> self<span class="token operator">-&gt;</span>x<span class="token punctuation">;</span>
-<span class="token punctuation">}</span>
 
 <span class="token keyword">void</span> <span class="token function">Bar_ctor</span><span class="token punctuation">(</span>Bar<span class="token operator">*</span> self<span class="token punctuation">,</span> <span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> y<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
