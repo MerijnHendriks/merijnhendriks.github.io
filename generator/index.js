@@ -4,12 +4,9 @@ const path = require("path");
 const { JSDOM } = require("jsdom");
 const MarkdownIt = require("markdown-it");
 const prism = require("markdown-it-prism");
+const frontmatter = require("markdown-it-title");
 const htmlMinifier = require("html-minifier");
 const CleanCSS = require("clean-css");
-
-/** globals */
-const md = new MarkdownIt();
-md.use(prism, { "defaultLanguage": "txt" });
 
 /** Create a directory recursively */
 function createDir(filepath)
@@ -65,10 +62,30 @@ function minifyHtml(html)
     });
 }
 
-/** convert markdown to html */
-function mdToHtml(markdown)
+/** Convert md to html, extract metadata */
+function mdToHtml(markdown, meta)
 {
-    return md.render(markdown);
+    const md = new MarkdownIt();
+    md.use(prism, { "defaultLanguage": "txt" });
+    md.use(frontmatter, { "excerpt": 1 })
+    return md.render(markdown, meta);
+}
+
+/** Insert the article into the template */
+function addBlogArticle(document, filename, meta)
+{
+    const element = document.getElementById("blog-content");
+    const markdown = readFile(`./md/${filename}.md`);
+    element.innerHTML = mdToHtml(markdown, meta);
+}
+
+/** Add title and metadata description */
+function addMetadata(document, meta)
+{
+    const description = meta.excerpt[0].substr(0, 80);
+    document.title = meta.title;
+    document.querySelector('meta[name="description"]')
+        .setAttribute("content", description);
 }
 
 /** Add bootstrap styling to blockquotes */
@@ -93,22 +110,19 @@ function addTableStyling(document)
     }
 }
 
-/** Insert the article into the template */
-function addBlogArticle(document, filename)
-{
-    const element = document.getElementById("blog-content");
-    const md = readFile(`./md/${filename}.md`);
-    element.innerHTML = mdToHtml(md);
-}
-
 /** Generate page */
 function generatePage(filename)
 {
     const html = readFile("./html/template.html");
     const dom = new JSDOM(html);
     const document = dom.window.document;
+    let meta = {
+        title: "",
+        excerpt: []
+    };
 
-    addBlogArticle(document, filename);
+    addBlogArticle(document, filename, meta);
+    addMetadata(document, meta)
     addBlockquoteStyling(document);
     addTableStyling(document);
 
