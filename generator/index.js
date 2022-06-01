@@ -1,5 +1,3 @@
-// -- imports
-
 const fs = require("fs");
 const path = require("path");
 const { DOMParser } = require("linkedom");
@@ -8,8 +6,6 @@ const prism = require("markdown-it-prism");
 const { html5Media } = require("markdown-it-html5-media");
 const htmlMinifier = require("html-minifier");
 const CleanCSS = require("clean-css");
-
-// -- globals
 
 const domParser = new DOMParser();
 const md = new MarkdownIt()
@@ -26,8 +22,6 @@ const htmlMinifyOptions = {
   "removeEmptyElements": true,
   "removeRedundantAttributes": true
 };
-
-// -- functions
 
 function writeFile(filepath, data) {
   if (!fs.existsSync(filepath)) {
@@ -70,13 +64,6 @@ function addBlockquoteStyling(document) {
   }
 }
 
-function addTableStyling(document) {
-  const tables = document.querySelectorAll("table");
-  for (const element of tables) {
-    element.classList.add("table", "table-bordered");
-  }
-}
-
 function minifyHtml(html) {
   return htmlMinifier.minify(html, htmlMinifyOptions);
 }
@@ -87,7 +74,6 @@ function generatePage(filename) {
 
   addBlogArticle(document, filename);
   addBlockquoteStyling(document);
-  addTableStyling(document);
 
   // add doctype to prevent quicks mode warning
   const result = `<!DOCTYPE html>${document.documentElement.outerHTML}`;
@@ -107,24 +93,22 @@ function generateAllPages() {
 }
 
 function generateCssBundle() {
-  console.log("Generating file: css bundle");
-
   let files = getFiles("./css");
 
-  // set correct path
   for (let i = 0; i < files.length; i++) {
+    // set correct path
     files[i] = `./css/${files[i]}`;
   }
 
+  console.log("Generating file: css bundle");
+  console.log(files);
   const minified = new CleanCSS().minify(files);
-  writeFile(`../assets/css/bundle.css`, minified.styles);
+  writeFile("../assets/css/bundle.css", minified.styles);
 }
 
 function main() {
   generateAllPages();
   generateCssBundle();
 }
-
-// -- execute code
 
 main();
