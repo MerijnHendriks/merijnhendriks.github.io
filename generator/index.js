@@ -2,7 +2,7 @@
 
 const fs = require("fs");
 const path = require("path");
-const { JSDOM } = require("jsdom");
+const { DOMParser } = require("linkedom");
 const MarkdownIt = require("markdown-it");
 const prism = require("markdown-it-prism");
 const frontmatter = require("markdown-it-title");
@@ -92,8 +92,7 @@ function minifyHtml(html) {
 
 function generatePage(filename) {
   const html = readFile("./html/template.html");
-  const dom = new JSDOM(html);
-  const document = dom.window.document;
+  const document = new DOMParser().parseFromString(html);
   let meta = {
     title: "",
     excerpt: []
