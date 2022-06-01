@@ -23,10 +23,6 @@ const htmlMinifyOptions = {
   "removeEmptyElements": true,
   "removeRedundantAttributes": true
 };
-const md = new MarkdownIt()
-    .use(prism, { "defaultLanguage": "txt" })
-    .use(frontmatter, { "excerpt": 1 })
-    .use(html5Media);
 
 // -- functions
 
@@ -55,6 +51,11 @@ function getFilename(filepath) {
 }
 
 function mdToHtml(markdown, meta) {
+  // must be created in the function, otherwise excerpts are empty
+  const md = new MarkdownIt()
+    .use(prism, { "defaultLanguage": "txt" })
+    .use(frontmatter, { "excerpt": 1 })
+    .use(html5Media);
   return md.render(markdown, meta);
 }
 
