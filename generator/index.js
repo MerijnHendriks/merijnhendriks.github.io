@@ -1,18 +1,18 @@
-const fs = require("fs");
-const path = require("path");
-const { DOMParser } = require("linkedom");
-const MarkdownIt = require("markdown-it");
-const { html5Media } = require("markdown-it-html5-media");
-const prism = require("markdown-it-prism");
-const CleanCSS = require("clean-css");
-const htmlMinifier = require("html-minifier");
+var fs = require("fs");
+var path = require("path");
+var linkedom = require("linkedom");
+var MarkdownIt = require("markdown-it");
+var mediaPlugin = require("markdown-it-html5-media");
+var prism = require("markdown-it-prism");
+var CleanCSS = require("clean-css");
+var htmlMinifier = require("html-minifier");
 
-const domParser = new DOMParser();
-const md = new MarkdownIt()
-  .use(html5Media)
+var domParser = new linkedom.DOMParser();
+var md = new MarkdownIt()
+  .use(mediaPlugin.html5Media)
   .use(prism, { "defaultLanguage": "txt" });
-const cssMinifier = new CleanCSS();
-const htmlMinifyOptions = {
+var cssMinifier = new CleanCSS();
+var htmlMinifyOptions = {
   "collapseInlineTagWhitespace": true,
   "collapseWhitespace": true,
   "conservativeCollapse": true,
@@ -27,7 +27,7 @@ const htmlMinifyOptions = {
 function writeFile(filepath, data) {
   if (!fs.existsSync(filepath)) {
     // create missing directories recursively
-    const target = filepath.substr(0, filepath.lastIndexOf("/"));
+    var target = filepath.substr(0, filepath.lastIndexOf("/"));
     fs.mkdirSync(target, { "recursive": true });
   }
 
@@ -39,9 +39,17 @@ function readFile(filepath) {
 }
 
 function getFiles(filepath) {
-  return fs.readdirSync(filepath).filter((item) => {
-    return fs.statSync(path.join(filepath, item)).isFile();
-  });
+  var files = fs.readdirSync(filepath);
+  var i = files.length;
+
+  while (i--) {
+    var item = path.join(filepath, files[i]);
+    if (!fs.statSync(item).isFile()) {
+      files.splice(i, 1);
+    }
+  }
+
+  return files;
 }
 
 function getFilename(filepath) {
@@ -53,15 +61,15 @@ function mdToHtml(markdown) {
 }
 
 function addBlogArticle(document, filename) {
-  const element = document.getElementById("blog-content");
-  const markdown = readFile(`./md/${filename}.md`);
+  var element = document.getElementById("blog-content");
+  var markdown = readFile("./md/" + filename + ".md");
   element.innerHTML = mdToHtml(markdown);
 }
 
 function addBlockquoteStyling(document) {
-  const blockquotes = document.querySelectorAll("blockquote");
-  for (const element of blockquotes) {
-    element.classList.add("blockquote", "blog-blockquote", "px-3");
+  var blockquotes = document.querySelectorAll("blockquote");
+  for (var i = 0; i < blockquotes.length; i++) {
+    blockquotes[i].classList.add("blockquote", "blog-blockquote", "px-3");
   }
 }
 
@@ -70,40 +78,40 @@ function minifyHtml(html) {
 }
 
 function generatePage(filename) {
-  const html = readFile("./html/template.html");
-  const document = domParser.parseFromString(html);
+  var html = readFile("./html/template.html");
+  var document = domParser.parseFromString(html);
 
   addBlogArticle(document, filename);
   addBlockquoteStyling(document);
 
   // add doctype to prevent quicks mode warning
-  const result = `<!DOCTYPE html>${document.documentElement.outerHTML}`;
+  var result = "<!DOCTYPE html>" + document.documentElement.outerHTML;
   return minifyHtml(result);
 }
 
 function generateAllPages() {
-  const filepath = "./md";
-  const files = getFiles(filepath);
+  var filepath = "./md";
+  var files = getFiles(filepath);
 
-  for (const file of files) {
-    const filename = getFilename(file);
-    console.log(`Generating page: ${filename}`);
-    const html = generatePage(filename);
-    writeFile(`../${filename}.html`, html);
+  for (var i = 0; i < files.length; i++) {
+    var filename = getFilename(files[i]);
+    console.log("Generating page: " + filename);
+    var html = generatePage(filename);
+    writeFile("../" + filename + ".html", html);
   }
 }
 
 function generateCssBundle() {
-  let files = getFiles("./css");
+  var files = getFiles("./css");
 
-  for (let i = 0; i < files.length; i++) {
+  for (var i = 0; i < files.length; i++) {
     // set correct path
-    files[i] = `./css/${files[i]}`;
+    files[i] = "./css/" + files[i];
   }
 
   console.log("Generating file: css bundle");
   console.log(files);
-  const minified = cssMinifier.minify(files);
+  var minified = cssMinifier.minify(files);
   writeFile("../assets/css/bundle.css", minified.styles);
 }
 
