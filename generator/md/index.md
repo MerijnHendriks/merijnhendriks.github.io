@@ -13,7 +13,7 @@ Demonstrating the inner workings of OOP in C.
 - [2022-05-27 - Virtual inheritance](20220527-4.html)
 - [2022-05-27 - Interface inheritance](20220527-3.html)
 - [2022-05-27 - Casting](20220527-2.html)
-- [2022-05-27 - Aimple inheritance](20220527-1.html)
+- [2022-05-27 - Simple inheritance](20220527-1.html)
 - [2022-05-26 - Class](20220526-1.html)
 - [2022-05-25 - Thoughts](20220525-6.html)
 
