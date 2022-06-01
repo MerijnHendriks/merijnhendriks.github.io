@@ -5,13 +5,16 @@ const path = require("path");
 const { DOMParser } = require("linkedom");
 const MarkdownIt = require("markdown-it");
 const prism = require("markdown-it-prism");
-const frontmatter = require("markdown-it-title");
 const { html5Media } = require("markdown-it-html5-media");
 const htmlMinifier = require("html-minifier");
 const CleanCSS = require("clean-css");
 
 // -- globals
 
+const domParser = new DOMParser();
+const md = new MarkdownIt()
+    .use(prism, { "defaultLanguage": "txt" })
+    .use(html5Media);
 const htmlMinifyOptions = {
   "collapseInlineTagWhitespace": true,
   "collapseWhitespace": true,
@@ -50,26 +53,14 @@ function getFilename(filepath) {
   return filepath.split('.').slice(0, -1).join('.');
 }
 
-function mdToHtml(markdown, meta) {
-  // must be created in the function, otherwise excerpts are empty
-  const md = new MarkdownIt()
-    .use(prism, { "defaultLanguage": "txt" })
-    .use(frontmatter, { "excerpt": 1 })
-    .use(html5Media);
-  return md.render(markdown, meta);
+function mdToHtml(markdown) {
+  return md.render(markdown);
 }
 
-function addBlogArticle(document, filename, meta) {
+function addBlogArticle(document, filename) {
   const element = document.getElementById("blog-content");
   const markdown = readFile(`./md/${filename}.md`);
-  element.innerHTML = mdToHtml(markdown, meta);
-}
-
-function addMetadata(document, meta) {
-  const description = `${meta.excerpt[0].substr(0, 80)}...`;
-  document.title = meta.title;
-  document.querySelector('meta[name="description"]')
-    .setAttribute("content", description);
+  element.innerHTML = mdToHtml(markdown);
 }
 
 function addBlockquoteStyling(document) {
@@ -92,14 +83,9 @@ function minifyHtml(html) {
 
 function generatePage(filename) {
   const html = readFile("./html/template.html");
-  const document = new DOMParser().parseFromString(html);
-  let meta = {
-    title: "",
-    excerpt: []
-  };
+  const document = domParser.parseFromString(html);
 
-  addBlogArticle(document, filename, meta);
-  addMetadata(document, meta)
+  addBlogArticle(document, filename);
   addBlockquoteStyling(document);
   addTableStyling(document);
 
