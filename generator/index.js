@@ -2,15 +2,16 @@ const fs = require("fs");
 const path = require("path");
 const { DOMParser } = require("linkedom");
 const MarkdownIt = require("markdown-it");
-const prism = require("markdown-it-prism");
 const { html5Media } = require("markdown-it-html5-media");
-const htmlMinifier = require("html-minifier");
+const prism = require("markdown-it-prism");
 const CleanCSS = require("clean-css");
+const htmlMinifier = require("html-minifier");
 
 const domParser = new DOMParser();
 const md = new MarkdownIt()
-    .use(prism, { "defaultLanguage": "txt" })
-    .use(html5Media);
+  .use(html5Media)
+  .use(prism, { "defaultLanguage": "txt" });
+const cssMinifier = new CleanCSS();
 const htmlMinifyOptions = {
   "collapseInlineTagWhitespace": true,
   "collapseWhitespace": true,
@@ -102,7 +103,7 @@ function generateCssBundle() {
 
   console.log("Generating file: css bundle");
   console.log(files);
-  const minified = new CleanCSS().minify(files);
+  const minified = cssMinifier.minify(files);
   writeFile("../assets/css/bundle.css", minified.styles);
 }
 
