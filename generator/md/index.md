@@ -29,8 +29,8 @@ Fun with `goto`.
 Anything related to the development of this blog
 
 - [2022-06-02 - Optimizing generation](20220602-1.html)
-- [2022-06-01 - Creation of this website](20220601-2.html)
-- [2022-06-01 - Website update](20220601-1.html)
+- [2022-06-01 - Creation](20220601-2.html)
+- [2022-06-01 - Update](20220601-1.html)
 
 ## Other
 
