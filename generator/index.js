@@ -24,14 +24,16 @@ var htmlMinifyOptions = {
   "removeRedundantAttributes": true
 };
 
-function writeFile(filepath, data) {
+function emptyCallback() {}
+
+async function writeFile(filepath, data) {
   if (!fs.existsSync(filepath)) {
     // create missing directories recursively
     var target = filepath.substr(0, filepath.lastIndexOf("/"));
-    fs.mkdirSync(target, { "recursive": true });
+    await fs.mkdir(target, { "recursive": true }, emptyCallback);
   }
 
-  fs.writeFileSync(filepath, data);
+  await fs.writeFile(filepath, data, emptyCallback);
 }
 
 function readFile(filepath) {
@@ -89,7 +91,7 @@ function generatePage(filename) {
   return minifyHtml(result);
 }
 
-function generateAllPages() {
+async function generateAllPages() {
   var filepath = "./md";
   var files = getFiles(filepath);
 
@@ -97,11 +99,11 @@ function generateAllPages() {
     var filename = getFilename(files[i]);
     console.log("Generating page: " + filename);
     var html = generatePage(filename);
-    writeFile("../" + filename + ".html", html);
+    await writeFile("../" + filename + ".html", html);
   }
 }
 
-function generateCssBundle() {
+async function generateCssBundle() {
   var files = getFiles("./css");
 
   for (var i = 0; i < files.length; i++) {
@@ -112,12 +114,12 @@ function generateCssBundle() {
   console.log("Generating file: css bundle");
   console.log(files);
   var minified = cssMinifier.minify(files);
-  writeFile("../assets/css/bundle.css", minified.styles);
+  await writeFile("../assets/css/bundle.css", minified.styles);
 }
 
-function main() {
-  generateAllPages();
-  generateCssBundle();
+async function main() {
+  await generateAllPages();
+  await generateCssBundle();
 }
 
 main();
