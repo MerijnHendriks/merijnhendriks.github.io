@@ -51,9 +51,15 @@ val <span class="token operator">=</span> <span class="token function">Foo_getX<
 <span class="token punctuation">{</span>
     <span class="token keyword">return</span> <span class="token function">Foo_getX</span><span class="token punctuation">(</span>self<span class="token operator">-&gt;</span>base<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
-</code></pre> <pre class="language-c"><code class="language-c">Bar bar<span class="token punctuation">;</span>
-<span class="token keyword">int</span> val <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
 
-<span class="token function">Bar_ctor</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>bar<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-val <span class="token operator">=</span> <span class="token function">Bar_getX</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>bar<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    Bar bar<span class="token punctuation">;</span>
+    <span class="token keyword">int</span> val <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+    <span class="token function">Bar_ctor</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>bar<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    val <span class="token operator">=</span> <span class="token function">Bar_getX</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>bar<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
 </code></pre> <p>But now you have to add this conversion method for <em>each</em> previous inherited class in the inheritance chain. Not only will this clutter your code with many duplicate functions that take up memory, it will also result in larger call chains which is not ideal (especially on embedded systems). I would call this "code smell".</p> <h2>Conclusion</h2> <p>You've now learned how to implement a very simple inheritance stratagy, and how to access the members from the base class. Next up is casting our structs to emulate upcasting and downcasting.</p> </div> <div class="col-md-4 p-5 blog-sidebar"> <h4>About</h4> <p>Hi! I'm a Dutch programmer with a love for hamburgers and sake nigiri. When I'm not programming all day, you can find me reading manga, playing S.T.A.L.K.E.R.: Call of Pripyat or D&amp;D5E / MTG with friends.</p> <h4>Links</h4> <ul> <li><a href="https://www.github.com/merijnhendriks">Github</a></li> <li><a href="mailto:merijn.d.hendriks@gmail.com">Email</a></li> </ul> </div> </div> </div> </body> </html>
