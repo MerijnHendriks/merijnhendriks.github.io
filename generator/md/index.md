@@ -3,9 +3,7 @@
 Welcome to my blog! While there isn't much on here right now, I plan on adding
 more things later.
 
-## C89
-
-### OOP
+## C89-OOP
 
 Demonstrating the inner workings of OOP in C.
 
@@ -17,7 +15,7 @@ Demonstrating the inner workings of OOP in C.
 - [2022-05-26 - Class](20220526-1.html)
 - [2022-05-25 - Thoughts](20220525-6.html)
 
-### Goto
+## C89-Goto
 
 Fun with `goto`.
 
