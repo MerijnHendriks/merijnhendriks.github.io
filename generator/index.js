@@ -24,7 +24,7 @@ var htmlMinifyOptions = {
   "removeRedundantAttributes": true
 };
 
-function emptyCallback() {}
+function emptyCallback() { }
 
 async function writeFile(filepath, data) {
   if (!fs.existsSync(filepath)) {
