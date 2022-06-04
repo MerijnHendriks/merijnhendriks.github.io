@@ -18,17 +18,15 @@ b <span class="token operator">=</span> <span class="token punctuation">(</span>
 
 <span class="token keyword">struct</span> <span class="token class-name">B</span>
 <span class="token punctuation">{</span>
-    A baseA<span class="token punctuation">;</span>
-    A<span class="token operator">*</span> virtA<span class="token punctuation">;</span>
+    A base_a<span class="token punctuation">;</span>
+    A<span class="token operator">*</span> virt_a<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span>
 
 <span class="token keyword">void</span> <span class="token function">B_ctor</span><span class="token punctuation">(</span>B<span class="token operator">*</span> self<span class="token punctuation">,</span> <span class="token keyword">int</span> a<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
-    self<span class="token operator">-&gt;</span>baseA<span class="token punctuation">.</span>val <span class="token operator">=</span> a<span class="token punctuation">;</span>
-    self<span class="token operator">-&gt;</span>virtA <span class="token operator">=</span> <span class="token operator">&amp;</span>self<span class="token operator">-&gt;</span>baseA<span class="token punctuation">;</span>
+    self<span class="token operator">-&gt;</span>base_a<span class="token punctuation">.</span>val <span class="token operator">=</span> a<span class="token punctuation">;</span>
+    self<span class="token operator">-&gt;</span>virt_a <span class="token operator">=</span> <span class="token operator">&amp;</span>self<span class="token operator">-&gt;</span>baseA<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
-</code></pre> <pre class="language-c"><code class="language-c">B b<span class="token punctuation">;</span>
-A a<span class="token punctuation">;</span>
 
 <span class="token function">B_ctor</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>b<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 a <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">(</span>A<span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>

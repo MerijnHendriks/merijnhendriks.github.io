@@ -8,6 +8,7 @@ your browser to return to this page.
 
 Demonstrating the inner workings of OOP in C.
 
+- [2022-06-02 - Type system](20220602-2.html)
 - [2022-05-28 - Polymorphism](20220528-1.html)
 - [2022-05-27 - Virtual inheritance](20220527-4.html)
 - [2022-05-27 - Interface inheritance](20220527-3.html)

@@ -58,13 +58,13 @@
 
 <span class="token keyword">struct</span> <span class="token class-name">B</span>
 <span class="token punctuation">{</span>
-    A<span class="token operator">*</span> virt<span class="token punctuation">;</span>
+    A<span class="token operator">*</span> virt_a<span class="token punctuation">;</span>
     <span class="token keyword">int</span> y<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span>
 
 <span class="token keyword">struct</span> <span class="token class-name">C</span>
 <span class="token punctuation">{</span>
-    A<span class="token operator">*</span> virt<span class="token punctuation">;</span>
+    A<span class="token operator">*</span> virt_a<span class="token punctuation">;</span>
     <span class="token keyword">int</span> z<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span>
 
@@ -80,27 +80,27 @@
     self<span class="token operator">-&gt;</span>x <span class="token operator">=</span> x<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 
-<span class="token keyword">void</span> <span class="token function">B_ctor</span><span class="token punctuation">(</span>B<span class="token operator">*</span> self<span class="token punctuation">,</span> A<span class="token operator">*</span> virt<span class="token punctuation">,</span> <span class="token keyword">int</span> y<span class="token punctuation">)</span>
+<span class="token keyword">void</span> <span class="token function">B_ctor</span><span class="token punctuation">(</span>B<span class="token operator">*</span> self<span class="token punctuation">,</span> A<span class="token operator">*</span> virtA<span class="token punctuation">,</span> <span class="token keyword">int</span> y<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
-    self<span class="token operator">-&gt;</span>virt <span class="token operator">=</span> virt<span class="token punctuation">;</span>
+    self<span class="token operator">-&gt;</span>virt_a <span class="token operator">=</span> virtA<span class="token punctuation">;</span>
     self<span class="token operator">-&gt;</span>y <span class="token operator">=</span> y<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 
-<span class="token keyword">void</span> <span class="token function">C_ctor</span><span class="token punctuation">(</span>C<span class="token operator">*</span> self<span class="token punctuation">,</span> A<span class="token operator">*</span> virt<span class="token punctuation">,</span> <span class="token keyword">int</span> z<span class="token punctuation">)</span>
+<span class="token keyword">void</span> <span class="token function">C_ctor</span><span class="token punctuation">(</span>C<span class="token operator">*</span> self<span class="token punctuation">,</span> A<span class="token operator">*</span> virtA<span class="token punctuation">,</span> <span class="token keyword">int</span> z<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
-    self<span class="token operator">-&gt;</span>virt <span class="token operator">=</span> virt<span class="token punctuation">;</span>
+    self<span class="token operator">-&gt;</span>virt_a <span class="token operator">=</span> virtA<span class="token punctuation">;</span>
     self<span class="token operator">-&gt;</span>z <span class="token operator">=</span> z<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 
-<span class="token keyword">void</span> <span class="token function">D_ctor</span><span class="token punctuation">(</span>D<span class="token operator">*</span> self<span class="token punctuation">,</span> A<span class="token operator">*</span> virt<span class="token punctuation">,</span> <span class="token keyword">int</span> y<span class="token punctuation">,</span> <span class="token keyword">int</span> z<span class="token punctuation">,</span> <span class="token keyword">int</span> v<span class="token punctuation">)</span>
+<span class="token keyword">void</span> <span class="token function">D_ctor</span><span class="token punctuation">(</span>D<span class="token operator">*</span> self<span class="token punctuation">,</span> A<span class="token operator">*</span> virtA<span class="token punctuation">,</span> <span class="token keyword">int</span> y<span class="token punctuation">,</span> <span class="token keyword">int</span> z<span class="token punctuation">,</span> <span class="token keyword">int</span> v<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
-    <span class="token function">B_ctor</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>self<span class="token operator">-&gt;</span>base_b<span class="token punctuation">,</span> virt<span class="token punctuation">,</span> y<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">C_ctor</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>self<span class="token operator">-&gt;</span>base_c<span class="token punctuation">,</span> virt<span class="token punctuation">,</span> z<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">B_ctor</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>self<span class="token operator">-&gt;</span>base_b<span class="token punctuation">,</span> virtA<span class="token punctuation">,</span> y<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">C_ctor</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>self<span class="token operator">-&gt;</span>base_c<span class="token punctuation">,</span> virtA<span class="token punctuation">,</span> z<span class="token punctuation">)</span><span class="token punctuation">;</span>
     self<span class="token operator">-&gt;</span>v <span class="token operator">=</span> v<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 </code></pre> <p>The interesting part from this implementation is that we change how the class base is stored.</p> <pre class="language-c"><code class="language-c"><span class="token keyword">struct</span> <span class="token class-name">B</span>
 <span class="token punctuation">{</span>
-    A<span class="token operator">*</span> virt<span class="token punctuation">;</span>
+    A<span class="token operator">*</span> virt_a<span class="token punctuation">;</span>
     <span class="token keyword">int</span> y<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span>
 </code></pre> <p>By making it a pointer, we force forwarding of initialization so we can obtain the right instance of <code>A</code> when it's available. This does mean that we have to create an instance of <code>A</code> and initialize it separately.</p> <p>Here is how you successfully initialize <code>D</code>:</p> <pre class="language-c"><code class="language-c">A a<span class="token punctuation">;</span>
