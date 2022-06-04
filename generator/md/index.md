@@ -1,7 +1,8 @@
-# Articles
+# Welcome to my blog
 
-Welcome to my blog! While there isn't much on here right now, I plan on adding
-more things later.
+This is the articles archive. Click on one of the links below to read one of
+the articles. After reading the article, press the previous page button/key for
+your browser to return to this page.
 
 ## C89-OOP
 
