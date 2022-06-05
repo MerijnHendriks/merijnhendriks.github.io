@@ -4,6 +4,12 @@ This is the articles archive. Click on one of the links below to read one of
 the articles. After reading the article, press the previous page button/key for
 your browser to return to this page.
 
+## Programming
+
+General programming thoughts and ideas.
+
+- [2022-06-05 - Lost in time](20220605-1.html)
+
 ## C89-OOP
 
 Demonstrating the inner workings of OOP in C.
