@@ -2,15 +2,14 @@
 
 <span class="token keyword">struct</span> <span class="token class-name">Type</span>
 <span class="token punctuation">{</span>
-    <span class="token keyword">int</span> <span class="token punctuation">(</span><span class="token operator">*</span>getTypeId<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> <span class="token punctuation">(</span><span class="token operator">*</span>getId<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">int</span> <span class="token punctuation">(</span><span class="token operator">*</span>isDerivedOf<span class="token punctuation">)</span><span class="token punctuation">(</span>Type<span class="token operator">*</span> type<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span>
 
-<span class="token keyword">static</span> <span class="token keyword">int</span> typeId <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-
 <span class="token keyword">int</span> <span class="token function">Type_getNewId</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> <span class="token operator">++</span>typeId<span class="token punctuation">;</span>
+    <span class="token keyword">static</span> <span class="token keyword">int</span> id <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token operator">++</span>id<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 
 <span class="token keyword">int</span> <span class="token function">Type_isBaseDerived</span><span class="token punctuation">(</span>Type<span class="token operator">*</span> type<span class="token punctuation">)</span>
@@ -21,16 +20,15 @@
 
 <span class="token keyword">struct</span> <span class="token class-name">Type</span>
 <span class="token punctuation">{</span>
-    <span class="token keyword">int</span> <span class="token punctuation">(</span><span class="token operator">*</span>getTypeId<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> <span class="token punctuation">(</span><span class="token operator">*</span>getId<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">int</span> <span class="token punctuation">(</span><span class="token operator">*</span>isDerivedOf<span class="token punctuation">)</span><span class="token punctuation">(</span>Type<span class="token operator">*</span> type<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span>
-</code></pre> <p>We make a <code>Type</code> VMT to get the instance's type and to compare if the type is derived from another type on runtime.</p> <pre class="language-c"><code class="language-c"><span class="token keyword">static</span> <span class="token keyword">int</span> typeId <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-
-<span class="token keyword">int</span> <span class="token function">Type_getNewId</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre> <p>We make a <code>Type</code> VMT to get the instance's type and to compare if the type is derived from another type on runtime.</p> <pre class="language-c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">Type_getNewId</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> <span class="token operator">++</span>typeId<span class="token punctuation">;</span>
+    <span class="token keyword">static</span> <span class="token keyword">int</span> id <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token operator">++</span>id<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
-</code></pre> <p>This is all the code we use for generating new type id's. I doubt this needs any more explanation.</p> <pre class="language-c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">Type_isBaseDerived</span><span class="token punctuation">(</span>Type<span class="token operator">*</span> type<span class="token punctuation">)</span>
+</code></pre> <p>This is all the code we use for generating new type id's. I really like the simplicity of the solution.</p> <pre class="language-c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">Type_isBaseDerived</span><span class="token punctuation">(</span>Type<span class="token operator">*</span> type<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
     <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
@@ -42,46 +40,47 @@
     <span class="token keyword">int</span> x<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span>
 
-<span class="token keyword">static</span> <span class="token keyword">int</span> typeId <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token keyword">static</span> Type foo_type <span class="token operator">=</span> <span class="token punctuation">{</span>
-    Foo_getTypeId<span class="token punctuation">,</span>
-    Type_isBaseDerived
-<span class="token punctuation">}</span><span class="token punctuation">;</span>
-
 <span class="token keyword">int</span> <span class="token function">Foo_getTypeId</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>typeId <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+    <span class="token keyword">static</span> <span class="token keyword">int</span> id <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>id <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
     <span class="token punctuation">{</span>
-        typeId <span class="token operator">=</span> <span class="token function">Type_getNewId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        id <span class="token operator">=</span> <span class="token function">Type_getNewId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 
-    <span class="token keyword">return</span> typeId<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> id<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 
 <span class="token keyword">void</span> <span class="token function">Foo_ctor</span><span class="token punctuation">(</span>Foo<span class="token operator">*</span> self<span class="token punctuation">,</span> <span class="token keyword">int</span> x<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
-    self<span class="token operator">-&gt;</span>type <span class="token operator">=</span> <span class="token operator">&amp;</span>foo_type<span class="token punctuation">;</span>
+    <span class="token keyword">static</span> Type type_foo <span class="token operator">=</span> <span class="token punctuation">{</span>
+        Foo_getTypeId<span class="token punctuation">,</span>
+        Type_isBaseDerived
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    self<span class="token operator">-&gt;</span>type <span class="token operator">=</span> <span class="token operator">&amp;</span>type_foo<span class="token punctuation">;</span>
     self<span class="token operator">-&gt;</span>x <span class="token operator">=</span> x<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
-</code></pre> <p>To break it down:</p> <pre class="language-c"><code class="language-c"><span class="token keyword">static</span> <span class="token keyword">int</span> typeId <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-
-<span class="token keyword">int</span> <span class="token function">Foo_getTypeId</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre> <p>To break it down:</p> <pre class="language-c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">Foo_getTypeId</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>typeId <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+    <span class="token keyword">static</span> <span class="token keyword">int</span> id <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>id <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
     <span class="token punctuation">{</span>
-        typeId <span class="token operator">=</span> <span class="token function">Type_getNewId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        id <span class="token operator">=</span> <span class="token function">Type_getNewId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 
-    <span class="token keyword">return</span> typeId<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> id<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
-</code></pre> <p>This is where the type identifier of <code>Foo</code> is generated and assigned. The <code>Foo_getType</code> function is exposed outside to allow derived classes to use it for comparison later.</p> <pre class="language-c"><code class="language-c"><span class="token keyword">static</span> Type foo_type <span class="token operator">=</span> <span class="token punctuation">{</span>
-    Foo_getTypeId<span class="token punctuation">,</span>
-    Type_isBaseDerived
-<span class="token punctuation">}</span><span class="token punctuation">;</span>
-
-<span class="token keyword">void</span> <span class="token function">Foo_ctor</span><span class="token punctuation">(</span>Foo<span class="token operator">*</span> self<span class="token punctuation">,</span> <span class="token keyword">int</span> x<span class="token punctuation">)</span>
+</code></pre> <p>This is where the type identifier of <code>Foo</code> is generated and assigned. The <code>Foo_getType</code> function is exposed outside to allow derived classes to use it for comparison later.</p> <pre class="language-c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">Foo_ctor</span><span class="token punctuation">(</span>Foo<span class="token operator">*</span> self<span class="token punctuation">,</span> <span class="token keyword">int</span> x<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
-    self<span class="token operator">-&gt;</span>type <span class="token operator">=</span> <span class="token operator">&amp;</span>foo_type<span class="token punctuation">;</span>
+    <span class="token keyword">static</span> Type type_foo <span class="token operator">=</span> <span class="token punctuation">{</span>
+        Foo_getTypeId<span class="token punctuation">,</span>
+        Type_isBaseDerived
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+    self<span class="token operator">-&gt;</span>type <span class="token operator">=</span> <span class="token operator">&amp;</span>type_foo<span class="token punctuation">;</span>
     self<span class="token operator">-&gt;</span>x <span class="token operator">=</span> x<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 </code></pre> <p>Here we create the type information and assign it. Notice the <code>Type_isDerivedType</code> function being used there? This is the function that allow base types to always return false for derived type comparisons.</p> <h3>Derived type</h3> <p>This is the modified <code>Bar</code> class from <code>C89-OOP: Single Inheritance</code>. Like with <code>Foo</code>, quite a bit of code has been added.</p> <pre class="language-c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">Bar</span> Bar<span class="token punctuation">;</span>
@@ -94,39 +93,45 @@
 
 <span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">Bar_isDerivedOf</span><span class="token punctuation">(</span>Type<span class="token operator">*</span> type<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> type<span class="token operator">-&gt;</span><span class="token function">getTypeId</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token function">Foo_getTypeId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> type<span class="token operator">-&gt;</span><span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token function">Foo_getTypeId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
-
-<span class="token keyword">static</span> <span class="token keyword">int</span> typeId <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token keyword">static</span> Type bar_type <span class="token operator">=</span> <span class="token punctuation">{</span>
-    Bar_getTypeId<span class="token punctuation">,</span>
-    Bar_isDerivedOf
-<span class="token punctuation">}</span><span class="token punctuation">;</span>
 
 <span class="token keyword">int</span> <span class="token function">Bar_getTypeId</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>typeId <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+    <span class="token keyword">static</span> <span class="token keyword">int</span> id <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>id <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
     <span class="token punctuation">{</span>
-        typeId <span class="token operator">=</span> <span class="token function">Type_getNewId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        id <span class="token operator">=</span> <span class="token function">Type_getNewId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 
-    <span class="token keyword">return</span> typeId<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> id<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 
 <span class="token keyword">void</span> <span class="token function">Bar_ctor</span><span class="token punctuation">(</span>Bar<span class="token operator">*</span> self<span class="token punctuation">,</span> <span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> y<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
+    <span class="token keyword">static</span> Type type_bar <span class="token operator">=</span> <span class="token punctuation">{</span>
+        Bar_getTypeId<span class="token punctuation">,</span>
+        Bar_isDerivedOf
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
     <span class="token function">Foo_ctor</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>self<span class="token operator">-&gt;</span>base<span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    self<span class="token operator">-&gt;</span>base<span class="token punctuation">.</span>type <span class="token operator">=</span> <span class="token operator">&amp;</span>bar_type<span class="token punctuation">;</span>
+    self<span class="token operator">-&gt;</span>base<span class="token punctuation">.</span>type <span class="token operator">=</span> <span class="token operator">&amp;</span>type_bar<span class="token punctuation">;</span>
     self<span class="token operator">-&gt;</span>y <span class="token operator">=</span> y<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 </code></pre> <p>To break it down:</p> <pre class="language-c"><code class="language-c"><span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">Bar_isDerivedOf</span><span class="token punctuation">(</span>Type<span class="token operator">*</span> type<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> type<span class="token operator">-&gt;</span><span class="token function">getTypeId</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token function">Foo_getTypeId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> type<span class="token operator">-&gt;</span><span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token function">Foo_getTypeId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
-</code></pre> <p>This is why it's important to expose the base's <code>getTypeId</code> function. We use it to see if the passed type is indeed <code>Foo</code> or another type that <code>Bar</code> is derived of.</p> <pre class="language-c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">Bar_ctor</span><span class="token punctuation">(</span>Bar<span class="token operator">*</span> self<span class="token punctuation">,</span> <span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> y<span class="token punctuation">)</span>
+</code></pre> <p>This is why it's important to expose the base's <code>getId</code> function. We use it to see if the passed type is indeed <code>Foo</code> or another type that <code>Bar</code> is derived of.</p> <pre class="language-c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">Bar_ctor</span><span class="token punctuation">(</span>Bar<span class="token operator">*</span> self<span class="token punctuation">,</span> <span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> y<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
+    <span class="token keyword">static</span> Type type_bar <span class="token operator">=</span> <span class="token punctuation">{</span>
+        Bar_getTypeId<span class="token punctuation">,</span>
+        Bar_isDerivedOf
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
     <span class="token function">Foo_ctor</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>self<span class="token operator">-&gt;</span>base<span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    self<span class="token operator">-&gt;</span>base<span class="token punctuation">.</span>type <span class="token operator">=</span> <span class="token operator">&amp;</span>bar_type<span class="token punctuation">;</span>
+    self<span class="token operator">-&gt;</span>base<span class="token punctuation">.</span>type <span class="token operator">=</span> <span class="token operator">&amp;</span>type_bar<span class="token punctuation">;</span>
     self<span class="token operator">-&gt;</span>y <span class="token operator">=</span> y<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 </code></pre> <p>Unlike <code>Foo</code>, we change the <code>Type</code> to match <code>Bar</code> instead of adding a new <code>Type</code> field into the class. This way if we cast <code>Bar</code> to <code>Foo</code> it would still report it to be <code>Bar</code>. This is the same behaviour as in C#.</p> <h2>Usage</h2> <p>The code isn't very clean, but it does illustrate how it works well:</p> <pre class="language-c"><code class="language-c">Bar bar<span class="token punctuation">;</span>
@@ -135,10 +140,10 @@ Foo<span class="token operator">*</span> foo<span class="token punctuation">;</s
 
 <span class="token function">Bar_ctor</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>bar<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 foo <span class="token operator">=</span> <span class="token punctuation">(</span>Foo<span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>bar<span class="token punctuation">;</span>
-isBarType <span class="token operator">=</span> foo<span class="token operator">-&gt;</span>type<span class="token operator">-&gt;</span><span class="token function">getTypeId</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token function">Bar_getTypeId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+isBarType <span class="token operator">=</span> foo<span class="token operator">-&gt;</span>type<span class="token operator">-&gt;</span><span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token function">Bar_getTypeId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre> <p>To compare the types of two instances for equality:</p> <pre class="language-c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">Type_equals</span><span class="token punctuation">(</span>Type<span class="token operator">*</span> typeA<span class="token punctuation">,</span> Type<span class="token operator">*</span> typeB<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> typeA<span class="token operator">-&gt;</span><span class="token function">getTypeId</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> typeB<span class="token operator">-&gt;</span><span class="token function">getTypeId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> typeA<span class="token operator">-&gt;</span><span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> typeB<span class="token operator">-&gt;</span><span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 
 <span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>

@@ -46,7 +46,7 @@
 <span class="token punctuation">{</span>
     <span class="token comment">// ...</span>
 <span class="token punctuation">}</span>
-</code></pre> <p>What C++ does internally is that it creates an instance of <code>A</code> separately, then makes each class in the inheritance tree inheriting virually from <code>A</code> gets the address of this instance assigned to it.</p> <p>Here is how I would emulate this in C89:</p> <pre class="language-c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">A</span> A<span class="token punctuation">;</span>
+</code></pre> <p>What C++ does internally is to me a mystery. But what we can do is creating an instance of <code>A</code> separately, then makes each class in the inheritance tree inheriting virually from <code>A</code> gets the address of this instance assigned to it.</p> <p>Here is how I would emulate this in C89:</p> <pre class="language-c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">A</span> A<span class="token punctuation">;</span>
 <span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">B</span> B<span class="token punctuation">;</span>
 <span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">C</span> C<span class="token punctuation">;</span>
 <span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">D</span> D<span class="token punctuation">;</span>
