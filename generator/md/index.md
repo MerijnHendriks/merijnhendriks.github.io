@@ -4,12 +4,6 @@ This is the articles archive. Click on one of the links below to read one of
 the articles. After reading the article, press the previous page button/key for
 your browser to return to this page.
 
-## Programming
-
-General programming thoughts and ideas.
-
-- [2022-06-05 - Lost in time](20220605-1.html)
-
 ## C89-OOP
 
 Demonstrating the inner workings of OOP in C.
@@ -39,6 +33,13 @@ Anything related to the development of this blog
 - [2022-06-02 - Optimizing generation](20220602-1.html)
 - [2022-06-01 - Creation](20220601-2.html)
 - [2022-06-01 - Update](20220601-1.html)
+
+## Rants
+
+A place to vent my fustrations.
+
+- [2022-06-07 - non-C(ense) embedded devices](20220607.md)
+- [2022-06-05 - Lost in time](20220605-1.html)
 
 ## Other
 
