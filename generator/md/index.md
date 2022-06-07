@@ -38,7 +38,7 @@ Anything related to the development of this blog
 
 A place to vent my fustrations.
 
-- [2022-06-07 - OOP is spaghetti bolognese](20220607-2.md)
+- [2022-06-07 - OOP and spaghetti bolognese](20220607-2.md)
 - [2022-06-07 - non-C(ense) embedded devices](20220607-1.md)
 - [2022-06-05 - zealotism](20220605-1.html)
 
