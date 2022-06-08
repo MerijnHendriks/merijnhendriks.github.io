@@ -41,19 +41,17 @@
 <span class="token punctuation">{</span>
     <span class="token keyword">static</span> Foo cache_foo <span class="token operator">=</span> <span class="token punctuation">{</span> <span class="token number">0</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
 
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>isLoaded<span class="token punctuation">[</span>LOAD_FOO<span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token function">Foo_ctor</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>foo<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        isLoaded<span class="token punctuation">[</span>LOAD_FOO<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
     <span class="token keyword">switch</span> <span class="token punctuation">(</span>id<span class="token punctuation">)</span>
     <span class="token punctuation">{</span>
         <span class="token keyword">case</span> LOAD_FOO<span class="token operator">:</span>
-        <span class="token punctuation">{</span>
-            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>isLoaded<span class="token punctuation">[</span>LOAD_FOO<span class="token punctuation">]</span><span class="token punctuation">)</span>
-            <span class="token punctuation">{</span>
-                <span class="token function">Foo_ctor</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>foo<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-                isLoaded<span class="token punctuation">[</span>LOAD_FOO<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
-            <span class="token punctuation">}</span>
-
             foo<span class="token punctuation">.</span>iclonable<span class="token operator">-&gt;</span><span class="token function">clone</span><span class="token punctuation">(</span><span class="token punctuation">(</span>IClonable<span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>foo<span class="token punctuation">,</span> instance<span class="token punctuation">)</span><span class="token punctuation">;</span>
             <span class="token keyword">return</span><span class="token punctuation">;</span>
-        <span class="token punctuation">}</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
 </code></pre> <p>The idea shares alot with the Factory pattern discussed before in the article <code>C89-DP: Factory</code>. But instead of running the constructor, we are cloning the values of <code>Foo</code> into another instance of <code>Foo</code>.</p> <h2>Usage</h2> <p>As simple as it gets:</p> <pre class="language-c"><code class="language-c">Foo foo<span class="token punctuation">;</span>
