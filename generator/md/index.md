@@ -1,8 +1,7 @@
-# Welcome to my blog
+# Articles archive
 
-This is the articles archive. Click on one of the links below to read one of
-the articles. After reading the article, press the previous page button/key for
-your browser to return to this page.
+I write when I've enough inspiration to do so. Sometimes I revisit older
+articles and polish them a bit and/or fix mistakes in wording and/or grammar.
 
 ## C89-OOP
 
