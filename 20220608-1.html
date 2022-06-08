@@ -47,7 +47,7 @@
     <span class="token function">Type_ctor</span><span class="token punctuation">(</span><span class="token punctuation">(</span>Type<span class="token operator">*</span><span class="token punctuation">)</span>self<span class="token punctuation">,</span> <span class="token operator">&amp;</span>typeId<span class="token punctuation">)</span><span class="token punctuation">;</span>
     self<span class="token operator">-&gt;</span>y <span class="token operator">=</span> y<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
-</code></pre> <p>The old code for generating the type id was removed and the VMT as well. We override the existing type by running the constructor again.</p> <h2>Usage</h2> <p>The only downside to this approach is that you need to make an instance of the class you want to compare against, opposed to just a function call.</p> <pre class="language-c"><code class="language-c">Bar bar1<span class="token punctuation">;</span>
+</code></pre> <p>The old code for generating the type id was removed and the VMT as well. We override the existing type by running the constructor again.</p> <h2>Usage</h2> <p>The only downside to this approach is that you need to make an instance of the class of the type you want to compare against, opposed to just a function call.</p> <pre class="language-c"><code class="language-c">Bar bar1<span class="token punctuation">;</span>
 Bar bar2<span class="token punctuation">;</span>
 Foo<span class="token operator">*</span> foo<span class="token punctuation">;</span>
 <span class="token keyword">int</span> isBarType<span class="token punctuation">;</span>
