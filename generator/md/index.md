@@ -30,6 +30,7 @@ Demonstrating the inner workings of OOP in C.
 
 Demonstrating OOP design patterns in C
 
+- [2022-06-08 - Prototype](20220608-5.html)
 - [2022-06-08 - Singleton](20220608-4.html)
 - [2022-06-08 - Factory](20220608-3.html)
 - [2022-06-08 - Thoughts](20220608-2.html)
