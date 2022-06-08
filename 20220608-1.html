@@ -16,7 +16,7 @@
 
     self<span class="token operator">-&gt;</span>id <span class="token operator">=</span> <span class="token operator">*</span>typeId<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
-</code></pre> <p><code>Type_ctor</code> is now the combination of <code>Type_setId</code> and <code>Foo_getTypeId</code>. It now describes how the type structure should be modified instead of just generating an id. This allows for more code reuse and keeping code related to the type system in the same place.</p> <p>In addition, I changed the function pointer to plain data to reduce needless complexity and size.</p> <h2>Base type</h2> <p>The biggest change here is stripping code.</p> <pre class="language-c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">Foo</span> Foo<span class="token punctuation">;</span>
+</code></pre> <p><code>Type_ctor</code> is now the combination of the old code and <code>Type_setId</code> It now describes how the type structure should be modified instead of just generating an id or changing addresses. This allows for more code reuse and keeping code related to the type system in the same place.</p> <p>In addition, I changed the function pointer to plain data to reduce needless complexity and size.</p> <h2>Base type</h2> <p>The biggest change here is stripping code.</p> <pre class="language-c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">Foo</span> Foo<span class="token punctuation">;</span>
 
 <span class="token keyword">struct</span> <span class="token class-name">Foo</span>
 <span class="token punctuation">{</span>
