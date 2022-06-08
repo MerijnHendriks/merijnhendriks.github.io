@@ -5,7 +5,7 @@
     <span class="token keyword">int</span> id<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span>
 
-<span class="token keyword">void</span> <span class="token function">Type_setId</span><span class="token punctuation">(</span>Type<span class="token operator">*</span> self<span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token operator">*</span> typeId<span class="token punctuation">)</span>
+<span class="token keyword">void</span> <span class="token function">Type_ctor</span><span class="token punctuation">(</span>Type<span class="token operator">*</span> self<span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token operator">*</span> typeId<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
     <span class="token keyword">static</span> <span class="token keyword">int</span> id <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
 
@@ -16,7 +16,7 @@
 
     self<span class="token operator">-&gt;</span>id <span class="token operator">=</span> <span class="token operator">*</span>typeId<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
-</code></pre> <p><code>Type_setId</code> is now the combination of <code>Type_getNewId</code> and <code>Foo_setTypeId</code>. It now describes how the type structure should be modified instead of just generating an id. This allows for more code reuse and keeping code related to the type system in the same place.</p> <p>In addition, changed the function pointer to plain data instead to make it easier to keep track of what's going on.</p> <h2>Base type</h2> <p>The biggest change here is stripping code.</p> <pre class="language-c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">Foo</span> Foo<span class="token punctuation">;</span>
+</code></pre> <p><code>Type_ctor</code> is now the combination of <code>Type_setId</code> and <code>Foo_setTypeId</code>. It now describes how the type structure should be modified instead of just generating an id. This allows for more code reuse and keeping code related to the type system in the same place.</p> <p>In addition, changed the function pointer to plain data instead to make it easier to keep track of what's going on.</p> <h2>Base type</h2> <p>The biggest change here is stripping code.</p> <pre class="language-c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">Foo</span> Foo<span class="token punctuation">;</span>
 
 <span class="token keyword">struct</span> <span class="token class-name">Foo</span>
 <span class="token punctuation">{</span>
@@ -28,10 +28,10 @@
 <span class="token punctuation">{</span>
     <span class="token keyword">static</span> <span class="token keyword">int</span> typeId <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
 
-    <span class="token function">Type_setId</span><span class="token punctuation">(</span><span class="token punctuation">(</span>Type<span class="token operator">*</span><span class="token punctuation">)</span>self<span class="token punctuation">,</span> <span class="token operator">&amp;</span>typeId<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">Type_ctor</span><span class="token punctuation">(</span><span class="token punctuation">(</span>Type<span class="token operator">*</span><span class="token punctuation">)</span>self<span class="token punctuation">,</span> <span class="token operator">&amp;</span>typeId<span class="token punctuation">)</span><span class="token punctuation">;</span>
     self<span class="token operator">-&gt;</span>x <span class="token operator">=</span> x<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
-</code></pre> <p>Instead of storing the <code>typeId</code> <em>and</em> the VMT into the static register, now only <code>typeId</code> needs to be stored. All of <code>Foo</code>'s <code>typeId</code> generation code was no longer needed and thus removed, and is instead handled by <code>Type_setId</code>.</p> <h2>Derived type</h2> <p>Just like with <code>Foo</code>, most of what I did was stipping</p> <pre class="language-c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">Bar</span> Bar<span class="token punctuation">;</span>
+</code></pre> <p>Instead of storing the <code>typeId</code> <em>and</em> the VMT into the static register, now only <code>typeId</code> needs to be stored. All of <code>Foo</code>'s <code>typeId</code> generation code was no longer needed and thus removed, and is instead handled by <code>Type_ctor</code>.</p> <h2>Derived type</h2> <p>Just like with <code>Foo</code>, most of what I did was stipping</p> <pre class="language-c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">Bar</span> Bar<span class="token punctuation">;</span>
 
 <span class="token keyword">struct</span> <span class="token class-name">Bar</span>
 <span class="token punctuation">{</span>
@@ -44,7 +44,7 @@
     <span class="token keyword">static</span> <span class="token keyword">int</span> typeId <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
 
     <span class="token function">Foo_ctor</span><span class="token punctuation">(</span><span class="token punctuation">(</span>Foo<span class="token operator">*</span><span class="token punctuation">)</span>self<span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token function">Type_setId</span><span class="token punctuation">(</span><span class="token punctuation">(</span>Type<span class="token operator">*</span><span class="token punctuation">)</span>self<span class="token punctuation">,</span> <span class="token operator">&amp;</span>typeId<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">Type_ctor</span><span class="token punctuation">(</span><span class="token punctuation">(</span>Type<span class="token operator">*</span><span class="token punctuation">)</span>self<span class="token punctuation">,</span> <span class="token operator">&amp;</span>typeId<span class="token punctuation">)</span><span class="token punctuation">;</span>
     self<span class="token operator">-&gt;</span>y <span class="token operator">=</span> y<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 </code></pre> <p>Much simpler. All old code could be removed and <code>Type_setId</code> can be used here as well for initialization of the type.</p> <h2>Usage</h2> <p>The only downside to this approach is that you need to make an instance of the class you want to compare against, opposed to just a function call.</p> <pre class="language-c"><code class="language-c">Bar bar<span class="token punctuation">;</span>
