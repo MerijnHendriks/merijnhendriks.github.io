@@ -28,7 +28,7 @@ Demonstrating the inner workings of OOP in C.
 
 ## C89-DP
 
-Demonstrating OOP design patterns in C
+Demonstrating design patterns (taken from Java) in C
 
 - [2022-06-08 - Prototype](20220608-5.html)
 - [2022-06-08 - Singleton](20220608-4.html)
