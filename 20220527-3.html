@@ -22,7 +22,7 @@
 
 <span class="token keyword">struct</span> <span class="token class-name">IFoo</span>
 <span class="token punctuation">{</span>
-    <span class="token keyword">int</span> <span class="token punctuation">(</span><span class="token operator">*</span>getX<span class="token punctuation">)</span><span class="token punctuation">(</span>Foo<span class="token operator">*</span> self<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> <span class="token punctuation">(</span><span class="token operator">*</span>getX<span class="token punctuation">)</span><span class="token punctuation">(</span>IFoo<span class="token operator">*</span> self<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span>
 
 <span class="token keyword">struct</span> <span class="token class-name">Foo</span>
@@ -31,23 +31,24 @@
     <span class="token keyword">int</span> x<span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span>
 
-<span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">Foo_getX</span><span class="token punctuation">(</span>Foo<span class="token operator">*</span> self<span class="token punctuation">)</span>
+<span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">Foo_getX</span><span class="token punctuation">(</span>IFoo<span class="token operator">*</span> self<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> self<span class="token operator">-&gt;</span>x<span class="token punctuation">;</span>
+    Foo<span class="token operator">*</span> foo <span class="token operator">=</span> <span class="token punctuation">(</span>Foo<span class="token operator">*</span><span class="token punctuation">)</span>self<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> foo<span class="token operator">-&gt;</span>x<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 
 <span class="token keyword">void</span> <span class="token function">Foo_ctor</span><span class="token punctuation">(</span>Foo<span class="token operator">*</span> self<span class="token punctuation">,</span> <span class="token keyword">int</span> x<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
-    <span class="token keyword">static</span> IFoo ifoo_vmt <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token keyword">static</span> IFoo ifoo <span class="token operator">=</span> <span class="token punctuation">{</span>
         Foo_getX
     <span class="token punctuation">}</span><span class="token punctuation">;</span>
 
-    self<span class="token operator">-&gt;</span>ifoo <span class="token operator">=</span> <span class="token operator">&amp;</span>ifoo_vmt<span class="token punctuation">;</span>
+    self<span class="token operator">-&gt;</span>ifoo <span class="token operator">=</span> <span class="token operator">&amp;</span>ifoo<span class="token punctuation">;</span>
     self<span class="token operator">-&gt;</span>x <span class="token operator">=</span> x<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 </code></pre> <p>We can emulate it as close as possible by using a technique called <code>Virtual Method Table</code> (VMT):</p> <pre class="language-c"><code class="language-c"><span class="token keyword">struct</span> <span class="token class-name">IFoo</span>
 <span class="token punctuation">{</span>
-    <span class="token keyword">int</span> <span class="token punctuation">(</span><span class="token operator">*</span>getX<span class="token punctuation">)</span><span class="token punctuation">(</span>Foo<span class="token operator">*</span> self<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> <span class="token punctuation">(</span><span class="token operator">*</span>getX<span class="token punctuation">)</span><span class="token punctuation">(</span>IFoo<span class="token operator">*</span> self<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span>
 </code></pre> <p>Here <code>IFoo</code> is a VMT that contains all methods and property getters/setters that a class inheriting from <code>IFoo</code> needs to contain. While we cannot enforce an interface to be respected at compile time in C89, we can at least have the error handling at runtime.</p> <pre class="language-c"><code class="language-c"><span class="token keyword">struct</span> <span class="token class-name">Foo</span>
 <span class="token punctuation">{</span>
@@ -57,22 +58,23 @@
 
 <span class="token function">Foo_ctor</span><span class="token punctuation">(</span>Foo<span class="token operator">*</span> self<span class="token punctuation">,</span> <span class="token keyword">int</span> x<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
-    <span class="token keyword">static</span> IFoo ifoo_vmt <span class="token operator">=</span> <span class="token punctuation">{</span>
+    <span class="token keyword">static</span> IFoo ifoo <span class="token operator">=</span> <span class="token punctuation">{</span>
         Foo_getX
     <span class="token punctuation">}</span><span class="token punctuation">;</span>
 
-    self<span class="token operator">-&gt;</span>ifoo <span class="token operator">=</span> <span class="token operator">&amp;</span>ifoo_vmt<span class="token punctuation">;</span>
+    self<span class="token operator">-&gt;</span>ifoo <span class="token operator">=</span> <span class="token operator">&amp;</span>ifoo<span class="token punctuation">;</span>
     self<span class="token operator">-&gt;</span>x <span class="token operator">=</span> x<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
-</code></pre> <p><code>Foo.ifoo</code> is a pointer so we can define a single VMT (<code>ifoo_vmt</code>) that we share across all instances of <code>Foo</code>. This means we can save up quite a bit on memory compared to having all instances use their own VMT instance. The reason why <code>ifoo_vmt</code> is a static variable inside the function, is to have a static instance of the VMT only changable in <code>Foo_ctor</code>'s scope.</p> <pre class="language-c"><code class="language-c"><span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">Foo_getX</span><span class="token punctuation">(</span>Foo<span class="token operator">*</span> self<span class="token punctuation">)</span>
+</code></pre> <p><code>Foo.ifoo</code> is a pointer so we can define a single VMT (<code>ifoo</code>) that we share across all instances of <code>Foo</code>. This means we can save up quite a bit on memory compared to having all instances use their own VMT instance. The reason why <code>ifoo</code> is a static variable inside the function, is to have a static instance of the VMT only changable in <code>Foo_ctor</code>'s scope.</p> <pre class="language-c"><code class="language-c"><span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">Foo_getX</span><span class="token punctuation">(</span>IFoo<span class="token operator">*</span> self<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
-    <span class="token keyword">return</span> self<span class="token operator">-&gt;</span>x<span class="token punctuation">;</span>
+    Foo<span class="token operator">*</span> foo <span class="token operator">=</span> <span class="token punctuation">(</span>Foo<span class="token operator">*</span><span class="token punctuation">)</span>self<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> foo<span class="token operator">-&gt;</span>x<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
-</code></pre> <p><code>Foo_getX</code> will only ever get accessed from the source file, so we don't need to expose it outside. It also allows for more compiler optimizations. To call a method from a VMT, we can simply do this:</p> <pre class="language-c"><code class="language-c">Foo foo<span class="token punctuation">;</span>
+</code></pre> <p><code>Foo_getX</code> will only ever get accessed from the source file, so we don't need to expose it outside. It also allows for more compiler optimizations. We have to cast <code>IFoo</code> to <code>Foo</code> in order to be able to access <code>Foo</code>'s members.</p> <h2>Usage</h2> <p>To call a method from a VMT, we can simply do this:</p> <pre class="language-c"><code class="language-c">Foo foo<span class="token punctuation">;</span>
 <span class="token keyword">int</span> val<span class="token punctuation">;</span>
 
 <span class="token function">Foo_ctor</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>foo<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-val <span class="token operator">=</span> foo<span class="token punctuation">.</span>ifoo<span class="token operator">-&gt;</span><span class="token function">getX</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>foo<span class="token punctuation">)</span><span class="token punctuation">;</span>
+val <span class="token operator">=</span> foo<span class="token punctuation">.</span>ifoo<span class="token operator">-&gt;</span><span class="token function">getX</span><span class="token punctuation">(</span><span class="token punctuation">(</span>IFoo<span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>foo<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre> <p>We can use <code>IFoo</code> also for casting the same way we did it in the previous article:</p> <pre class="language-c"><code class="language-c">Foo foo<span class="token punctuation">;</span>
 IFoo<span class="token operator">*</span> ifoo<span class="token punctuation">;</span>
 

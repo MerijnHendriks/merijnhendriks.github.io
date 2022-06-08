@@ -3,6 +3,15 @@
 I write when I've enough inspiration to do so. Sometimes I revisit older
 articles and polish them a bit and/or fix mistakes in wording and/or grammar.
 
+## C89-Goto
+
+Fun with `goto`.
+
+- [2022-05-25 - Cleanup](20220525-5.html)
+- [2022-05-25 - Switch-case](20220525-4.html)
+- [2022-05-25 - Loops](20220525-3.html)
+- [2022-05-25 - Thoughts](20220525-2.html)
+
 ## C89-OOP
 
 Demonstrating the inner workings of OOP in C.
@@ -17,14 +26,12 @@ Demonstrating the inner workings of OOP in C.
 - [2022-05-26 - Class](20220526-1.html)
 - [2022-05-25 - Thoughts](20220525-6.html)
 
-## C89-Goto
+## C89-DP
 
-Fun with `goto`.
+Demonstrating OOP design patterns in C
 
-- [2022-05-25 - Cleanup](20220525-5.html)
-- [2022-05-25 - Switch-case](20220525-4.html)
-- [2022-05-25 - Loops](20220525-3.html)
-- [2022-05-25 - Thoughts](20220525-2.html)
+- [2022-06-08 - Factory](20220608-3.html)
+- [2022-06-08 - Thoughts](20220608-2.html)
 
 ## Website
 
