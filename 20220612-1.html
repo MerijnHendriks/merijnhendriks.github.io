@@ -1,0 +1,45 @@
+<!DOCTYPE html><html lang="en"> <head> <meta charset="utf-8"> <meta name="viewport" content="width=device-width,initial-scale=1"> <meta name="author" content="Merijn Hendriks"> <title>Merijn Hendriks</title> <link rel="icon" type="image/x-icon" href="./assets/img/favicon.ico"> <link rel="stylesheet" type="text/css" href="./assets/css/bundle.css"> </head> <body> <div class="container-fluid min-vh-100 d-flex flex-column"> <header class="p-5 blog-banner"> <div class="container-fluid py-5"> <h1 class="display-5 fw-bold"><a href="./index.html">Merijn Hendriks</a></h1> <p class="col-md-8 fs-4">Programmer, Creative, Nerd</p> </div> </header> <div class="row flex-grow-1"> <main class="col-md-8 p-5"> <article id="blog-content"><h1>VSCode bloat</h1> <p>Visual Studio Code has something going for it; it has one of the most powerful features an editor can have; customizable task for automating what you want to. However, the more I am using VSCode, the more it's getting in my way.</p> <p>Recently I've been working a bit on html markup for designing physical cards. All fine and dany, until VSCode keeps inserting <code>&lt;/div&gt;</code> elements and more that I didn't ask for. Now I spend my time fighting the editor to insert the right characters. The same is true for brackets, strings, and more.</p> <p>Code Lens showing references everywhere is annoying, the file minimap takes too much space on my 1280x800 screen, and the screen reader (orca) I sometimes use (I am visually impaired) is absolute garbage on vscode. The fact that I cannot disable <code>popular extensions</code> and the likes nags me too.</p> <p>In case you wonder, here are my settings:</p> <pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+    <span class="token comment">// disable general editor annoyingness</span>
+    <span class="token property">"workbench.startupEditor"</span><span class="token operator">:</span> <span class="token string">"none"</span><span class="token punctuation">,</span>
+    <span class="token property">"explorer.confirmDelete"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+    <span class="token property">"explorer.confirmDragAndDrop"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+    <span class="token property">"editor.matchBrackets"</span><span class="token operator">:</span> <span class="token string">"never"</span><span class="token punctuation">,</span>
+
+    <span class="token comment">// disable git trying to be smart</span>
+    <span class="token property">"git.enableSmartCommit"</span><span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+    <span class="token property">"git.confirmSync"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+
+    <span class="token comment">// disable telemetry</span>
+    <span class="token property">"telemetry.telemetryLevel"</span><span class="token operator">:</span> <span class="token string">"off"</span><span class="token punctuation">,</span>
+    <span class="token property">"workbench.settings.enableNaturalLanguageSearch"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+    <span class="token property">"workbench.enableExperiments"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+    <span class="token property">"update.showReleaseNotes"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+    <span class="token property">"extensions.autoCheckUpdates"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+    <span class="token property">"extensions.autoUpdate"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+    <span class="token property">"update.mode"</span><span class="token operator">:</span> <span class="token string">"none"</span><span class="token punctuation">,</span>
+
+    <span class="token comment">// disable trust</span>
+    <span class="token property">"security.workspace.trust.enabled"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+
+    <span class="token comment">// disable smart features</span>
+    <span class="token property">"editor.minimap.enabled"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+    <span class="token property">"editor.codeLens"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+
+    <span class="token comment">// disable intellisense</span>
+    <span class="token property">"editor.acceptSuggestionOnCommitCharacter"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+    <span class="token property">"editor.acceptSuggestionOnEnter"</span><span class="token operator">:</span> <span class="token string">"off"</span><span class="token punctuation">,</span>
+    <span class="token property">"editor.hover.enabled"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+    <span class="token property">"editor.parameterHints.enabled"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+    <span class="token property">"editor.quickSuggestions"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+    <span class="token property">"editor.quickSuggestionsDelay"</span><span class="token operator">:</span> <span class="token number">10</span><span class="token punctuation">,</span>
+    <span class="token property">"editor.suggest.snippetsPreventQuickSuggestions"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+    <span class="token property">"editor.suggestOnTriggerCharacters"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+    <span class="token property">"editor.wordBasedSuggestions"</span><span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+
+    <span class="token comment">// disable text insertion</span>
+    <span class="token property">"editor.autoClosingBrackets"</span><span class="token operator">:</span> <span class="token string">"never"</span><span class="token punctuation">,</span>
+    <span class="token property">"editor.autoClosingDelete"</span><span class="token operator">:</span> <span class="token string">"never"</span><span class="token punctuation">,</span>
+    <span class="token property">"editor.autoClosingOvertype"</span><span class="token operator">:</span> <span class="token string">"never"</span><span class="token punctuation">,</span>
+    <span class="token property">"editor.autoSurround"</span><span class="token operator">:</span> <span class="token string">"never"</span>
+<span class="token punctuation">}</span>
+</code></pre> <p>I've tried atom with moderate success with the plugin <code>platformio-ide-terminal</code>, but it's to me a bit too clunky to be used and will retire soon. TextMate is sadly only for osx, and JetBrains Fleet seems to be more focussed on web intergration than actual productivity.</p> <p>It makes me realize that all I really need from my editor is a file panel, my text editor and a console to type commands in without having to leave the editor. A programmer should from the top of his/her head what he/she needs, otherwise just do a quick search in the documentation manual.</p> <p>I'm switching to gedit now and see how it goes. There is a terminal, files panel, some simple git intergration, multi-file edit and it isn't based on chromium so it sounds goods enough.</p> </article> </main> <aside class="col-md-4 p-5 blog-sidebar"> <h4>About</h4> <p>Hi! I'm a Dutch programmer with a love for hamburgers and sake nigiri. When I'm not programming all day, you can find me reading manga, playing S.T.A.L.K.E.R.: Call of Pripyat or D&amp;D5E / MTG with friends.</p> <h4>Links</h4> <ul> <li><a href="https://www.github.com/merijnhendriks">Github</a></li> <li><a href="mailto:merijn.d.hendriks@gmail.com">Email</a></li> </ul> </aside> </div> </div> </body> </html>
