@@ -47,6 +47,7 @@ Anything related to the development of this blog
 
 A place to vent my fustrations.
 
+- [2022-06-24 - Code accessability](20220624-1.html)
 - [2022-06-12 - VSCode bloat](20220612-1.html)
 - [2022-06-07 - OOP and spaghetti bolognese](20220607-2.html)
 - [2022-06-07 - Non-C(ense) embedded devices](20220607-1.html)
@@ -56,5 +57,7 @@ A place to vent my fustrations.
 
 Stuff that fits no other category.
 
+- [2022-06-24 - Importance of elders](20220624-3.html)
+- [2022-06-24 - War](20220624-2.html)
 - [2022-05-25 - Hello, world! (again)](20220525-1.html)
 - [2022-03-24 - Blossom](20220324-1.html)
