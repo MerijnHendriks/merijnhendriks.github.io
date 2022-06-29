@@ -16,6 +16,7 @@ Fun with `goto`.
 
 Demonstrating the inner workings of OOP in C.
 
+- [2022-06-29 - Conclusion](20220629-3.html)
 - [2022-06-29 - Dynamic allocation](20220629-2.html)
 - [2022-06-08 - Alternative type system](20220608-1.html)
 - [2022-06-02 - Type system](20220602-2.html)
