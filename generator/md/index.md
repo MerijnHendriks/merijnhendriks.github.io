@@ -30,16 +30,15 @@ Demonstrating the inner workings of OOP in C.
 
 ## C89-DP
 
-Demonstrating design patterns (taken from Java) in C
+Demonstrating design patterns (taken from Java) in C.
 
-- [2022-06-08 - Prototype](20220608-5.html)
-- [2022-06-08 - Singleton](20220608-4.html)
-- [2022-06-08 - Factory](20220608-3.html)
-- [2022-06-08 - Thoughts](20220608-2.html)
+- [2022-06-08 - Prototype](20220608-4.html)
+- [2022-06-08 - Singleton](20220608-3.html)
+- [2022-06-08 - Factory](20220608-2.html)
 
 ## Website
 
-Anything related to the development of this blog
+Anything related to the development of this blog.
 
 - [2022-06-29 - Small update](20220629-1.html)
 - [2022-06-02 - Optimizing generation](20220602-1.html)
