@@ -2,23 +2,18 @@
 
 /* blockquote */
 blockquote {
-  color: #555555;
   background-color: #e2e3e5;
-  border-left-color: #d6d8db;
+  border-left: 5px solid #d6d8db;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
 }
 
-/* content */
-body {
-  background-color: #fff;
-}
-
-.blog-content {
-  color: #212529;
+blockquote > p {
+  margin-bottom: 0rem;
 }
 
 /* sidebar */
 .blog-sidebar {
-  color: #212529;
   background-color: #f9f9f9;
 }
 

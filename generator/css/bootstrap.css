@@ -4,7 +4,7 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  * https://getbootstrap.com/
  *
- * Modified by Merijn Hendriks 
+ * Modified by Merijn Hendriks
  */
 
 /* root */
@@ -14,7 +14,6 @@
   box-sizing: border-box;
 }
 
-/* body */
 body {
   margin: 0;
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -73,10 +72,6 @@ p {
   margin-bottom: 1rem;
 }
 
-blockquote > p {
-  margin-bottom: 0rem;
-}
-
 /* lists */
 ol,
 ul {
@@ -94,13 +89,6 @@ ul ul,
 ol ul,
 ul ol {
   margin-bottom: 0;
-}
-
-blockquote {
-  background: #f9f9f9;
-  border-left: 5px solid #ccc;
-  margin: 1.5em 10px;
-  padding: 0.5em 10px;
 }
 
 /* text effects */
@@ -212,6 +200,23 @@ img {
   }
 }
 
+/* flex */
+.d-flex {
+  display: flex !important;
+}
+
+.min-vh-100 {
+  min-height: 100vh !important;
+}
+
+.flex-column {
+  flex-direction: column !important;
+}
+
+.flex-grow-1 {
+  flex-grow: 1 !important;
+}
+
 /* utility */
 .p-5 {
   padding: 3rem !important;
@@ -234,21 +239,4 @@ img {
   font-size: calc(1.425rem + 2.1vw);
   font-weight: 300;
   line-height: 1.2;
-}
-
-/* flex */
-.d-flex {
-  display: flex !important;
-}
-
-.min-vh-100 {
-  min-height: 100vh !important;
-}
-
-.flex-column {
-  flex-direction: column !important;
-}
-
-.flex-grow-1 {
-  flex-grow: 1 !important;
 }
