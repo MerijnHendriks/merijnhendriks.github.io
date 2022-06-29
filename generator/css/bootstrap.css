@@ -4,73 +4,77 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  * https://getbootstrap.com/
  *
- * Stripped by Merijn Hendriks 
+ * Modified by Merijn Hendriks 
  */
 
 /* root */
 *,
 *::before,
 *::after {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 /* body */
 body {
-    margin: 0;
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
-    text-align: left;
-    color: #212529;
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: left;
+  color: #212529;
 }
 
 /* heading */
 h1, h2, h3, h4 {
-    margin-top: 0;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
-    line-height: 1.2;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  line-height: 1.2;
 }
 
 h1 {
-    font-size: calc(1.375rem + 1.5vw);
+  font-size: calc(1.375rem + 1.5vw);
 }
 
 h2 {
-    font-size: calc(1.325rem + 0.9vw);
+  font-size: calc(1.325rem + 0.9vw);
 }
 
 h3 {
-    font-size: calc(1.3rem + 0.6vw);
+  font-size: calc(1.3rem + 0.6vw);
 }
 
 h4 {
-    font-size: calc(1.275rem + 0.3vw);
+  font-size: calc(1.275rem + 0.3vw);
 }
 
 @media (min-width: 1200px) {
-    h1 {
-        font-size: 2.5rem;
-    }
+  h1 {
+    font-size: 2.5rem;
+  }
 
-    h2 {
-        font-size: 2rem;
-    }
+  h2 {
+    font-size: 2rem;
+  }
 
-    h3 {
-        font-size: 1.75rem;
-    }
+  h3 {
+    font-size: 1.75rem;
+  }
 
-    h4 {
-        font-size: 1.5rem;
-    }
+  h4 {
+    font-size: 1.5rem;
+  }
 }
 
 /* text */
 p {
-    margin-top: 0;
-    margin-bottom: 1rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+blockquote > p {
+  margin-bottom: 0rem;
 }
 
 /* lists */
@@ -92,103 +96,97 @@ ul ol {
   margin-bottom: 0;
 }
 
-/* blockquote */
 blockquote {
-    margin: 0 0 1rem;
-}
-
-.blockquote {
-    margin-bottom: 1rem;
-    font-size: 1.25rem;
-}
-
-.blockquote > :last-child {
-    margin-bottom: 0;
+  background: #f9f9f9;
+  border-left: 5px solid #ccc;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
 }
 
 /* text effects */
 strong {
-    font-weight: bolder;
+  font-weight: bolder;
 }
 
 small {
-    font-size: 0.875em;
+  font-size: 0.875em;
 }
 
 sup {
-    position: relative;
-    font-size: 0.75em;
-    line-height: 0;
-    vertical-align: baseline;
-    top: -0.5em;
+  position: relative;
+  font-size: 0.75em;
+  line-height: 0;
+  vertical-align: baseline;
+  top: -0.5em;
 }
 
 /* text link */
 a {
-    color: #007bff;
-    text-decoration: none;
-    background-color: transparent;
+  color: #007bff;
+  text-decoration: none;
+  background-color: transparent;
 }
 
 a:hover {
-    color: #0056b3;
-    text-decoration: underline;
+  color: #0056b3;
+  text-decoration: underline;
 }
 
 a:not([href]):not([class]) {
-    color: inherit;
-    text-decoration: none;
+  color: inherit;
+  text-decoration: none;
 }
 
 a:not([href]):not([class]):hover {
-    color: inherit;
-    text-decoration: none;
+  color: inherit;
+  text-decoration: none;
 }
 
 /* code */
 pre,
 code {
-    font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    font-size: 1em;
-    direction: ltr;
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 1em;
+  direction: ltr;
 }
 
 pre {
-    display: block;
-    margin-top: 0;
-    margin-bottom: 1rem;
-    overflow: auto;
-    font-size: 0.875em;
+  display: block;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  overflow: auto;
+  font-size: 0.875em;
 }
 
 code {
-    font-size: 0.875em;
-    color: #d63384;
-    word-wrap: break-word;
+  font-size: 0.875em;
+  color: #d63384;
+  word-wrap: break-word;
 }
 
 pre code {
-    font-size: inherit;
-    color: inherit;
-    word-break: normal;
+  font-size: inherit;
+  color: inherit;
+  word-break: normal;
 }
 
 /* image */
 img {
-    vertical-align: middle;
+  vertical-align: middle;
+  max-width: 100%;
 }
 
 @media (min-width: 1200px) {
-    .display-5 {
-        font-size: 3rem;
-    }
+  .display-5 {
+    font-size: 3rem;
+  }
 }
 
 /* grid system */
 .container-fluid {
-    width: 100%;
-    margin-right: auto;
-    margin-left: auto;
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .row {
@@ -197,65 +195,60 @@ img {
 }
 
 .row > * {
-    flex-shrink: 0;
-    width: 100%;
-    max-width: 100%;
+  flex-shrink: 0;
+  width: 100%;
+  max-width: 100%;
 }
 
 @media (min-width: 768px) {
-    .col-md-4 {
-        flex: 0 0 auto;
-        width: 33.33333333%;
-    }
+  .col-md-4 {
+    flex: 0 0 auto;
+    width: 33.33333333%;
+  }
 
-    .col-md-8 {
-        flex: 0 0 auto;
-        width: 66.66666667%;
-    }
+  .col-md-8 {
+    flex: 0 0 auto;
+    width: 66.66666667%;
+  }
 }
 
 /* utility */
 .p-5 {
-    padding: 3rem !important;
-}
-
-.px-3 {
-    padding-right: 1rem !important;
-    padding-left: 1rem !important;
+  padding: 3rem !important;
 }
 
 .py-5 {
-    padding-top: 3rem !important;
-    padding-bottom: 3rem !important;
+  padding-top: 3rem !important;
+  padding-bottom: 3rem !important;
 }
 
 .fs-4 {
-    font-size: calc(1.275rem + 0.3vw) !important;
+  font-size: calc(1.275rem + 0.3vw) !important;
 }
 
 .fw-bold {
-    font-weight: 700 !important;
+  font-weight: 700 !important;
 }
 
 .display-5 {
-    font-size: calc(1.425rem + 2.1vw);
-    font-weight: 300;
-    line-height: 1.2;
+  font-size: calc(1.425rem + 2.1vw);
+  font-weight: 300;
+  line-height: 1.2;
 }
 
 /* flex */
 .d-flex {
-    display: flex !important;
+  display: flex !important;
 }
 
 .min-vh-100 {
-    min-height: 100vh !important;
+  min-height: 100vh !important;
 }
 
 .flex-column {
-    flex-direction: column !important;
+  flex-direction: column !important;
 }
 
 .flex-grow-1 {
-    flex-grow: 1 !important;
+  flex-grow: 1 !important;
 }

@@ -1,37 +1,43 @@
 @charset "UTF-8";
 
-/* image */
-img {
-    max-width: 100%;
+/* blockquote */
+blockquote {
+  color: #555555;
+  background-color: #e2e3e5;
+  border-left-color: #d6d8db;
 }
 
-/* blockquote */
-.blog-blockquote {
-    font-size: 1rem;
-    background-color: #e9ecef;
+/* content */
+body {
+  background-color: #fff;
+}
+
+.blog-content {
+  color: #212529;
 }
 
 /* sidebar */
 .blog-sidebar {
-    background-color: #fbf3da;
+  color: #212529;
+  background-color: #f9f9f9;
 }
 
 /* banner */
 .blog-banner {
-    color: #fff;
-    background: linear-gradient(
-        rgba(249,178,148,1) 0%,
-        rgba(249,178,148,1) 52%,
-        rgba(241,114,128,1) 52%,
-        rgba(241,114,128,1) 68%,
-        rgba(192,108,134,1) 68%,
-        rgba(192,108,134,1) 84%,
-        rgba(109,92,126,1)  84%,
-        rgba(109,92,126,1)  100%
-    ); 
+  color: #fff;
+  background: linear-gradient(
+    #f9b294 0%,
+    #f9b294 52%,
+    #f17280 52%,
+    #f17280 68%,
+    #c06c86 68%,
+    #c06c86 84%,
+    #6d5c7e 84%,
+    #6d5c7e 100%
+  ); 
 }
 
 .blog-banner > * > * > a {
-    color: #fff;
-    text-decoration: none;
+  color: #fff;
+  text-decoration: none;
 }

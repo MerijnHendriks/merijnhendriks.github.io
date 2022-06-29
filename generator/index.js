@@ -1,14 +1,13 @@
 var fs = require("fs");
 var path = require("path");
-var linkedom = require("linkedom");
+const { JSDOM } = require("jsdom");
 var MarkdownIt = require("markdown-it");
 var mediaPlugin = require("markdown-it-html5-media");
 var prism = require("markdown-it-prism");
 var CleanCSS = require("clean-css");
 var htmlMinifier = require("html-minifier");
 
-var domParser = new linkedom.DOMParser();
-var md = new MarkdownIt()
+var md = new MarkdownIt({ "html": true })
   .use(mediaPlugin.html5Media)
   .use(prism, { "defaultLanguage": "txt" });
 var cssMinifier = new CleanCSS();
@@ -24,16 +23,14 @@ var htmlMinifyOptions = {
   "removeRedundantAttributes": true
 };
 
-function emptyCallback() { }
-
 async function writeFile(filepath, data) {
   if (!fs.existsSync(filepath)) {
     // create missing directories recursively
     var target = filepath.substr(0, filepath.lastIndexOf("/"));
-    await fs.mkdir(target, { "recursive": true }, emptyCallback);
+    await fs.mkdirSync(target, { "recursive": true });
   }
 
-  await fs.writeFile(filepath, data, emptyCallback);
+  await fs.writeFileSync(filepath, data);
 }
 
 function readFile(filepath) {
@@ -58,37 +55,19 @@ function getFilename(filepath) {
   return filepath.split('.').slice(0, -1).join('.');
 }
 
-function mdToHtml(markdown) {
-  return md.render(markdown);
-}
-
-function addBlogArticle(document, filename) {
-  var element = document.getElementById("blog-content");
-  var markdown = readFile("./md/" + filename + ".md");
-  element.innerHTML = mdToHtml(markdown);
-}
-
-function addBlockquoteStyling(document) {
-  var blockquotes = document.querySelectorAll("blockquote");
-  for (var i = 0; i < blockquotes.length; i++) {
-    blockquotes[i].classList.add("blockquote", "blog-blockquote", "px-3");
-  }
-}
-
-function minifyHtml(html) {
-  return htmlMinifier.minify(html, htmlMinifyOptions);
-}
-
 function generatePage(filename) {
   var html = readFile("./html/template.html");
-  var document = domParser.parseFromString(html);
+  var dom = new JSDOM(html);
+  var document = dom.window.document;
 
-  addBlogArticle(document, filename);
-  addBlockquoteStyling(document);
+  // generate markdown
+  var markdown = readFile("./md/" + filename + ".md");
+  var element = document.getElementsByClassName("blog-content")[0];
+  element.innerHTML = md.render(markdown);
 
   // add doctype to prevent quicks mode warning
   var result = "<!DOCTYPE html>" + document.documentElement.outerHTML;
-  return minifyHtml(result);
+  return htmlMinifier.minify(result, htmlMinifyOptions);
 }
 
 async function generateAllPages() {
@@ -106,8 +85,8 @@ async function generateAllPages() {
 async function generateCssBundle() {
   var files = getFiles("./css");
 
+  // set correct path
   for (var i = 0; i < files.length; i++) {
-    // set correct path
     files[i] = "./css/" + files[i];
   }
 
