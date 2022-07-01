@@ -49,6 +49,7 @@ Anything related to the development of this blog.
 
 A place to vent my fustrations.
 
+- [2022-07-01 - Common sense(lessness)](20220701-1.html)
 - [2022-06-24 - Code accessability](20220624-1.html)
 - [2022-06-12 - VSCode bloat](20220612-1.html)
 - [2022-06-07 - OOP and spaghetti bolognese](20220607-2.html)
