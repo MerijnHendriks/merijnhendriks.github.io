@@ -1,70 +1,70 @@
-<!DOCTYPE html><html lang="en"><head> <meta charset="utf-8"> <meta name="viewport" content="width=device-width,initial-scale=1"> <meta name="author" content="Merijn Hendriks"> <title>Merijn Hendriks</title> <link rel="icon" type="image/x-icon" href="./assets/img/favicon.ico"> <link rel="stylesheet" type="text/css" href="./assets/css/bundle.css"> </head> <body> <div class="container-fluid min-vh-100 d-flex flex-column"> <header class="p-5 blog-banner"> <div class="container-fluid py-5"> <h1 class="display-5 fw-bold"><a href="./index.html">Merijn Hendriks</a></h1> <p class="col-md-8 fs-4">Programmer, Creative, Nerd</p> </div> </header> <div class="row flex-grow-1"> <main class="col-md-8 p-5"> <article class="blog-content"><h1>Operating systems</h1> <p>I've ran Ubuntu 22.04 (with my own tweaks) as my main operating system for the past months, but ended going back to windows 10 LTSC2021 because one of my favorite video games (Genshin Impact) couldn't run on my system. Both have advantages and shortcomings, so today I'll discuss how I use my computer for a bit.</p> <h2>What do I do?</h2> <p>My laptop is basically what for many people a smartphone is these days; I take it everywhere, I do pretty much everything except calls on it. I like to play AAA games from 2016 and before, as well as lighter indie games released today. I type a lot on it, and do a lot of programming on it as well (C, C#).Heavier workloads includes compiling C++ projects, running Escape From Tarkov with abyssmal quality, Genshin Impact and having many tabs open.</p> <p>My system specs aren't great but neither poor:</p> <ul> <li>AMD Ryzen 5 5500U</li> <li>2x4GB 3200MHz RAM</li> <li>512GB NVME</li> </ul> <h2>Ubuntu 22.04</h2> <p>Compared to the previous versions I've used (14.04, 16.04) it was a real blast to use. However, it's performance and stability didn't live up to 20.04's standards. They also completely removed the mini-iso, so I had to write my own script to strip Ubuntu to the bare-minimum required:</p> <pre class="language-txt"><code class="language-txt">#!/bin/bash
-# run this as root
+<!DOCTYPE html><html lang="en"><head> <meta charset="utf-8"> <meta name="viewport" content="width=device-width,initial-scale=1"> <meta name="author" content="Merijn Hendriks"> <title>Merijn Hendriks</title> <link rel="icon" type="image/x-icon" href="./assets/img/favicon.ico"> <link rel="stylesheet" type="text/css" href="./assets/css/bundle.css"> </head> <body> <div class="container-fluid min-vh-100 d-flex flex-column"> <header class="p-5 blog-banner"> <div class="container-fluid py-5"> <h1 class="display-5 fw-bold"><a href="./index.html">Merijn Hendriks</a></h1> <p class="col-md-8 fs-4">Programmer, Creative, Nerd</p> </div> </header> <div class="row flex-grow-1"> <main class="col-md-8 p-5"> <article class="blog-content"><h1>Operating systems</h1> <p>I've ran Ubuntu 22.04 (with my own tweaks) as my main operating system for the past months, but ended going back to windows 10 LTSC2021 because one of my favorite video games (Genshin Impact) couldn't run on my system. Both have advantages and shortcomings, so today I'll discuss how I use my computer for a bit.</p> <h2>What do I do?</h2> <p>My laptop is basically what for many people a smartphone is these days; I take it everywhere, I do pretty much everything except calls on it. I like to play AAA games from 2016 and before, as well as lighter indie games released today. I type a lot on it, and do a lot of programming on it as well (C, C#).Heavier workloads includes compiling C++ projects, running Escape From Tarkov with abyssmal quality, Genshin Impact and having many tabs open.</p> <p>My system specs aren't great but neither poor:</p> <ul> <li>AMD Ryzen 5 5500U</li> <li>2x4GB 3200MHz RAM</li> <li>512GB NVME</li> </ul> <h2>Ubuntu 22.04</h2> <p>Compared to the previous versions I've used (14.04, 16.04) it was a real blast to use. However, it's performance and stability didn't live up to 20.04's standards. They also completely removed the mini-iso, so I had to write my own script to strip Ubuntu to the bare-minimum required:</p> <pre class="language-bash"><code class="language-bash"><span class="token shebang important">#!/bin/bash</span>
+<span class="token comment"># run this as root</span>
 
-# update ppa cache
-apt update
+<span class="token comment"># update ppa cache</span>
+<span class="token function">apt</span> update
 
-# remove snap and software using it
-snap remove firefox gtk-common-themes snap-store snap-desktop-integration \
+<span class="token comment"># remove snap and software using it</span>
+snap remove firefox gtk-common-themes snap-store snap-desktop-integration <span class="token punctuation">\</span>
 gnome-3-38-2004 core20 bare snapd
-apt purge -y snapd
-rm -rf /snap /var/snap /var/lib/snapd ~/snap
+<span class="token function">apt</span> purge -y snapd
+<span class="token function">rm</span> -rf /snap /var/snap /var/lib/snapd ~/snap
 
-# remove apt software
-apt purge -y ubuntu-desktop ubuntu-desktop-minimal vim-common update-notifier \
-evince yelp gedit totem eog thunderbird libreoffice-common \
-libreoffice-style-colibre  gnome-startup-applications network-manager-gnome \
-whoopsie apport rygel gnome-online-accounts xdg-desktop-portal \
-network-manager-openvpn network-manager-pptp mobile-broadband-provider-info \
-ppp cups-common cups-pk-helper gnome-control-center-faces libcanberra-pulse \
-orca gnome-accessibility-themes gnome-remote-desktop plymouth ibus \
+<span class="token comment"># remove apt software</span>
+<span class="token function">apt</span> purge -y ubuntu-desktop ubuntu-desktop-minimal vim-common update-notifier <span class="token punctuation">\</span>
+evince yelp gedit totem eog thunderbird libreoffice-common <span class="token punctuation">\</span>
+libreoffice-style-colibre  gnome-startup-applications network-manager-gnome <span class="token punctuation">\</span>
+whoopsie apport rygel gnome-online-accounts xdg-desktop-portal <span class="token punctuation">\</span>
+network-manager-openvpn network-manager-pptp mobile-broadband-provider-info <span class="token punctuation">\</span>
+ppp cups-common cups-pk-helper gnome-control-center-faces libcanberra-pulse <span class="token punctuation">\</span>
+orca gnome-accessibility-themes gnome-remote-desktop plymouth ibus <span class="token punctuation">\</span>
 ubuntu-release-upgrader-core nautilus-sendto nautilus-extension-gnome-terminal
 
-# remove fonts
-apt purge -y fonts-indic fonts-liberation fonts-liberation2 fonts-noto-mono \
+<span class="token comment"># remove fonts</span>
+<span class="token function">apt</span> purge -y fonts-indic fonts-liberation fonts-liberation2 fonts-noto-mono <span class="token punctuation">\</span>
 fonts-droid-fallback fonts-urw-base35 fonts-freefont-ttf
 
-# reinstall important stuff
-apt install -y --no-install-recommends linux-sound-base acpi-support \
-gnome-session gdm3 gnome-shell-extension-prefs gnome-terminal \
+<span class="token comment"># reinstall important stuff</span>
+<span class="token function">apt</span> <span class="token function">install</span> -y --no-install-recommends linux-sound-base acpi-support <span class="token punctuation">\</span>
+gnome-session gdm3 gnome-shell-extension-prefs gnome-terminal <span class="token punctuation">\</span>
 gnome-system-monitor gnome-bluetooth gnome-software nautilus ubuntu-settings
 
-# reinstall yaru theme
-apt install -y --no-install-recommends yaru-theme-gnome-shell yaru-theme-gtk \
+<span class="token comment"># reinstall yaru theme</span>
+<span class="token function">apt</span> <span class="token function">install</span> -y --no-install-recommends yaru-theme-gnome-shell yaru-theme-gtk <span class="token punctuation">\</span>
 yaru-theme-sound yaru-theme-icon ubuntu-sounds fonts-ubuntu fonts-ubuntu-console
-gsettings set org.gnome.desktop.interface cursor-theme 'Yaru'
+gsettings <span class="token builtin class-name">set</span> org.gnome.desktop.interface cursor-theme <span class="token string">'Yaru'</span>
 
-# remove remains
-apt autoremove -y --purge
+<span class="token comment"># remove remains</span>
+<span class="token function">apt</span> autoremove -y --purge
 
-# update all packages
-apt dist-upgrade -y
+<span class="token comment"># update all packages</span>
+<span class="token function">apt</span> dist-upgrade -y
 
-# remove unused icons
-rm /usr/share/applications/software-properties-drivers.desktop
-rm /usr/share/applications/gnome-language-selector.desktop
+<span class="token comment"># remove unused icons</span>
+<span class="token function">rm</span> /usr/share/applications/software-properties-drivers.desktop
+<span class="token function">rm</span> /usr/share/applications/gnome-language-selector.desktop
 
-# disable autostart
-rm /etc/xdg/autostart/gnome-software-service.desktop
-</code></pre> <p>This results in an ubuntu installation with pretty much everything stripped with the exception of the GNOME 42 desktop environment. In this configuration, Ubuntu 22.04 uses ~900MB RAM (no user applications running) instead of 1.5GB. For most modern systems with 16GB RAM or more, it doesn't matter unless you're running intensive games as well. For my 8GB RAM device it made a huge difference in how usable it was however.</p> <p>Most of the applications I use I install as flatpak:</p> <pre class="language-txt"><code class="language-txt"># apt
-apt install -y --no-install-recommends gnome-tweaks
-apt install -y --no-install-recommends gnome-software-plugin-flatpak
-apt install -y --no-install-recommends xdg-desktop-portal-gtk
-apt install -y --no-install-recommends xdg-desktop-portal-gnome
+<span class="token comment"># disable autostart</span>
+<span class="token function">rm</span> /etc/xdg/autostart/gnome-software-service.desktop
+</code></pre> <p>This results in an ubuntu installation with pretty much everything stripped with the exception of the GNOME 42 desktop environment. In this configuration, Ubuntu 22.04 uses ~900MB RAM (no user applications running) instead of 1.5GB. For most modern systems with 16GB RAM or more, it doesn't matter unless you're running intensive games as well. For my 8GB RAM device it made a huge difference in how usable it was however.</p> <p>Most of the applications I use I install as flatpak:</p> <pre class="language-bash"><code class="language-bash"><span class="token comment"># apt</span>
+<span class="token function">apt</span> <span class="token function">install</span> -y --no-install-recommends gnome-tweaks
+<span class="token function">apt</span> <span class="token function">install</span> -y --no-install-recommends gnome-software-plugin-flatpak
+<span class="token function">apt</span> <span class="token function">install</span> -y --no-install-recommends xdg-desktop-portal-gtk
+<span class="token function">apt</span> <span class="token function">install</span> -y --no-install-recommends xdg-desktop-portal-gnome
  
-# flathub
+<span class="token comment"># flathub</span>
 flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 flatpak remote-add --if-not-exists flathub-beta https://flathub.org/beta-repo/flathub-beta.flatpakrepo
 flatpak update --appstream
-flatpak install -y flathub com.github.tchx84.Flatseal
-flatpak install -y flathub com.mattjakeman.ExtensionManager
-flatpak install -y flathub org.gnome.FileRoller
-flatpak install -y flathub org.gnome.Epiphany
-flatpak install -y flathub org.gnome.TextEditor
-flatpak install -y flathub org.gnome.eog
-flatpak install -y flathub io.github.celluloid_player.Celluloid
-flatpak install -y flathub com.discordapp.Discord
-flatpak install -y flathub com.wps.Office
-flatpak install -y flathub com.valvesoftware.Steam
-flatpak install -y flathub com.github.Matoking.protontricks
+flatpak <span class="token function">install</span> -y flathub com.github.tchx84.Flatseal
+flatpak <span class="token function">install</span> -y flathub com.mattjakeman.ExtensionManager
+flatpak <span class="token function">install</span> -y flathub org.gnome.FileRoller
+flatpak <span class="token function">install</span> -y flathub org.gnome.Epiphany
+flatpak <span class="token function">install</span> -y flathub org.gnome.TextEditor
+flatpak <span class="token function">install</span> -y flathub org.gnome.eog
+flatpak <span class="token function">install</span> -y flathub io.github.celluloid_player.Celluloid
+flatpak <span class="token function">install</span> -y flathub com.discordapp.Discord
+flatpak <span class="token function">install</span> -y flathub com.wps.Office
+flatpak <span class="token function">install</span> -y flathub com.valvesoftware.Steam
+flatpak <span class="token function">install</span> -y flathub com.github.Matoking.protontricks
 </code></pre> <p>The performance is akin to the apt distributed versions, increase in RAM usage isn't very noticable. This setup does ensure that I always get the latest versions of applications where it matters. Even if flatpaks and such take a lot more space due to runtimes compared to apt, the whole installation is only 11GB in size.</p> <p>The GNOME desktop itself is really sweet to use, especially customizable with the styling consistency that I expect from a macbook machine. Sure its not the most feature rich, but I got my trusty <code>tty3</code> / gnome terminal for those tasks.</p> <p>The terminals for linux make it easy enough for me to pretty much live in them when I'm programming. It's faster to <code>cd</code>, <code>ls</code> <code>mkdir</code> and <code>rm</code> than having to use my mouse for those tasks. When programming, I love to use the <code>nano</code> editor since it got no frills nor distractions.</p> <p>Running windows software is... as probably anyone would suspect, a pain for "niece" games like Genshin Impact that do not run through Steam's proton and include intrusive anti-cheat. While I often make a concious decision to not play or buy those games, life to me is too short to live and die by this rule.</p> <p>While I'm sure that Genshin Impact and Escape From Tarkov can be made to work with Ubuntu 22.04, I have too little time to waste on these endeavours. And thus, I moved back to windows.</p> <h2>Windows 10 Enterprise LTSC 2021</h2> <p>Of course, I'm not going to the standard version of windows. The LTSC version gives me all the control of the enterprise variants, minus all the bloat from standard windows. After updating and cleaning up the mess windows leaves behind from doing so, it is 20GB in size and uses 2GB with no applications running. This is more than twice as large as my stripped Ubuntu 22.04 build, and I did indeed notice this.</p> <p>My biggest gripe with Windows 10 is the telemetry, but luckily it can disabled by using a piece of software called WPD (Windows Privacy Dashboard). Blocking windows update is another nice bonus, but it doesn't bother me as much since LTSC provides many facilities to make it bearable.</p> <p>Since epiphany is not available as browser on windows, firefox doesn't run that great for me and I really don't feel like installing chrome, I ended up giving microsoft edge a test drive. It suprised me as it exceeded all my expectations. The telemetry and such all goes through window's telemetry system so all of that gets blocked by WPD thanks to group policy support in LTSC.</p> <p>The new tab page bothered me so I changed it to <code>chrome-search://local-ntp/local-ntp.html</code> using an extension called tab redirect. I also use ublock origin with all filters enabled and more to reduce bandwith used, and I block pretty much everything in the browser. Everything I don't need gets didged on closing the browser. After messing with the settings tab, RAM usage is very low; 210MB for a youtube video (compared to 350MB on epiphany). It loads all my websites just fine.</p> <p>Setting up my programming environment was a bit rough. I had to use msys2 to get my toolchain for C++ to work nicely since I don't want to use visual studio 2022. It still sucks that there is no text editor with less frills (no, notepad++ doesn't count) but I can make do.</p> <p>Of couse, Genshin Impact and Escape From Tarkov are playable on windows and gaming is still as amazing as ever. Also much less of a pain to set up compared to Ubuntu 22.04, but that's to be expected.</p> <h2>Conclusion</h2> <p>Ubuntu 22.04 works great with a bit of initial setup, gaming is a bit of a pain but I really love a command-line oriented setup and having the desktop environment as simple as possible. In windows 10 LTSC on the other hand I get the gaming experience that I'm looking for, and a pretty neat browser to my suprise but not the performance. For now I can run windows 10 LTSC for a while longer, but I hope I can do the things I want to do in linux by the time I need a new device.</p> </article> </main> <aside class="col-md-4 p-5 blog-sidebar"> <h4>About</h4> <p>Hi! I'm a Dutch programmer with a love for hamburgers and sake nigiri. When I'm not programming all day, you can find me reading manga, playing S.T.A.L.K.E.R.: Call of Pripyat or D&amp;D5E / MTG with friends.</p> <h4>Links</h4> <ul> <li><a href="https://www.github.com/merijnhendriks">Github</a></li> <li><a href="mailto:merijn.d.hendriks@gmail.com">Email</a></li> </ul> </aside> </div> </div> </body></html>

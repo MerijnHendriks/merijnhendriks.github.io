@@ -4,7 +4,7 @@ A small markdown blog generator.
 
 ## Requirements
 
-- NodeJS 12
+- NodeJS 14
 
 ## Setup
 

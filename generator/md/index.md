@@ -60,6 +60,7 @@ A place to vent my fustrations.
 
 Stuff that fits no other category.
 
+- [2022-08-10 - Operating systems](20220810-1.html)
 - [2022-06-24 - Importance of elders](20220624-3.html)
 - [2022-06-24 - War](20220624-2.html)
 - [2022-05-25 - Hello, world! (again)](20220525-1.html)
