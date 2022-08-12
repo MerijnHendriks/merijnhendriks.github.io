@@ -49,7 +49,7 @@ Anything related to the development of this blog.
 
 Other programming related things.
 
-- [2022-08-12 - Designing a language](20220812-2.html)
+- [2022-08-12 - Programming language wishlist](20220812-2.html)
 
 ## Rants
 
