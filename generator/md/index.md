@@ -45,6 +45,12 @@ Anything related to the development of this blog.
 - [2022-06-01 - Creation](20220601-2.html)
 - [2022-06-01 - Update](20220601-1.html)
 
+## Programming
+
+Other programming related things.
+
+- [2022-08-12 - Designing a language](20220812-2.html)
+
 ## Rants
 
 A place to vent my fustrations.
