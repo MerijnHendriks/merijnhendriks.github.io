@@ -28,6 +28,7 @@ articles and polish them a bit and/or fix mistakes in wording and/or grammar.
 
 ## Technology
 
+- [2022-08-31 - Hardening my devices](20220831-2.html)
 - [2022-08-10 - Operating systems](20220810-1.html)
 
 ## Website
