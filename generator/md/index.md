@@ -55,6 +55,7 @@ A place to vent my fustrations.
 
 Stuff that fits no other category.
 
+- [2022-09-09 - Addicted to my smartphone](20220909-1.html)
 - [2022-08-12 - Mankind's future](20220812-1.html)
 - [2022-06-24 - Importance of elders](20220624-3.html)
 - [2022-06-24 - War](20220624-2.html)
