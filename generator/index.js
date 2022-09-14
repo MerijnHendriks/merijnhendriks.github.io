@@ -1,3 +1,4 @@
+var crypto = require("crypto");
 var fs = require("fs");
 var path = require("path");
 const { JSDOM } = require("jsdom");
@@ -7,6 +8,7 @@ var prism = require("markdown-it-prism");
 var CleanCSS = require("clean-css");
 var htmlMinifier = require("html-minifier");
 
+var dbpath = "./cache/hash.json";
 var md = new MarkdownIt({ "html": true })
   .use(mediaPlugin.html5Media)
   .use(prism, { "defaultLanguage": "txt" });
@@ -70,24 +72,55 @@ function generatePage(filename) {
   return htmlMinifier.minify(result, htmlMinifyOptions);
 }
 
-async function generateAllPages() {
+function didHashChange(hashdb, filepath) {
+  var buffer = fs.readFileSync(filepath);
+  var hash = crypto.createHash("sha256");
+  hash.update(buffer);
+  var result = hash.digest("hex");
+
+  if (!hashdb[filepath] || hashdb[filepath] !== result) {
+    hashdb[filepath] = result;
+    return true;
+  }
+
+  return false;
+}
+
+async function generateAllPages(hashdb) {
   var filepath = "./md";
   var files = getFiles(filepath);
 
   for (var i = 0; i < files.length; i++) {
     var filename = getFilename(files[i]);
+
+    if (!didHashChange(hashdb, `${filepath}/${files[i]}`)) {
+      console.log("Skip generating page: " + filename);
+      continue;
+    }
+    
     console.log("Generating page: " + filename);
     var html = generatePage(filename);
     await writeFile("../" + filename + ".html", html);
   }
 }
 
-async function generateCssBundle() {
+async function generateCssBundle(hashdb) {
   var files = getFiles("./css");
+  var changed = 0;
 
-  // set correct path
   for (var i = 0; i < files.length; i++) {
+    // set correct path
     files[i] = "./css/" + files[i];
+
+    // check if file changed
+    if (didHashChange(hashdb, files[i])) {
+      changed++;
+    }
+  }
+
+  if (changed === 0) {
+    console.log("Skip generating file: css bundle");
+    return;
   }
 
   console.log("Generating file: css bundle");
@@ -97,8 +130,15 @@ async function generateCssBundle() {
 }
 
 async function main() {
-  await generateAllPages();
-  await generateCssBundle();
+  // load hashdb
+  var hashdb = fs.existsSync(dbpath) ? JSON.parse(readFile(dbpath)) : {};
+  
+  // generate pages
+  await generateAllPages(hashdb);
+  await generateCssBundle(hashdb);
+
+  // save hashdb
+  writeFile(dbpath, JSON.stringify(hashdb), null, "\t");
 }
 
 main();
