@@ -138,7 +138,7 @@ async function main() {
   await generateCssBundle(hashdb);
 
   // save hashdb
-  writeFile(dbpath, JSON.stringify(hashdb), null, "\t");
+  await writeFile(dbpath, JSON.stringify(hashdb), null, "\t");
 }
 
 main();
