@@ -28,6 +28,7 @@ articles and polish them a bit and/or fix mistakes in wording and/or grammar.
 
 ## Technology
 
+- [2022-09-15 - Hardening ubuntu 22.04](20220915-1.html)
 - [2022-08-31 - Hardening my devices](20220831-2.html)
 - [2022-08-10 - Operating systems](20220810-1.html)
 
