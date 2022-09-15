@@ -8,7 +8,6 @@ var prism = require("markdown-it-prism");
 var CleanCSS = require("clean-css");
 var htmlMinifier = require("html-minifier");
 
-var dbpath = "./cache/hash.json";
 var md = new MarkdownIt({ "html": true })
   .use(mediaPlugin.html5Media)
   .use(prism, { "defaultLanguage": "txt" });
@@ -131,6 +130,7 @@ function generateCssBundle(hashdb) {
 
 function main() {
   // load hashdb
+  var dbpath = "./cache/hash.json";
   var hashdb = fs.existsSync(dbpath) ? JSON.parse(readFile(dbpath)) : {};
   
   // generate pages
