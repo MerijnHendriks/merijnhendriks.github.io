@@ -8,7 +8,6 @@ var prism = require("markdown-it-prism");
 var CleanCSS = require("clean-css");
 var htmlMinifier = require("html-minifier");
 
-var config = JSON.parse(readFile("./config.json"));
 var md = new MarkdownIt({ "html": true })
   .use(mediaPlugin.html5Media)
   .use(prism, { "defaultLanguage": "txt" });
@@ -24,6 +23,9 @@ var htmlMinifyOptions = {
   "removeEmptyElements": true,
   "removeRedundantAttributes": true
 };
+
+var config = {};
+var hashdb = {};
 
 function writeFile(filepath, data) {
   if (!fs.existsSync(filepath)) {
@@ -57,27 +59,39 @@ function getFilename(filepath) {
   return filepath.split('.').slice(0, -1).join('.');
 }
 
+function jsonPrettify(o) {
+  return JSON.stringify(o, null, 4)
+}
+
+function getLinks() {
+  var html = "";
+  var links = config.page.links;
+  var keys = Object.keys(links);
+
+  for (var i = 0; i < keys.length; i++) {
+    var key = keys[i];
+    html += '<li><a href="' + links[key] + '">' + key + '</a></li>';
+  }
+
+  return html;
+}
+
 function generatePage(filename) {
-  var html = readFile("./html/template.html");
+  var html = readFile(config.input.templates + "page.html");
 
   // replace template strings
-  html = html.replaceAll("<!-- $author -->", config.author);
-  html = html.replaceAll("<!-- $description -->", config.description);
-  html = html.replaceAll("<!-- $banner -->", config.banner);
-  html = html.replaceAll("<!-- $about -->", config.about);
-
-  let links = "";
-  for (const key in config.links) {
-    links += '<li><a href="' + config.links[key] + '">' + key + '</a></li>';
-  }
-  html = html.replaceAll("<!-- $links -->", links);
+  html = html.replaceAll("<!-- $author -->", config.general.author);
+  html = html.replaceAll("<!-- $description -->", config.general.description);
+  html = html.replaceAll("<!-- $banner -->", config.page.banner);
+  html = html.replaceAll("<!-- $about -->", config.page.about);
+  html = html.replaceAll("<!-- $links -->", getLinks());
 
   // load document
   var dom = new JSDOM(html);
   var document = dom.window.document;
 
   // generate markdown
-  var markdown = readFile("./md/" + filename + ".md");
+  var markdown = readFile(config.input.md + filename + ".md");
   var element = document.getElementsByClassName("blog-content")[0];
   element.innerHTML = md.render(markdown);
 
@@ -86,7 +100,7 @@ function generatePage(filename) {
   return htmlMinifier.minify(result, htmlMinifyOptions);
 }
 
-function didHashChange(hashdb, filepath) {
+function didHashChange(filepath) {
   var buffer = fs.readFileSync(filepath);
   var hash = crypto.createHash("sha256");
   hash.update(buffer);
@@ -100,39 +114,38 @@ function didHashChange(hashdb, filepath) {
   return false;
 }
 
-function generateAllPages(hashdb, force) {
-  var filepath = "./md";
-  var files = getFiles(filepath);
+function generateAllPages() {
+  var files = getFiles(config.input.md);
 
   for (var i = 0; i < files.length; i++) {
     var filename = getFilename(files[i]);
 
-    if (!force && !didHashChange(hashdb, `${filepath}/${files[i]}`)) {
+    if (!didHashChange(config.input.md + files[i])) {
       console.log("Skip generating page: " + filename);
       continue;
     }
     
     console.log("Generating page: " + filename);
     var html = generatePage(filename);
-    writeFile("../" + filename + ".html", html);
+    writeFile(config.output.html + filename + ".html", html);
   }
 }
 
-function generateCssBundle(hashdb, force) {
-  var files = getFiles("./css");
+function generateCssBundle() {
+  var files = getFiles(config.input.css);
   var changed = 0;
 
   for (var i = 0; i < files.length; i++) {
     // set correct path
-    files[i] = "./css/" + files[i];
+    files[i] = config.input.css + files[i];
 
     // check if file changed
-    if (didHashChange(hashdb, files[i])) {
+    if (didHashChange(files[i])) {
       changed++;
     }
   }
 
-  if (!force && changed === 0) {
+  if (changed === 0) {
     console.log("Skip generating file: css bundle");
     return;
   }
@@ -140,22 +153,24 @@ function generateCssBundle(hashdb, force) {
   console.log("Generating file: css bundle");
   console.log(files);
   var minified = cssMinifier.minify(files);
-  writeFile("../assets/css/bundle.css", minified.styles);
+  writeFile(config.output.css, minified.styles);
 }
 
 function main() {
+  // load config
+  config = JSON.parse(readFile("./assets/config.json"));
+
   // load hashdb
-  var dbpath = "./cache/hash.json";
-  var hashdb = fs.existsSync(dbpath) ? JSON.parse(readFile(dbpath)) : {};
-  var force = didHashChange(hashdb, "./config.json")
-    || didHashChange(hashdb, "./html/template.html");
+  hashdb = fs.existsSync(config.input.hashdb)
+    ? JSON.parse(readFile(config.input.hashdb))
+    : {};
 
   // generate pages
-  generateAllPages(hashdb, force);
-  generateCssBundle(hashdb, force);
+  generateAllPages();
+  generateCssBundle();
 
   // save hashdb
-  writeFile(dbpath, JSON.stringify(hashdb), null, "\t");
+  writeFile(config.input.hashdb, jsonPrettify(hashdb));
 }
 
 main();
