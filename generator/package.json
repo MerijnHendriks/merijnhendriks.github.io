@@ -10,8 +10,5 @@
     "markdown-it-html5-media": "^0.7.1",
     "markdown-it-prism": "^2.2.4",
     "markdown-it-title": "^4.0.0"
-  },
-  "scripts": {
-    "build": "node index.js"
   }
 }
