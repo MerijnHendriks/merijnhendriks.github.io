@@ -8,6 +8,7 @@ var prism = require("markdown-it-prism");
 var CleanCSS = require("clean-css");
 var htmlMinifier = require("html-minifier");
 
+var config = JSON.parse(readFile("./config.json"));
 var md = new MarkdownIt({ "html": true })
   .use(mediaPlugin.html5Media)
   .use(prism, { "defaultLanguage": "txt" });
@@ -58,6 +59,20 @@ function getFilename(filepath) {
 
 function generatePage(filename) {
   var html = readFile("./html/template.html");
+
+  // replace template strings
+  html = html.replaceAll("<!-- $author -->", config.author);
+  html = html.replaceAll("<!-- $description -->", config.description);
+  html = html.replaceAll("<!-- $banner -->", config.banner);
+  html = html.replaceAll("<!-- $about -->", config.about);
+
+  let links = "";
+  for (const key in config.links) {
+    links += '<li><a href="' + config.links[key] + '">' + key + '</a></li>';
+  }
+  html = html.replaceAll("<!-- $links -->", links);
+
+  // load document
   var dom = new JSDOM(html);
   var document = dom.window.document;
 
@@ -85,14 +100,14 @@ function didHashChange(hashdb, filepath) {
   return false;
 }
 
-function generateAllPages(hashdb) {
+function generateAllPages(hashdb, force) {
   var filepath = "./md";
   var files = getFiles(filepath);
 
   for (var i = 0; i < files.length; i++) {
     var filename = getFilename(files[i]);
 
-    if (!didHashChange(hashdb, `${filepath}/${files[i]}`)) {
+    if (!force && !didHashChange(hashdb, `${filepath}/${files[i]}`)) {
       console.log("Skip generating page: " + filename);
       continue;
     }
@@ -103,7 +118,7 @@ function generateAllPages(hashdb) {
   }
 }
 
-function generateCssBundle(hashdb) {
+function generateCssBundle(hashdb, force) {
   var files = getFiles("./css");
   var changed = 0;
 
@@ -117,7 +132,7 @@ function generateCssBundle(hashdb) {
     }
   }
 
-  if (changed === 0) {
+  if (!force && changed === 0) {
     console.log("Skip generating file: css bundle");
     return;
   }
@@ -132,10 +147,12 @@ function main() {
   // load hashdb
   var dbpath = "./cache/hash.json";
   var hashdb = fs.existsSync(dbpath) ? JSON.parse(readFile(dbpath)) : {};
-  
+  var force = didHashChange(hashdb, "./config.json")
+    || didHashChange(hashdb, "./html/template.html");
+
   // generate pages
-  generateAllPages(hashdb);
-  generateCssBundle(hashdb);
+  generateAllPages(hashdb, force);
+  generateCssBundle(hashdb, force);
 
   // save hashdb
   writeFile(dbpath, JSON.stringify(hashdb), null, "\t");
