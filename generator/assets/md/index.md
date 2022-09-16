@@ -5,6 +5,8 @@ articles and polish them a bit and/or fix mistakes in wording and/or grammar.
 
 ## Programming
 
+Mostly how to make C do things that its's not meant for.
+
 - [2022-08-31 - Making VSCode work](20220831-1.html)
 - [2022-08-12 - Programming language wishlist](20220812-2.html)
 - [2022-06-29 - C89-OOP: Conclusion](20220629-3.html)
@@ -27,6 +29,8 @@ articles and polish them a bit and/or fix mistakes in wording and/or grammar.
 - [2022-05-25 - C89-Goto: Thoughts](20220525-2.html)
 
 ## Technology
+
+Mostly about operating systems.
 
 - [2022-09-15 - Hardening ubuntu 22.04](20220915-1.html)
 - [2022-08-31 - Hardening my devices](20220831-2.html)
