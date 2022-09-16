@@ -1,16 +1,17 @@
-var crypto = require("crypto");
-var fs = require("fs");
-var path = require("path");
-var { JSDOM } = require("jsdom");
-var MarkdownIt = require("markdown-it");
-var mdmedia = require("markdown-it-html5-media");
-var mdprism = require("markdown-it-prism");
-var mdtitle = require("markdown-it-title");
-var CleanCSS = require("clean-css");
-var htmlMinifier = require("html-minifier");
+const crypto = require("crypto");
+const fs = require("fs");
+const path = require("path");
+const { JSDOM } = require("jsdom");
+const MarkdownIt = require("markdown-it");
+const mdmedia = require("markdown-it-html5-media");
+const mdprism = require("markdown-it-prism");
+const mdtitle = require("markdown-it-title");
+const CleanCSS = require("clean-css");
+const htmlMinifier = require("html-minifier");
 
-var cssMinifier = new CleanCSS();
-var htmlMinifyOptions = {
+// package globals
+const cssMinifier = new CleanCSS();
+const htmlMinifyOptions = {
   "collapseInlineTagWhitespace": true,
   "collapseWhitespace": true,
   "conservativeCollapse": true,
@@ -22,13 +23,14 @@ var htmlMinifyOptions = {
   "removeRedundantAttributes": true
 };
 
-var config = {};
-var hashdb = {};
+// program globals
+let config = {};
+let hashdb = {};
 
 function writeFile(filepath, data) {
   if (!fs.existsSync(filepath)) {
     // create missing directories recursively
-    var target = filepath.substr(0, filepath.lastIndexOf("/"));
+    const target = filepath.substr(0, filepath.lastIndexOf("/"));
     fs.mkdirSync(target, { "recursive": true });
   }
 
@@ -40,17 +42,8 @@ function readFile(filepath) {
 }
 
 function getFiles(filepath) {
-  var files = fs.readdirSync(filepath);
-  var i = files.length;
-
-  while (i--) {
-    var item = path.join(filepath, files[i]);
-    if (!fs.statSync(item).isFile()) {
-      files.splice(i, 1);
-    }
-  }
-
-  return files;
+  return fs.readdirSync(filepath).filter(
+    x => fs.statSync(path.join(filepath, x)).isFile());
 }
 
 function getFilename(filepath) {
@@ -62,15 +55,15 @@ function jsonPrettify(o) {
 }
 
 function mdToHtml(markdown) {
-  var md = new MarkdownIt({ "html": true })
+  const md = new MarkdownIt({ "html": true })
     .use(mdmedia.html5Media)
     .use(mdprism, { "defaultLanguage": "txt" });
   return md.render(markdown);
 }
 
 function getMdTitle(markdown) {
-  var result = {};
-  var md = new MarkdownIt({ "html": true })
+  let result = {};
+  const md = new MarkdownIt({ "html": true })
     .use(mdtitle, { "level": 1, "excerpt": 1});
 
   md.render(markdown, result);
@@ -78,12 +71,10 @@ function getMdTitle(markdown) {
 }
 
 function getLinks() {
-  var html = "";
-  var links = config.page.links;
-  var keys = Object.keys(links);
+  let html = "";
+  const links = config.page.links;
 
-  for (var i = 0; i < keys.length; i++) {
-    var key = keys[i];
+  for (let key in links) {
     html += '<li><a href="' + links[key] + '">' + key + '</a></li>';
   }
 
@@ -92,7 +83,7 @@ function getLinks() {
 
 function generatePage(filename) {
   console.log("Generating page: " + filename);
-  var html = readFile(config.input.templates + "page.html");
+  let html = readFile(config.input.templates + "page.html");
 
   // replace template strings
   html = html.replaceAll("<!-- $author -->", config.general.author);
@@ -102,27 +93,27 @@ function generatePage(filename) {
   html = html.replaceAll("<!-- $links -->", getLinks());
 
   // load document
-  var dom = new JSDOM(html);
-  var document = dom.window.document;
+  const dom = new JSDOM(html);
+  const document = dom.window.document;
 
   // generate markdown
-  var markdown = readFile(config.input.md + filename + ".md");
-  var element = document.getElementsByClassName("blog-content")[0];
+  const markdown = readFile(config.input.md + filename + ".md");
+  const element = document.getElementsByClassName("blog-content")[0];
   element.innerHTML = mdToHtml(markdown);
 
   // add doctype to prevent quicks mode warning
-  var doctypefix = "<!DOCTYPE html>" + document.documentElement.outerHTML;
+  let result = "<!DOCTYPE html>" + document.documentElement.outerHTML;
 
   // save result minified
-  var result = htmlMinifier.minify(doctypefix, htmlMinifyOptions);
+  result = htmlMinifier.minify(result, htmlMinifyOptions);
   writeFile(config.output.html + filename + ".html", result);
 }
 
 function didHashChange(filepath) {
-  var buffer = fs.readFileSync(filepath);
-  var hash = crypto.createHash("sha256");
+  const buffer = fs.readFileSync(filepath);
+  const hash = crypto.createHash("sha256");
   hash.update(buffer);
-  var result = hash.digest("hex");
+  const result = hash.digest("hex");
 
   if (!hashdb[filepath] || hashdb[filepath] !== result) {
     hashdb[filepath] = result;
@@ -139,8 +130,8 @@ function getFeedItem(file, title, description) {
 }
 
 function shouldSkipFeed(filename) {
-  for (var i = 0; i < config.rss.skip.length; i++) {
-    if (filename == config.rss.skip[i]) {
+  for (const file of config.rss.skip) {
+    if (filename == file) {
       return true;
     }
   }
@@ -151,24 +142,24 @@ function shouldSkipFeed(filename) {
 function generateFeed() {
   console.log("Generating file: rss feed");
 
-  var files = getFiles(config.input.md);
-  var feed = readFile(config.input.templates + "feed.rss");
+  const files = getFiles(config.input.md);
+  let feed = readFile(config.input.templates + "feed.rss");
+  let items = "";
 
   // generate feed
   feed = feed.replaceAll("<!-- $host -->", config.rss.host);
   feed = feed.replaceAll("<!-- $description -->", config.general.description);
 
-  var items = "";
-  for (var i = 0; i < files.length; i++) {
-    var filename = getFilename(files[i]);
+  for (const file of files) {
+    const filename = getFilename(file);
 
     if (shouldSkipFeed(filename)) {
       continue;
     }
 
-    var markdown = readFile(config.input.md + filename + ".md");
-    var info = getMdTitle(markdown);
-    var description = info.excerpt[0]
+    const markdown = readFile(config.input.md + filename + ".md");
+    const info = getMdTitle(markdown);
+    const description = info.excerpt[0]
       .slice(0, config.rss.introsize)
       .trim()
       + "...";
@@ -180,13 +171,13 @@ function generateFeed() {
 }
 
 function generateAllPages() {
-  var files = getFiles(config.input.md);
+  const files = getFiles(config.input.md);
 
   // generate pages
-  for (var i = 0; i < files.length; i++) {
-    var filename = getFilename(files[i]);
+  for (const file of files) {
+    const filename = getFilename(file);
 
-    if (didHashChange(config.input.md + files[i])) {
+    if (didHashChange(config.input.md + file)) {
       generatePage(filename);
     } else {
       console.log("Skip generating page: " + filename);
@@ -195,38 +186,30 @@ function generateAllPages() {
 }
 
 function generateCssBundle() {
-  var files = getFiles(config.input.css);
-  var changed = 0;
+  let files = getFiles(config.input.css);
 
-  for (var i = 0; i < files.length; i++) {
-    // set correct path
+  // set correct path
+  for (let i = 0; i < files.length; i++) {
     files[i] = config.input.css + files[i];
+  }
 
-    // check if file changed
-    if (didHashChange(files[i])) {
-      changed++;
+  // generate css bundle
+  for (const file of files) {
+    if (didHashChange(file)) {
+      console.log(`Generating file: css bundle\n${files}`);
+      writeFile(config.output.css, cssMinifier.minify(files).styles);
+      return;
     }
   }
 
-  if (changed === 0) {
-    console.log("Skip generating file: css bundle");
-    return;
-  }
-
-  console.log("Generating file: css bundle");
-  console.log(files);
-  var minified = cssMinifier.minify(files);
-  writeFile(config.output.css, minified.styles);
+  console.log("Skip generating file: css bundle");
 }
 
 function main() {
-  // load config
+  // load globals
   config = JSON.parse(readFile("./assets/config.json"));
-
-  // load hashdb
-  hashdb = fs.existsSync(config.input.hashdb)
-    ? JSON.parse(readFile(config.input.hashdb))
-    : {};
+  const hashdbpath = config.input.hashdb;
+  hashdb = fs.existsSync(hashdbpath) ? JSON.parse(readFile(hashdbpath)) : {};
 
   // generate files
   generateFeed();
@@ -234,7 +217,7 @@ function main() {
   generateCssBundle();
 
   // save hashdb
-  writeFile(config.input.hashdb, jsonPrettify(hashdb));
+  writeFile(hashdbpath, jsonPrettify(hashdb));
 }
 
 main();
