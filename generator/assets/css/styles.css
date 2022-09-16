@@ -34,5 +34,31 @@ blockquote > p {
 
 .blog-banner > * > * > a {
   color: #fff;
-  text-decoration: none;
+}
+
+/* dark mode */ 
+@media (prefers-color-scheme: dark) {
+  body {
+    color: rgb(217, 215, 206);
+    background-color: rgb(33, 39, 51);;
+  }
+
+  a {
+    color: rgb(255, 204, 102);
+  }
+  a:hover {
+    color: rgb(255, 204, 102);
+  }
+  .blog-banner > * > * > a {
+    color: #fff;
+  }
+
+  blockquote {
+    background-color: rgb(26, 31, 40);
+    border-left: 5px solid rgb(20, 23, 30);
+  }
+
+  .blog-sidebar {
+    background-color: rgb(26, 31, 40);
+  }
 }
