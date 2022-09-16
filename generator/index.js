@@ -27,7 +27,7 @@ const htmlMinifyOptions = {
 let config = {};
 let hashdb = {};
 
-function writeFile(filepath, data) {
+const writeFile = (filepath, data) => {
   if (!fs.existsSync(filepath)) {
     // create missing directories recursively
     const target = filepath.substr(0, filepath.lastIndexOf("/"));
@@ -37,31 +37,31 @@ function writeFile(filepath, data) {
   fs.writeFileSync(filepath, data);
 }
 
-function readFile(filepath) {
+const readFile = (filepath) => {
   return fs.readFileSync(filepath).toString();
 }
 
-function getFiles(filepath) {
+const getFiles = (filepath) => {
   return fs.readdirSync(filepath).filter(
     x => fs.statSync(path.join(filepath, x)).isFile());
 }
 
-function getFilename(filepath) {
+const getFilename = (filepath) => {
   return filepath.split('.').slice(0, -1).join('.');
 }
 
-function jsonPrettify(o) {
+const jsonPrettify = (o) => {
   return JSON.stringify(o, null, 4)
 }
 
-function mdToHtml(markdown) {
+const mdToHtml = (markdown) => {
   const md = new MarkdownIt({ "html": true })
     .use(mdmedia.html5Media)
     .use(mdprism, { "defaultLanguage": "txt" });
   return md.render(markdown);
 }
 
-function getMdTitle(markdown) {
+const getMdTitle = (markdown) => {
   let result = {};
   const md = new MarkdownIt({ "html": true })
     .use(mdtitle, { "level": 1, "excerpt": 1});
@@ -70,7 +70,7 @@ function getMdTitle(markdown) {
   return result;
 }
 
-function getLinks() {
+const getLinks = () => {
   let html = "";
   const links = config.page.links;
 
@@ -81,7 +81,7 @@ function getLinks() {
   return html;
 }
 
-function generatePage(filename) {
+const generatePage = (filename) => {
   console.log("Generating page: " + filename);
   let html = readFile(config.input.templates + "page.html");
 
@@ -109,7 +109,7 @@ function generatePage(filename) {
   writeFile(config.output.html + filename + ".html", result);
 }
 
-function didHashChange(filepath) {
+const didHashChange = (filepath) => {
   const buffer = fs.readFileSync(filepath);
   const hash = crypto.createHash("sha256");
   hash.update(buffer);
@@ -123,13 +123,13 @@ function didHashChange(filepath) {
   return false;
 }
 
-function getFeedItem(file, title, description) {
+const getFeedItem = (file, title, description) => {
   return "<item><link>https://" + config.rss.host + "/" + file + "</link>"
     + "<title>" + title + "</title>"
     + "<description>" + description + "</description></item>";
 }
 
-function shouldSkipFeed(filename) {
+const shouldSkipFeed = (filename) => {
   for (const file of config.rss.skip) {
     if (filename == file) {
       return true;
@@ -139,7 +139,7 @@ function shouldSkipFeed(filename) {
   return false;
 }
 
-function generateFeed() {
+const generateFeed = () => {
   console.log("Generating file: rss feed");
 
   const files = getFiles(config.input.md);
@@ -170,7 +170,7 @@ function generateFeed() {
   writeFile(config.output.rss, feed);
 }
 
-function generateAllPages() {
+const generateAllPages = () => {
   const files = getFiles(config.input.md);
 
   // generate pages
@@ -185,7 +185,7 @@ function generateAllPages() {
   }
 }
 
-function generateCssBundle() {
+const generateCssBundle = () => {
   let files = getFiles(config.input.css);
 
   // set correct path
@@ -205,7 +205,7 @@ function generateCssBundle() {
   console.log("Skip generating file: css bundle");
 }
 
-function main() {
+const main = () => {
   // load globals
   config = JSON.parse(readFile("./assets/config.json"));
   const hashdbpath = config.input.hashdb;
