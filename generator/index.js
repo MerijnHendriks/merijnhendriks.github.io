@@ -3,14 +3,12 @@ var fs = require("fs");
 var path = require("path");
 var { JSDOM } = require("jsdom");
 var MarkdownIt = require("markdown-it");
-var mediaPlugin = require("markdown-it-html5-media");
-var prism = require("markdown-it-prism");
+var mdmedia = require("markdown-it-html5-media");
+var mdprism = require("markdown-it-prism");
+var mdtitle = require("markdown-it-title");
 var CleanCSS = require("clean-css");
 var htmlMinifier = require("html-minifier");
 
-var md = new MarkdownIt({ "html": true })
-  .use(mediaPlugin.html5Media)
-  .use(prism, { "defaultLanguage": "txt" });
 var cssMinifier = new CleanCSS();
 var htmlMinifyOptions = {
   "collapseInlineTagWhitespace": true,
@@ -63,6 +61,22 @@ function jsonPrettify(o) {
   return JSON.stringify(o, null, 4)
 }
 
+function mdToHtml(markdown) {
+  var md = new MarkdownIt({ "html": true })
+    .use(mdmedia.html5Media)
+    .use(mdprism, { "defaultLanguage": "txt" });
+  return md.render(markdown);
+}
+
+function getMdTitle(markdown) {
+  var result = {};
+  var md = new MarkdownIt({ "html": true })
+    .use(mdtitle, { "level": 1, "excerpt": 1});
+
+  md.render(markdown, result);
+  return result;
+}
+
 function getLinks() {
   var html = "";
   var links = config.page.links;
@@ -77,6 +91,7 @@ function getLinks() {
 }
 
 function generatePage(filename) {
+  console.log("Generating page: " + filename);
   var html = readFile(config.input.templates + "page.html");
 
   // replace template strings
@@ -93,11 +108,14 @@ function generatePage(filename) {
   // generate markdown
   var markdown = readFile(config.input.md + filename + ".md");
   var element = document.getElementsByClassName("blog-content")[0];
-  element.innerHTML = md.render(markdown);
+  element.innerHTML = mdToHtml(markdown);
 
   // add doctype to prevent quicks mode warning
-  var result = "<!DOCTYPE html>" + document.documentElement.outerHTML;
-  return htmlMinifier.minify(result, htmlMinifyOptions);
+  var doctypefix = "<!DOCTYPE html>" + document.documentElement.outerHTML;
+
+  // save result minified
+  var result = htmlMinifier.minify(doctypefix, htmlMinifyOptions);
+  writeFile(config.output.html + filename + ".html", result);
 }
 
 function didHashChange(filepath) {
@@ -114,20 +132,65 @@ function didHashChange(filepath) {
   return false;
 }
 
-function generateAllPages() {
-  var files = getFiles(config.input.md);
+function getFeedItem(file, title, description) {
+  return "<item><link>https://" + config.rss.host + "/" + file + "</link>"
+    + "<title>" + title + "</title>"
+    + "<description>" + description + "</description></item>";
+}
 
+function shouldSkipFeed(filename) {
+  for (var i = 0; i < config.rss.skip.length; i++) {
+    if (filename == config.rss.skip[i]) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+function generateFeed() {
+  console.log("Generating file: rss feed");
+
+  var files = getFiles(config.input.md);
+  var feed = readFile(config.input.templates + "feed.rss");
+
+  // generate feed
+  feed = feed.replaceAll("<!-- $host -->", config.rss.host);
+  feed = feed.replaceAll("<!-- $description -->", config.general.description);
+
+  var items = "";
   for (var i = 0; i < files.length; i++) {
     var filename = getFilename(files[i]);
 
-    if (!didHashChange(config.input.md + files[i])) {
-      console.log("Skip generating page: " + filename);
+    if (shouldSkipFeed(filename)) {
       continue;
     }
-    
-    console.log("Generating page: " + filename);
-    var html = generatePage(filename);
-    writeFile(config.output.html + filename + ".html", html);
+
+    var markdown = readFile(config.input.md + filename + ".md");
+    var info = getMdTitle(markdown);
+    var description = info.excerpt[0]
+      .slice(0, config.rss.introsize)
+      .trim()
+      + "...";
+    items += getFeedItem(filename + ".html", info.title, description);
+  }
+
+  feed = feed.replaceAll("<!-- $items -->", items);
+  writeFile(config.output.rss, feed);
+}
+
+function generateAllPages() {
+  var files = getFiles(config.input.md);
+
+  // generate pages
+  for (var i = 0; i < files.length; i++) {
+    var filename = getFilename(files[i]);
+
+    if (didHashChange(config.input.md + files[i])) {
+      generatePage(filename);
+    } else {
+      console.log("Skip generating page: " + filename);
+    }
   }
 }
 
@@ -165,7 +228,8 @@ function main() {
     ? JSON.parse(readFile(config.input.hashdb))
     : {};
 
-  // generate pages
+  // generate files
+  generateFeed();
   generateAllPages();
   generateCssBundle();
 

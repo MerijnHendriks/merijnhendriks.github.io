@@ -11,6 +11,11 @@
             "Email": "mailto:merijn.d.hendriks@gmail.com"
         }
     },
+    "rss": {
+        "host": "merijnhendriks.github.io",
+        "introsize": 80,
+        "skip": [ "404", "index" ]
+    },
     "input": {
         "css": "./assets/css/",
         "md": "./assets/md/",
@@ -19,6 +24,7 @@
     },
     "output": {
         "html": "../",
-        "css": "../assets/css/bundle.css"
+        "css": "../assets/css/bundle.css",
+        "rss": "../feed.rss"
     }
 }
