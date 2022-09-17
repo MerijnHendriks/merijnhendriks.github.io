@@ -236,3 +236,11 @@ img {
 .fw-bold {
   font-weight: 700 !important;
 }
+
+.position-fixed {
+  position: fixed !important;
+}
+
+.offset-3 {
+  margin-left: 25%;
+}

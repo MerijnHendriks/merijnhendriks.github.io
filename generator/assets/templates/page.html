@@ -18,8 +18,8 @@
 <body>
   <div class="container-fluid min-vh-100 d-flex flex-column">
     <div class="row flex-grow-1">
-      <!-- right side -->
-      <aside class="col-md-3 blog-sidebar">
+      <!-- sidebar -->
+      <aside class="col-md-3 position-fixed blog-sidebar">
         <!-- banner -->
         <div class="blog-banner container-fluid py-5">
           <h1 class="fw-bold"><a href="./index.html"><!-- $author --></a></h1>
@@ -27,18 +27,18 @@
         </div>
 
         <div class="p-5">
-        <h4>About</h4>
-        <p><!-- $about --></p>
+          <h4>About</h4>
+          <p><!-- $about --></p>
 
-        <h4>Links</h4>
-        <ul>
-          <!-- $links -->
-        </ul>
+          <h4>Links</h4>
+          <ul>
+            <!-- $links -->
+          </ul>
         </div>
       </aside>
 
       <!-- left side -->
-      <main class="col-md-9 p-5">
+      <main class="col-md-9 offset-3 p-5">
         <article class="blog-content"></article>
       </main>
     </div>
