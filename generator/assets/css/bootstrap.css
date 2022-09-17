@@ -191,14 +191,14 @@ img {
 }
 
 @media (min-width: 768px) {
-  .col-md-4 {
+  .col-md-3 {
     flex: 0 0 auto;
-    width: 33.33333333%;
+    width: 25%;
   }
 
-  .col-md-8 {
+  .col-md-9 {
     flex: 0 0 auto;
-    width: 66.66666667%;
+    width: 75%;
   }
 }
 
@@ -235,10 +235,4 @@ img {
 
 .fw-bold {
   font-weight: 700 !important;
-}
-
-.display-5 {
-  font-size: calc(1.425rem + 2.1vw);
-  font-weight: 300;
-  line-height: 1.2;
 }

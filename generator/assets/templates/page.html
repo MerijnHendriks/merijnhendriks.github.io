@@ -17,22 +17,16 @@
 
 <body>
   <div class="container-fluid min-vh-100 d-flex flex-column">
-    <!-- banner -->
-    <header class="p-5 blog-banner">
-      <div class="container-fluid py-5">
-        <h1 class="display-5 fw-bold"><a href="./index.html"><!-- $author --></a></h1>
-        <p class="col-md-8 fs-4"><!-- $banner --></p>
-      </div>
-    </header>
-
     <div class="row flex-grow-1">
-      <!-- left side -->
-      <main class="col-md-8 p-5">
-        <article class="blog-content"></article>
-      </main>
-
       <!-- right side -->
-      <aside class="col-md-4 p-5 blog-sidebar">
+      <aside class="col-md-3 blog-sidebar">
+        <!-- banner -->
+        <div class="blog-banner container-fluid py-5">
+          <h1 class="fw-bold"><a href="./index.html"><!-- $author --></a></h1>
+          <p class="fs-4"><!-- $banner --></p>
+        </div>
+
+        <div class="p-5">
         <h4>About</h4>
         <p><!-- $about --></p>
 
@@ -40,7 +34,13 @@
         <ul>
           <!-- $links -->
         </ul>
+        </div>
       </aside>
+
+      <!-- left side -->
+      <main class="col-md-9 p-5">
+        <article class="blog-content"></article>
+      </main>
     </div>
   </div>
 </body>
