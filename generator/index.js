@@ -1,4 +1,3 @@
-const crypto = require("crypto");
 const fs = require("fs");
 const path = require("path");
 const MarkdownIt = require("markdown-it");
@@ -24,7 +23,6 @@ const htmlMinifyOptions = {
 
 // program globals
 let config = {};
-let hashdb = {};
 
 const writeFile = (filepath, data) => {
   if (!fs.existsSync(filepath)) {
@@ -47,10 +45,6 @@ const getFiles = (filepath) => {
 
 const getFilename = (filepath) => {
   return filepath.split('.').slice(0, -1).join('.');
-}
-
-const jsonPrettify = (o) => {
-  return JSON.stringify(o, null, 4)
 }
 
 const mdToHtml = (markdown) => {
@@ -100,18 +94,14 @@ const generatePage = (filename) => {
   writeFile(config.output.html + filename + ".html", result);
 }
 
-const didHashChange = (filepath) => {
-  const buffer = fs.readFileSync(filepath);
-  const hash = crypto.createHash("sha256");
-  hash.update(buffer);
-  const result = hash.digest("hex");
+const generateAllPages = () => {
+  const files = getFiles(config.input.md);
 
-  if (!hashdb[filepath] || hashdb[filepath] !== result) {
-    hashdb[filepath] = result;
-    return true;
+  // generate pages
+  for (const file of files) {
+    const filename = getFilename(file);
+    generatePage(filename);
   }
-
-  return false;
 }
 
 const getFeedItem = (file, title, description) => {
@@ -161,21 +151,6 @@ const generateFeed = () => {
   writeFile(config.output.rss, feed);
 }
 
-const generateAllPages = () => {
-  const files = getFiles(config.input.md);
-
-  // generate pages
-  for (const file of files) {
-    const filename = getFilename(file);
-
-    if (didHashChange(config.input.md + file)) {
-      generatePage(filename);
-    } else {
-      console.log("Skip generating page: " + filename);
-    }
-  }
-}
-
 const generateCssBundle = () => {
   let files = getFiles(config.input.css);
 
@@ -185,30 +160,18 @@ const generateCssBundle = () => {
   }
 
   // generate css bundle
-  for (const file of files) {
-    if (didHashChange(file)) {
-      console.log(`Generating file: css bundle\n${files}`);
-      writeFile(config.output.css, cssMinifier.minify(files).styles);
-      return;
-    }
-  }
-
-  console.log("Skip generating file: css bundle");
+  console.log(`Generating file: css bundle\n${files}`);
+  writeFile(config.output.css, cssMinifier.minify(files).styles);
 }
 
 const main = () => {
   // load globals
   config = JSON.parse(readFile("./assets/config.json"));
-  const hashdbpath = config.input.hashdb;
-  hashdb = fs.existsSync(hashdbpath) ? JSON.parse(readFile(hashdbpath)) : {};
 
   // generate files
   generateFeed();
   generateAllPages();
   generateCssBundle();
-
-  // save hashdb
-  writeFile(hashdbpath, jsonPrettify(hashdb));
 }
 
 main();
