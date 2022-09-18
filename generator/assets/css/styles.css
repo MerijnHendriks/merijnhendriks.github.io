@@ -11,20 +11,6 @@ blockquote > p {
   margin-bottom: 0rem;
 }
 
-/* sidebar */
-.blog-sidebar {
-  background-color: #f0f0f0;
-}
-@media (min-width: 768px) {
-  /* sticky when on desktop */
-  .blog-sidebar {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-  }
-}
-
 /* banner */
 .blog-banner {
   text-align: center;
@@ -42,6 +28,27 @@ blockquote > p {
 }
 .blog-banner > * > a {
   color: #fff;
+}
+
+/* sidebar */
+.blog-sidebar {
+  background-color: #f0f0f0;
+}
+@media (min-width: 992px) {
+  .blog-sidebar {
+    /* sticky when on desktop */
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    overflow-y: auto;
+    /* hide scrollbar */
+    scrollbar-width: none;
+  }
+  .blog-sidebar::-webkit-scrollbar {
+    /* hide scrollbar */
+    display: none;
+  }
 }
 
 /* dark mode */ 
