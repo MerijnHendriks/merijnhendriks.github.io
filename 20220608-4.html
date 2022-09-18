@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head> <meta charset="utf-8"> <meta name="viewport" content="width=device-width,initial-scale=1"> <meta name="author" content="Merijn Hendriks"> <meta name="description" content="My personal blog."> <title>Merijn Hendriks</title> <link rel="icon" type="image/x-icon" href="./assets/img/favicon.ico"> <link rel="stylesheet" type="text/css" href="./assets/css/bundle.css"> </head> <body> <div class="container-fluid d-flex flex-column"> <div class="row flex-grow-1"> <aside class="col-lg-3 blog-sidebar"> <div class="container-fluid py-5 blog-banner"> <h1 class="fw-bold"><a href="./index.html">Merijn Hendriks</a></h1> <p class="fs-4">Programmer, Creative, Nerd</p> </div> <div class="p-5"> <h4>About</h4> <p>Hi! I'm a Dutch programmer with a love for hamburgers and sake nigiri. When I'm not programming all day, you can find me reading manga, playing S.T.A.L.K.E.R.: Call of Pripyat or D&amp;D5E / MTG with friends.</p> <h4>Links</h4> <ul> <li><a href="https://www.github.com/merijnhendriks">Github</a></li><li><a href="mailto:me@nohurry.moe">Email</a></li><li><a href="https://nohurry.moe/feed.rss">RSS</a></li> </ul> </div> </aside> <main class="col-lg-9 p-5 offset-lg-3"> <article class="blog-content"><h1>C89-DP: Prototype</h1> <p>Apparently the goal of this pattern is to cache costly objects and clone them instead of requesting them again. I've never used this before, so it should be a nice challenge!</p> <h2>IClonable</h2> <p>This is what all clonable classes will be implementing.</p> <pre class="language-c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">IClonable</span> IClonable<span class="token punctuation">;</span>
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="utf-8"> <meta name="viewport" content="width=device-width,initial-scale=1"> <meta name="author" content="Merijn Hendriks"> <meta name="description" content="My personal blog."> <title>Merijn Hendriks</title> <link rel="icon" type="image/x-icon" href="./assets/img/favicon.ico"> <link rel="stylesheet" type="text/css" href="./assets/css/bundle.css"> </head> <body> <div class="container-fluid d-flex flex-column"> <div class="row flex-grow-1"> <aside class="col-lg-3 blog-sidebar"> <div class="container-fluid py-5 blog-banner"> <h1 class="fw-bold"><a href="./index.html">Merijn Hendriks</a></h1> <p class="fs-4">Programmer, Creative, Nerd</p> </div> <div class="p-5"> <h4>About</h4> <p>Hi! I'm a Dutch programmer with a love for hamburgers and sake nigiri. When I'm not programming all day, you can find me reading manga, playing S.T.A.L.K.E.R.: Call of Pripyat or D&D5E / MTG with friends.</p> <h4>Links</h4> <ul> <li><a href="https://www.github.com/merijnhendriks">Github</a></li><li><a href="mailto:me@nohurry.moe">Email</a></li><li><a href="https://nohurry.moe/feed.rss">RSS</a></li> </ul> </div> </aside> <main class="col-lg-9 p-5 offset-lg-3"> <article> <h1>C89-DP: Prototype</h1> <p>Apparently the goal of this pattern is to cache costly objects and clone them instead of requesting them again. I've never used this before, so it should be a nice challenge!</p> <h2>IClonable</h2> <p>This is what all clonable classes will be implementing.</p> <pre class="language-c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">IClonable</span> IClonable<span class="token punctuation">;</span>
 
 <span class="token keyword">struct</span> <span class="token class-name">IClonable</span>
 <span class="token punctuation">{</span>
@@ -16,7 +16,7 @@
 <span class="token punctuation">{</span>
     Foo<span class="token operator">*</span> a <span class="token operator">=</span> <span class="token punctuation">(</span>Foo<span class="token operator">*</span><span class="token punctuation">)</span>self<span class="token punctuation">;</span>
     Foo<span class="token operator">*</span> b <span class="token operator">=</span> <span class="token punctuation">(</span>Foo<span class="token operator">*</span><span class="token punctuation">)</span>other<span class="token punctuation">;</span>
-    b<span class="token operator">-&gt;</span>x <span class="token operator">=</span> a<span class="token operator">-&gt;</span>x<span class="token punctuation">;</span>
+    b<span class="token operator">-></span>x <span class="token operator">=</span> a<span class="token operator">-></span>x<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 
 <span class="token keyword">void</span> <span class="token function">Foo_ctor</span><span class="token punctuation">(</span>Foo<span class="token operator">*</span> self<span class="token punctuation">,</span> <span class="token keyword">int</span> x<span class="token punctuation">)</span>
@@ -25,8 +25,8 @@
         Foo_clone
     <span class="token punctuation">}</span><span class="token punctuation">;</span>
 
-    self<span class="token operator">-&gt;</span>iclonable <span class="token operator">=</span> <span class="token operator">&amp;</span>iclonable<span class="token punctuation">;</span>
-    self<span class="token operator">-&gt;</span>x <span class="token operator">=</span> x<span class="token punctuation">;</span>
+    self<span class="token operator">-></span>iclonable <span class="token operator">=</span> <span class="token operator">&amp;</span>iclonable<span class="token punctuation">;</span>
+    self<span class="token operator">-></span>x <span class="token operator">=</span> x<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 </code></pre> <p><code>Foo_clone</code> is where the magic happens. We just copy the values over to the other instance. We initialize the cache the first time <code>Foo_clone</code> is called.</p> <h2>Cache</h2> <p>Normally you would make a list or array for this, but in our case having an indexed static instance is good enough. I use an array of ints (C89 doesn't have a bool type build-in) to keep track of which values are initialized.</p> <pre class="language-c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">ISLOADED_LENGTH</span> <span class="token expression"><span class="token number">1</span></span></span>
 
@@ -50,7 +50,7 @@
     <span class="token keyword">switch</span> <span class="token punctuation">(</span>id<span class="token punctuation">)</span>
     <span class="token punctuation">{</span>
         <span class="token keyword">case</span> CACHE_FOO<span class="token operator">:</span>
-            foo<span class="token punctuation">.</span>iclonable<span class="token operator">-&gt;</span><span class="token function">clone</span><span class="token punctuation">(</span><span class="token punctuation">(</span>IClonable<span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>foo<span class="token punctuation">,</span> instance<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            foo<span class="token punctuation">.</span>iclonable<span class="token operator">-></span><span class="token function">clone</span><span class="token punctuation">(</span><span class="token punctuation">(</span>IClonable<span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>foo<span class="token punctuation">,</span> instance<span class="token punctuation">)</span><span class="token punctuation">;</span>
             <span class="token keyword">return</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
@@ -70,7 +70,7 @@ val <span class="token operator">=</span> foo<span class="token punctuation">.</
         isLoaded <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 
-    self<span class="token operator">-&gt;</span>x <span class="token operator">=</span> cache<span class="token punctuation">.</span>x<span class="token punctuation">;</span>
+    self<span class="token operator">-></span>x <span class="token operator">=</span> cache<span class="token punctuation">.</span>x<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 </code></pre> <p>Afterwards just call <code>Foo_clone</code> directly:</p> <pre class="language-c"><code class="language-c">Foo foo<span class="token punctuation">;</span>
 <span class="token keyword">int</span> val<span class="token punctuation">;</span>
@@ -94,17 +94,17 @@ val <span class="token operator">=</span> foo<span class="token punctuation">.</
         isLoaded <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 
-    foo<span class="token operator">-&gt;</span>x <span class="token operator">=</span> cache<span class="token punctuation">.</span>x<span class="token punctuation">;</span>
+    foo<span class="token operator">-></span>x <span class="token operator">=</span> cache<span class="token punctuation">.</span>x<span class="token punctuation">;</span>
 <span class="token punctuation">}</span>
 
 <span class="token keyword">void</span> <span class="token function">Cache_get</span><span class="token punctuation">(</span>IClonable<span class="token operator">*</span> instance<span class="token punctuation">)</span>
 <span class="token punctuation">{</span>
     Type<span class="token operator">*</span> type <span class="token operator">=</span> <span class="token punctuation">(</span>Type<span class="token operator">*</span><span class="token punctuation">)</span>instance<span class="token punctuation">;</span>
 
-    <span class="token keyword">if</span> <span class="token punctuation">(</span>type<span class="token operator">-&gt;</span><span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token function">Foo_getTypeId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>type<span class="token operator">-></span><span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token function">Foo_getTypeId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
     <span class="token punctuation">{</span>
-        instance<span class="token operator">-&gt;</span><span class="token function">clone</span><span class="token punctuation">(</span>instance<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        instance<span class="token operator">-></span><span class="token function">clone</span><span class="token punctuation">(</span>instance<span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token keyword">return</span><span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 <span class="token punctuation">}</span>
-</code></pre> <p>This system of couse can't have multiple instances of <code>Foo</code> to clone from, but it works nicer in an environment where generics are important due to automatic detection of types.</p> <h2>Conclusion</h2> <p>It just works. It takes a bit of setup, but its nice that it was doable.</p> </article> </main> </div> </div> </body></html>
+</code></pre> <p>This system of couse can't have multiple instances of <code>Foo</code> to clone from, but it works nicer in an environment where generics are important due to automatic detection of types.</p> <h2>Conclusion</h2> <p>It just works. It takes a bit of setup, but its nice that it was doable.</p> </article> </main> </div> </div> </body> </html>
