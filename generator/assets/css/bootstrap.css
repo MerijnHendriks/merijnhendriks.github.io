@@ -200,15 +200,15 @@ img {
     flex: 0 0 auto;
     width: 75%;
   }
+
+  .offset-md-3 {
+    margin-left: 25%;
+  }
 }
 
 /* flex */
 .d-flex {
   display: flex !important;
-}
-
-.min-vh-100 {
-  min-height: 100vh !important;
 }
 
 .flex-column {
