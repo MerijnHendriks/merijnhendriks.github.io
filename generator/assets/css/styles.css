@@ -1,9 +1,13 @@
 @charset "UTF-8";
 
-/* blockquote */
+body {
+  color: #262626;
+  background-color: #f7f7f7;
+}
+
 blockquote {
-  background-color: #e2e3e5;
-  border-left: 5px solid #d6d8db;
+  background-color: #e5e5e5;
+  border-left: 5px solid #007bff;
   margin: 1.5em 10px;
   padding: 0.5em 10px;
 }
@@ -14,7 +18,7 @@ blockquote > p {
 /* banner */
 .blog-banner {
   text-align: center;
-  color: #fff;
+  color: #262626;
   background: linear-gradient(
     #f9b294 0%,
     #f9b294 52%,
@@ -27,12 +31,12 @@ blockquote > p {
   ); 
 }
 .blog-banner > * > a {
-  color: #fff;
+  color: #262626;
 }
 
 /* sidebar */
 .blog-sidebar {
-  background-color: #f0f0f0;
+  border-right: 1px solid #737373;
 }
 @media (min-width: 992px) {
   .blog-sidebar {
@@ -60,7 +64,7 @@ blockquote > p {
 
   blockquote {
     background-color: #1a1f28;
-    border-left: 5px solid #14171e;
+    border-left: 5px solid #ffcc66;
   }
 
   a {
@@ -70,7 +74,7 @@ blockquote > p {
     color: #ffcc66;
   }
 
-  .blog-banner > p {
+  .blog-banner {
     color: #fff;
   }
   .blog-banner > * > a {
@@ -79,5 +83,6 @@ blockquote > p {
 
   .blog-sidebar {
     background-color: #1a1f28;
+    border-right: none;
   }
 }
