@@ -1,7 +1,6 @@
 const crypto = require("crypto");
 const fs = require("fs");
 const path = require("path");
-const { JSDOM } = require("jsdom");
 const MarkdownIt = require("markdown-it");
 const mdmedia = require("markdown-it-html5-media");
 const mdprism = require("markdown-it-prism");
@@ -85,27 +84,19 @@ const generatePage = (filename) => {
   console.log("Generating page: " + filename);
   let html = readFile(config.input.templates + "page.html");
 
+  // generate markdown
+  const markdown = readFile(config.input.md + filename + ".md");
+
   // replace template strings
   html = html.replaceAll("<!-- $author -->", config.general.author);
   html = html.replaceAll("<!-- $description -->", config.general.description);
   html = html.replaceAll("<!-- $banner -->", config.page.banner);
   html = html.replaceAll("<!-- $about -->", config.page.about);
   html = html.replaceAll("<!-- $links -->", getLinks());
-
-  // load document
-  const dom = new JSDOM(html);
-  const document = dom.window.document;
-
-  // generate markdown
-  const markdown = readFile(config.input.md + filename + ".md");
-  const element = document.getElementsByClassName("blog-content")[0];
-  element.innerHTML = mdToHtml(markdown);
-
-  // add doctype to prevent quicks mode warning
-  let result = "<!DOCTYPE html>" + document.documentElement.outerHTML;
+  html = html.replaceAll("<!-- $article -->", mdToHtml(markdown));
 
   // save result minified
-  result = htmlMinifier.minify(result, htmlMinifyOptions);
+  const result = htmlMinifier.minify(html, htmlMinifyOptions);
   writeFile(config.output.html + filename + ".html", result);
 }
 
