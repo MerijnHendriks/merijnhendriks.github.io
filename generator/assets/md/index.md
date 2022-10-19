@@ -3,8 +3,6 @@
 I write when I've enough inspiration to do so. Sometimes I revisit older
 articles and polish them a bit and/or fix mistakes in wording and/or grammar.
 
-- [2022-09-28 - Thoughts: Language and gender](20220929-1.html)
-- [2022-09-28 - Thoughts: Transgender difficulties](20220928-1.html)
 - [2022-09-23 - Programming: Thoughts on Rust](20220923-1.html)
 - [2022-09-18 - Website: New look and more](20220918-1.html)
 - [2022-09-15 - OS: Hardening ubuntu 22.04](20220915-1.html)
@@ -12,14 +10,11 @@ articles and polish them a bit and/or fix mistakes in wording and/or grammar.
 - [2022-08-31 - OS: Hardening my devices](20220831-2.html)
 - [2022-08-31 - Programming: Making VSCode work](20220831-1.html)
 - [2022-08-12 - Programming: Language wishlist](20220812-2.html)
-- [2022-08-12 - Thoughts: Mankind's future](20220812-1.html)
 - [2022-08-10 - OS: Small review](20220810-1.html)
 - [2022-07-01 - Rant: Common sense(lessness)](20220701-1.html)
 - [2022-06-29 - C89-OOP: Conclusion](20220629-3.html)
 - [2022-06-29 - C89-OOP: Dynamic allocation](20220629-2.html)
 - [2022-06-29 - Website: Small update](20220629-1.html)
-- [2022-06-24 - Thoughts: Importance of elders](20220624-3.html)
-- [2022-06-24 - Thoughts: War](20220624-2.html)
 - [2022-06-24 - Programming: Code accessability](20220624-1.html)
 - [2022-06-12 - Rant: VSCode bloat](20220612-1.html)
 - [2022-06-08 - C89-DP: Prototype](20220608-4.html)
