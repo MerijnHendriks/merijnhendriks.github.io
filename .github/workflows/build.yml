@@ -16,7 +16,7 @@ jobs:
         with:
           node-version: 18.x
       - run: npm install --prefix generator
-      - run: node ./generator/index.js
+      - run: cd generator && node index.js
 
       - name: Push changes
         uses: stefanzweifel/git-auto-commit-action@v4
