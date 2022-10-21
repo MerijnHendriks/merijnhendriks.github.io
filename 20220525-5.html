@@ -1,0 +1,82 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="utf-8"> <meta name="viewport" content="width=device-width,initial-scale=1"> <meta name="author" content="No;Hurry"> <meta name="description" content="My personal blog."> <title>No;Hurry</title> <link rel="icon" type="image/x-icon" href="./assets/img/favicon.ico"> <link rel="stylesheet" type="text/css" href="./assets/css/bundle.css"> </head> <body>  <div class="container-fluid py-5"> <h1 class="fw-bold"><a href="./index.html">No;Hurry</a></h1> <p class="fs-4">Segfaulting life</p> </div>  <div class="container-fluid d-flex flex-column"> <div class="row flex-grow-1"> <main class="col-lg-9 p-5 offset-lg-3"> <article> <h1>C89-Goto: Cleanup</h1> <p>In my previous article I explained how the <code>goto</code> statement can be used to emulate the <code>switch-case</code> control structure. For this last entry of the series, I'll demonstrate one of the few techniques that <code>goto</code> is still actively used for today in the embedded world: resource cleanup and as a barebone exception handling mechanism. For a change, this <em>is</em> something you can apply in production, and would heavily recommend you do so when it's appropiate!</p> <p>The last but most important part of <code>goto</code> is that it can be done to handle cleanup elegantly in case an error occurs. For example, let's take this piece of code:</p> <pre class="language-c"><code class="language-c"><span class="token comment">/* cleanup: if-return */</span>
+
+<span class="token keyword">void</span> <span class="token operator">*</span>p1 <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token operator">*</span>p2 <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token operator">*</span>p3 <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+
+p1 <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">16</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>p1<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">return</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/* use p1 here */</span>
+
+p2 <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">16</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>p2<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>p1<span class="token punctuation">)</span> <span class="token function">free</span><span class="token punctuation">(</span>p1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/* use p2 here */</span>
+
+p3 <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">16</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>p3<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>p2<span class="token punctuation">)</span> <span class="token function">free</span><span class="token punctuation">(</span>p2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>p1<span class="token punctuation">)</span> <span class="token function">free</span><span class="token punctuation">(</span>p1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/* use p3 here */</span>
+
+<span class="token keyword">if</span> <span class="token punctuation">(</span>p3<span class="token punctuation">)</span> <span class="token function">free</span><span class="token punctuation">(</span>p3<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>p2<span class="token punctuation">)</span> <span class="token function">free</span><span class="token punctuation">(</span>p2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>p1<span class="token punctuation">)</span> <span class="token function">free</span><span class="token punctuation">(</span>p1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre> <p>The goal of this example is to allocate memory in steps, do something with it in between and allocate some more, until we reach the exit point where all memory needs to be freed. In between, we need to make sure that the memory is correctly allocated. If it isn't, clean up memory and terminate.</p> <p>It looks like a real mess, but this is how I often encounter programmers handling cleanup because people do not know they could use <code>goto</code> for this:</p> <pre class="language-c"><code class="language-c"><span class="token comment">/* cleanup: goto */</span>
+
+<span class="token keyword">void</span> <span class="token operator">*</span>p1 <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token operator">*</span>p2 <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token operator">*</span>p3 <span class="token operator">=</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+
+p1 <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">16</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>p1<span class="token punctuation">)</span> <span class="token keyword">goto</span> cleanup<span class="token punctuation">;</span>
+
+<span class="token comment">/* use p1 here */</span>
+
+p2 <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">16</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>p2<span class="token punctuation">)</span> <span class="token keyword">goto</span> cleanup<span class="token punctuation">;</span>
+
+<span class="token comment">/* use p2 here */</span>
+
+p3 <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">16</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>p3<span class="token punctuation">)</span> <span class="token keyword">goto</span> cleanup<span class="token punctuation">;</span>
+
+<span class="token comment">/* use p3 here */</span>
+
+cleanup<span class="token operator">:</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>p3<span class="token punctuation">)</span> <span class="token function">free</span><span class="token punctuation">(</span>p3<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>p2<span class="token punctuation">)</span> <span class="token function">free</span><span class="token punctuation">(</span>p2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span>p1<span class="token punctuation">)</span> <span class="token function">free</span><span class="token punctuation">(</span>p1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre> <p>That looks much more concise, doesn't it?</p> <p>This technique could also be used for handling errors that normally would throw an exception in other languages:</p> <pre class="language-c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">Simulation_run</span><span class="token punctuation">(</span>Foo<span class="token operator">*</span> foo<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> result <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">Foo_alloc</span><span class="token punctuation">(</span>foo<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">goto</span> error_1<span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">Foo_ctor</span><span class="token punctuation">(</span>foo<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token keyword">goto</span> error_2<span class="token punctuation">;</span>
+
+    result <span class="token operator">=</span> <span class="token function">Foo_runTest</span><span class="token punctuation">(</span>foo<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    error_2<span class="token operator">:</span>
+    <span class="token function">Foo_dtor</span><span class="token punctuation">(</span>foo<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    error_1<span class="token operator">:</span>
+    <span class="token function">Foo_dealloc</span><span class="token punctuation">(</span>foo<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> result<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre> <h2>Conclusion</h2> <p>Hopefully this series gave you some insight on how <code>goto</code> can be used to emulate control structures, what the code you write with normal control structures roughly gets translated to in assembly (without optimizations), and how you can do a very clean and concise cleanup of resources with <code>goto</code>.</p> </article> </main> <aside class="col-lg-3 blog-sidebar"> <div class="p-5"> <h4>About</h4> <p>Hi! My name is Merijn Hendriks and I'm a Dutch programmer with a love for hamburgers and sake nigiri. When I'm not programming all day, you can find me reading manga, playing S.T.A.L.K.E.R.: Call of Pripyat or D&D5E / MTG with friends.</p> <h4>Links</h4> <ul> <li><a href="https://www.github.com/merijnhendriks">Github</a></li><li><a href="mailto:me@nohurry.moe">Email</a></li><li><a href="https://nohurry.moe/feed.rss">RSS</a></li> </ul> </div> </aside> </div> </div> </body> </html>
