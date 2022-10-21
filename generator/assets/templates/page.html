@@ -12,15 +12,22 @@
 </head>
 
 <body>
+  <header class="p-5 blog-banner"></header>
+    <div class="container-fluid py-5">
+      <h1 class="fw-bold"><a href="./index.html"><!-- $author --></a></h1>
+      <p class="fs-4"><!-- $banner --></p>
+    </div>
+  </header>
+
   <div class="container-fluid d-flex flex-column">
     <div class="row flex-grow-1">
+      <main class="col-lg-9 p-5 offset-lg-3">
+        <article>
+          <!-- $article -->
+        </article>
+      </main>
 
       <aside class="col-lg-3 blog-sidebar">
-        <div class="container-fluid py-5 blog-banner">
-          <h1 class="fw-bold"><a href="./index.html"><!-- $author --></a></h1>
-          <p class="fs-4"><!-- $banner --></p>
-        </div>
-
         <div class="p-5">
           <h4>About</h4>
           <p><!-- $about --></p>
@@ -31,12 +38,6 @@
           </ul>
         </div>
       </aside>
-
-      <main class="col-lg-9 p-5 offset-lg-3">
-        <article>
-          <!-- $article -->
-        </article>
-      </main>
     </div>
   </div>
 </body>

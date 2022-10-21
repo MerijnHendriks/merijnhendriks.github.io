@@ -77,7 +77,7 @@ blockquote > p {
   .blog-banner {
     color: #fff;
   }
-  .blog-banner > * > a {
+  .blog-banner > * > * > a {
     color: #fff;
   }
 
