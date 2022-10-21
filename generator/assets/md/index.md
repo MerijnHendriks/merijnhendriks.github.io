@@ -3,6 +3,7 @@
 I write when I've enough inspiration to do so. Sometimes I revisit older
 articles and polish them a bit and/or fix mistakes in wording and/or grammar.
 
+- [2022-10-21 - Website: Automation](20221021-1.html)
 - [2022-09-23 - Programming: Thoughts on Rust](20220923-1.html)
 - [2022-09-18 - Website: New look and more](20220918-1.html)
 - [2022-09-15 - OS: Hardening ubuntu 22.04](20220915-1.html)
