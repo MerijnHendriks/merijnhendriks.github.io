@@ -78,16 +78,18 @@ const generatePage = (filename) => {
   console.log("Generating page: " + filename);
   let html = readFile(config.input.templates + "page.html");
 
-  // generate markdown
-  const markdown = readFile(config.input.md + filename + ".md");
+  // get markdown text
+  const articleText = readFile(config.input.md + filename + ".md");
+  const aboutText = readFile(config.input.templates + "about.md"); 
 
   // replace template strings
   html = html.replaceAll("<!-- $author -->", config.general.author);
   html = html.replaceAll("<!-- $description -->", config.general.description);
-  html = html.replaceAll("<!-- $banner -->", config.page.banner);
-  html = html.replaceAll("<!-- $about -->", config.page.about);
+  html = html.replaceAll("<!-- $banner-header -->", config.page.banner.header);
+  html = html.replaceAll("<!-- $banner-text -->", config.page.banner.text);
+  html = html.replaceAll("<!-- $about -->", mdToHtml(aboutText));
   html = html.replaceAll("<!-- $links -->", getLinks());
-  html = html.replaceAll("<!-- $article -->", mdToHtml(markdown));
+  html = html.replaceAll("<!-- $article -->", mdToHtml(articleText));
 
   // save result minified
   const result = htmlMinifier.minify(html, htmlMinifyOptions);

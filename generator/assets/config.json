@@ -1,11 +1,13 @@
 {
     "general": {
-        "author": "No;Hurry",
+        "author": "Merijn Hendriks",
         "description": "My personal blog."
     },
     "page": {
-        "banner": "Segfaulting life",
-        "about": "Hi! My name is Merijn Hendriks and I'm a Dutch programmer with a love for hamburgers and sake nigiri. When I'm not programming all day, you can find me reading manga, playing S.T.A.L.K.E.R.: Call of Pripyat or D&D5E / MTG with friends.",
+        "banner": {
+            "header": "lp0 on fire",
+            "text": "My personal blog"
+        },
         "links": {
             "Github": "https://www.github.com/merijnhendriks",
             "Email": "mailto:me@nohurry.moe",

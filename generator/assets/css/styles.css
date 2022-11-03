@@ -30,29 +30,14 @@ blockquote > p {
     #6d5c7e 100%
   ); 
 }
-.blog-banner > * > a {
+.blog-banner > * > * > a {
+  font-family: var(--bs-font-monospace);
   color: #262626;
 }
 
 /* sidebar */
 .blog-sidebar {
-  border-right: 1px solid #737373;
-}
-@media (min-width: 992px) {
-  .blog-sidebar {
-    /* sticky when on desktop */
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    overflow-y: auto;
-    /* hide scrollbar */
-    scrollbar-width: none;
-  }
-  .blog-sidebar::-webkit-scrollbar {
-    /* hide scrollbar */
-    display: none;
-  }
+  border-left: 1px solid #737373;
 }
 
 /* dark mode */ 
@@ -83,6 +68,6 @@ blockquote > p {
 
   .blog-sidebar {
     background-color: #1a1f28;
-    border-right: none;
+    border-left: none;
   }
 }
