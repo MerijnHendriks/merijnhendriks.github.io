@@ -3,6 +3,7 @@
 I write when I've enough inspiration to do so. Sometimes I revisit older
 articles and polish them a bit and/or fix mistakes in wording and/or grammar.
 
+- [2023-10-16 - Story: The other side](20231016-1.html)
 - [2023-02-20 - Story: A gentle warmth](20230220-1.html)
 - [2023-01-01 - Happy new year!](20230101-1.html)
 - [2022-11-09 - OS: Making windows 11 work](20221109-2.html)
