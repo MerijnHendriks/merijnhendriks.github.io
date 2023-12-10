@@ -10,12 +10,12 @@
         },
         "links": {
             "Github": "https://www.github.com/merijnhendriks",
-            "Email": "mailto:me@nohurry.moe",
-            "RSS": "https://nohurry.moe/feed.rss"
+            "Email": "mailto:merijn.d.hendriks@gmail.com",
+            "RSS": "https://merijnhendriks.github.io/feed.rss"
         }
     },
     "rss": {
-        "host": "nohurry.moe",
+        "host": "merijnhendriks.github.io",
         "introsize": 80,
         "skip": [ "404", "index" ]
     },
