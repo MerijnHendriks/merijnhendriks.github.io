@@ -109,7 +109,7 @@ const generateAllPages = () => {
 const getFeedItem = (file, title, description) => {
   return "<item><link>https://" + config.rss.host + "/" + file + "</link>"
     + "<title>" + title + "</title>"
-    + "<description>" + description + "</description></item>";
+    + "<description>" + description + "</description></item>" + "\n";
 }
 
 const shouldSkipFeed = (filename) => {
