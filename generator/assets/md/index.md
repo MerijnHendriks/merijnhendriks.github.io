@@ -3,6 +3,7 @@
 I write when I've enough inspiration to do so. Sometimes I revisit older
 articles and polish them a bit and/or fix mistakes in wording and/or grammar.
 
+- [2025-10-26 - LLMs in the field](20251026-1.html)
 - [2025-10-03 - Comfort Woman](20251003-1.html)
 - [2024-04-15 - SPTarkov: History - EMUTARKOV 2020](20240416-6.html)
 - [2024-04-15 - SPTarkov: History - JUSTEMUTARKOV 2019](20240416-5.html)
